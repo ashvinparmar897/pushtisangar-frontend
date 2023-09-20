@@ -11,8 +11,8 @@ export const SidebarData = [
     icon: <IoIcons.IoMdPeople />
   },
   {
-    title: 'Support',
-    path: '/',
+    title: 'About',
+    path: '/about-us',
     icon: <IoIcons.IoMdHelpCircle />
   },
   {
@@ -93,8 +93,18 @@ export const SidebarData = [
     ]
   },
   {
-    title: 'Contact',
-    path: '/',
+    title: 'Blog',
+    path: '/blog',
     icon: <FaIcons.FaCartPlus />
+  },
+  {
+    title: 'Gallery',
+    path: '/gallery',
+    icon: <IoIcons.IoMdHelpCircle />
+  },
+  {
+    title: 'Contact',
+    path: '/contact-us',
+    icon: <IoIcons.IoMdHelpCircle />
   },
 ];

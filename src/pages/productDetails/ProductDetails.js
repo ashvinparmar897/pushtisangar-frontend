@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import './ProductDetails.css'
 import Header from '../../components/Header'
 import MidFooter from '../../components/MidFooter'
@@ -21,6 +21,8 @@ import S7 from "../../images/s7.jpg";
 import S8 from "../../images/s8.jpg";
 import S9 from "../../images/s9.jpg";
 import { Link,  useNavigate } from "react-router-dom";
+import Preloader from '../../components/Loader'
+import MobileSidebar from '../../components/MobileSidebar'
 
 
 
@@ -31,12 +33,22 @@ import { Link,  useNavigate } from "react-router-dom";
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(cover1); // Default selected image
   const [selectedColors, setSelectedColors] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+
   const navigate = useNavigate();
 
   const handleCartClick = () => {
     // Use navigate to go to the cart page
     navigate('/cart');
   };
+
+  useEffect(() => {
+    // Scroll back to the top when the component loads
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    window.scrollTo(0, 0);
+  }, []);
 
   
   const handleThumbClick = (imageURL) => {
@@ -208,9 +220,15 @@ const ProductDetails = () => {
 
     // Add more product objects here
   ];
+
+
+  if (isLoading) {
+    return <Preloader />; // Show the preloader while loading
+  }
   return (
     <div>
       <Header/>
+      <MobileSidebar/>
       <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">

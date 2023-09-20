@@ -38,7 +38,7 @@ const ForgotPassword = () => {
                 <h1>Hello, friend!</h1>
                 <p>Enjoy your personal details and start your journey with us.</p>
                 <div className="register">
-                  <Link className="createlinking register_button" to="#" id>Sign Up</Link>
+                  <Link className="createlinking register_button" to="/signup" id>Sign Up</Link>
                 </div>
               </div>
             </div>

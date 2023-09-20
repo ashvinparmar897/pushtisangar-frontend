@@ -18,8 +18,7 @@ const TopProducts = () => {
     {
       id: 1,
       imageUrl: S1,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+     
       category: "Shangar",
       name: "God Shanagar By Pushtimarg ",
       price: 238.85,
@@ -29,8 +28,7 @@ const TopProducts = () => {
     {
       id: 1,
       imageUrl: S2,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+     
       category: "Sughandhi",
       name: "Sughandhi Attar Different fragrances",
       price: 238.85,
@@ -40,8 +38,7 @@ const TopProducts = () => {
     {
       id: 1,
       imageUrl: S3,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+     
       category: "Shringar",
       name: "Moti product with category of Shringar",
       price: 238.85,
@@ -51,8 +48,7 @@ const TopProducts = () => {
     {
       id: 1,
       imageUrl: S4,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+     
       category: "Shringar",
       name: "Popular Product on Shringar Products",
       price: 238.85,
@@ -61,8 +57,7 @@ const TopProducts = () => {
     {
       id: 1,
       imageUrl: S5,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+     
       category: "Vastra",
       name: "Best Zari in Vastra Category",
       price: 238.85,
@@ -145,7 +140,7 @@ const TopProducts = () => {
 
   return (
     <div style={{background:'rgba(251, 248, 240, 0.74)'}}>
-      <div className="container">
+      <div className="container" style={{marginTop:'55px'}}>
         <div className="row popular-row">
           <h1 className="text-start fs-1 mt-4 mb-4">Popular Products</h1>
         </div>
@@ -172,28 +167,7 @@ const TopProducts = () => {
                       />
                     </Link>
                   </div>
-                  {/* <div className="product-action-1">
-                    <Link
-                      aria-label="Quick view"
-                      className="action-btn small hover-up"
-                      data-bs-toggle="modal"
-                      data-bs-target="#quickViewModal"
-                      tabIndex={0}
-                    >
-                      <i className="fi-rs-eye bi bi-eye-fill" />
-                    </Link>
-                    <Link
-                      aria-label="Add To Wishlist"
-                      className="action-btn small hover-up"
-                      to="#"
-                      tabIndex={0}
-                    >
-                      <i className="fi-rs-heart bi bi-heart" />
-                    </Link>
-                  </div> */}
-                  {/* <div className="product-badges product-badges-position product-badges-mrg">
-                    <span className="best">Best sale</span>
-                  </div> */}
+                  
                 </div>
                 <div class="product-content-wrap">
                   <div class="product-category">

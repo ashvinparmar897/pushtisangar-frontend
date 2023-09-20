@@ -10,6 +10,7 @@ import Featured from "../../components/Featured";
 import Header from "../../components/Header";
 // import ContactImg from "./../../images/contact-us-img.jpg";
 import "./contactUs.css";
+import MobileSidebar from "../../components/MobileSidebar";
 
 const ContactUs = () => {
   const schema = Yup.object().shape({
@@ -26,6 +27,7 @@ const ContactUs = () => {
   return (
     <React.Fragment>
       <Header />
+      <MobileSidebar/>
       <div class="page-header breadcrumb-wrap">
         <div className="container">
           <div className="breadcrumb">
@@ -35,7 +37,7 @@ const ContactUs = () => {
               </i>
               Home
             </Link>
-            <AiOutlineRight className="rightIcon" /> <span /> Pages <span />{" "}
+          
             <AiOutlineRight className="rightIcon" /> Contact
           </div>
         </div>

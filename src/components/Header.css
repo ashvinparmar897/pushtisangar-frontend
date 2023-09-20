@@ -1,3 +1,18 @@
+/* Add this to your Login.css file */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* You can adjust the opacity (last value) for the desired background color */
+    z-index: 999; /* Ensure it's above other content */
+    display: none; /* Initially hidden */
+  }
+  
+
+
+
 .btn:hover{
     color: white !important;
 }
@@ -381,7 +396,7 @@ h4 {
     font-size: 24px;
 }
 .cart-dropdown-wrap ul li .shopping-cart-title h4 a {
-    color: #e85151;
+    color: #81ca84;
 }
 .cart-dropdown-wrap ul li .shopping-cart-delete {
     display: -webkit-box;
@@ -435,8 +450,8 @@ i[class^="fi-rs-"], span[class^="fi-rs-"] {
 }
 .cart-dropdown-wrap .shopping-cart-footer .shopping-cart-button a.outline {
     background-color: transparent;
-    border: 2px solid #e85151;
-    color: #e85151;
+    border: 2px solid #93c572;
+    color: #93c572;
 }
 .cart-dropdown-wrap .shopping-cart-footer .shopping-cart-button a {
     display: inline-block;
@@ -445,9 +460,9 @@ i[class^="fi-rs-"], span[class^="fi-rs-"] {
     border-radius: 4px;
     line-height: 1;
     padding: 10px 20px;
-    background-color: #e85151;
+    background-color: #93c572;
     font-family: "Quicksand", sans-serif;
-    border: 2px solid #e85151;
+    border: 2px solid #93c572;
 }
 .header-action-2 .header-action-icon-2:last-child {
     padding: 0 0px 0 8px;
@@ -549,7 +564,7 @@ option {
 } */
 
 .header-style-1 .main-categori-wrap > a span {
-    color: #434343  !important;
+    color: white !important;
 }
 span.fi-rs-apps {
     font-size: 16px;
@@ -662,7 +677,7 @@ span.fi-rs-apps {
 }
 
 .main-menu.main-menu-padding-1 > nav > ul > li:first-child {
-    padding-left: 0 !important;
+    padding-left: 0 ;
 }
 .main-menu.main-menu-lh-2 > nav > ul > li {
     line-height: 70px;

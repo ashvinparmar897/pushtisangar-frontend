@@ -12,11 +12,13 @@ import Subscribe from "../../components/Subscribe";
 import MidFooter from "../../components/MidFooter";
 import Featured from "../../components/Featured";
 import Header from "../../components/Header";
+import MobileSidebar from "../../components/MobileSidebar";
 
 const AboutUs = () => {
   return (
     <React.Fragment>
       <Header />
+      <MobileSidebar/>
       <div class="page-header breadcrumb-wrap">
         <div className="container">
           <div className="breadcrumb">
@@ -26,7 +28,7 @@ const AboutUs = () => {
               </i>
               Home
             </Link>
-            <AiOutlineRight className="rightIcon" /> <span /> Pages <span />{" "}
+           
             <AiOutlineRight className="rightIcon" /> About us
           </div>
         </div>

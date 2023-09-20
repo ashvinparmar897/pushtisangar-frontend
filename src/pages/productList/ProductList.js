@@ -20,6 +20,7 @@ import S7 from "../../images/s7.jpg";
 import S8 from "../../images/s8.jpg";
 import S9 from "../../images/s9.jpg";
 import { Link} from "react-router-dom";
+import MobileSidebar from "../../components/MobileSidebar";
 
 const ProductList = () => {
   // Define state variables for filters
@@ -251,6 +252,7 @@ const ProductList = () => {
     
     <div>
       <Header />
+      <MobileSidebar/>
       <div className="container">
         <div className="row">
           <div className="col-lg-12">

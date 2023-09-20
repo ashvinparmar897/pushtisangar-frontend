@@ -6,7 +6,7 @@ import offer3 from "../images/small-image-3.jpg"
 const OfferPart = () => {
   return (
     <div>
-      <section className="banners mb-25 mt-5 mb-5">
+      <section className="banners mb-25 mt-4 mb-4">
         <div className="container">
           <div className="row">
             <div className="col-lg-4 col-md-6">

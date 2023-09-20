@@ -64,7 +64,7 @@ const MidFooter = () => {
                   <a href="#">Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="#">Terms &amp; Conditions</a>
+                  <a href="terms-condition">Terms &amp; Conditions</a>
                 </li>
                 <li>
                   <a href="#">Contact Us</a>
@@ -137,11 +137,11 @@ const MidFooter = () => {
     <div className="d-flex justify-content-between lh-base mb-3 footer-text align-items-center">
 
       <div>
-        <p className="font-sm mb-0 text-start">Copyright © 2023,<strong className="text-brand"> Pushti Shangar</strong> , All rights reserved</p>
+        <p className="font-sm mb-0 text-start d-block">Copyright © 2023,<strong className="text-brand"> Pushti Shangar</strong> , All rights reserved</p>
       </div>
       <div>
 
-      <p className="font-sm mb-0 text-start"> <span> Designed & Developed by <strong className="text-brand"><Link to='https://www.barodaweb.com'  target="_blank">Barodaweb</Link></strong> -The E-Catalogue Designer</span></p>
+      <p className="font-sm mb-0 text-start d-block"> <span> Designed & Developed by <strong className="text-brand"><Link to='https://www.barodaweb.com'  target="_blank">Barodaweb</Link></strong> -The E-Catalogue Designer</span></p>
       </div>
     </div>
     

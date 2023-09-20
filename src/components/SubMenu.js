@@ -43,7 +43,7 @@ const DropdownLink = styled(Link)`
    
     font-weight: 500;
     font-family: "Quicksand", sans-serif;
-  color: #253D4E;
+
 
   &:hover {
     background: white;
@@ -58,7 +58,7 @@ const SubMenu = ({ item }) => {
 
   return (
     <>
-      <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
+      <SidebarLink to={item.path} className='element' onClick={item.subNav && showSubnav}>
         <div>
         
           <SidebarLabel>{item.title}</SidebarLabel>
@@ -74,7 +74,7 @@ const SubMenu = ({ item }) => {
       {subnav &&
         item.subNav.map((item, index) => {
           return (
-            <DropdownLink to={item.path} key={index}>
+            <DropdownLink to={item.path} key={index} className='sub-elements'>
              
               <SidebarLabel>{item.title}</SidebarLabel>
             </DropdownLink>

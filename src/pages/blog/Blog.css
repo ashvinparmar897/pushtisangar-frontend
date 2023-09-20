@@ -47,9 +47,13 @@ h4 {
     padding-bottom: 10px !important;
 }
   
-.hover-up:hover{
+.hovr-up:hover{
     background: white !important;
     color: black;
+    transform: translateY(-5px);
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+  
 }
 
 

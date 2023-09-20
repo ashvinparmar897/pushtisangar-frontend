@@ -80,7 +80,7 @@ const Featured = () => {
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Best prices &amp; offers</h3>
-                  <p>Orders ₹999 or more</p>
+                  <p className="icon-box-desc">Order ₹999 or more</p>
                 </div>
               </div>
             </div>
@@ -162,7 +162,7 @@ const Featured = () => {
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Free delivery</h3>
-                  <p>24/7 amazing services</p>
+                  <p className="icon-box-desc">24/7 amazing services</p>
                 </div>
               </div>
             </div>
@@ -226,7 +226,7 @@ const Featured = () => {
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Great daily deal</h3>
-                  <p>When you sign up</p>
+                  <p className="icon-box-desc">When you sign up</p>
                 </div>
               </div>
             </div>
@@ -326,7 +326,7 @@ const Featured = () => {
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Wide assortment</h3>
-                  <p>Mega Discounts</p>
+                  <p className="icon-box-desc">Mega Discounts</p>
                 </div>
               </div>
             </div>
@@ -397,7 +397,7 @@ const Featured = () => {
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Easy returns</h3>
-                  <p>Within 30 days</p>
+                  <p className="icon-box-desc">Within 30 days</p>
                 </div>
               </div>
             </div>
@@ -457,7 +457,7 @@ const Featured = () => {
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Safe delivery</h3>
-                  <p>Within 30 days</p>
+                  <p className="icon-box-desc">Within 30 days</p>
                 </div>
               </div>
             </div>

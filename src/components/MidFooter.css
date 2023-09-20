@@ -22,7 +22,7 @@
 
 }
 ol, ul {
-    list-style: none !important;
+    list-style: none ;
 }
 .contact-infor li:not(:last-child) {
     margin-bottom: 10px;

@@ -144,7 +144,7 @@ const NewArrival = () => {
     <div style={{background:'rgba(251, 248, 240, 0.74)'}}>
       <div className="container">
         <div className="row ">
-          <h1 className="text-start fs-1 mt-5 mb-5">New Arrivals</h1>
+          <h1 className="text-start fs-1 mt-3 mb-4">New Arrivals</h1>
         </div>
         <div className="row popular-row">
           {products.map((product) => (

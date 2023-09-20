@@ -7,11 +7,13 @@ import Featured from "../../components/Featured";
 import Header from "../../components/Header";
 import GalleryImg from "./../../images/product-detail.jpg";
 import "./Gallery.css";
+import MobileSidebar from "../../components/MobileSidebar";
 
 const Gallery = () => {
   return (
     <React.Fragment>
       <Header />
+      <MobileSidebar/>
       <div class="page-header breadcrumb-wrap">
         <div className="container">
           <div className="breadcrumb">
@@ -21,7 +23,7 @@ const Gallery = () => {
               </i>
               Home
             </Link>
-            <AiOutlineRight className="rightIcon" /> <span /> Pages <span />{" "}
+           
             <AiOutlineRight className="rightIcon" /> Gallery
           </div>
         </div>

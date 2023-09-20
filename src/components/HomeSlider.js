@@ -136,7 +136,7 @@ const HomeSlider = () => {
               <div className="banner-img style-3 animated animated">
                 <div className="banner-text" style={{ marginTop: "8rem" }}>
                   <p className="cutom-color mb-50 d-flex flex-column" style={{ fontSize: "36px" }}>
-                    <span>Delivered to</span><span className="text-brand ms-4">your home
+                    <span>Delivered to</span><span className="mt-3 ms-4">your home
                     </span>
                   </p>
                   <Link to='/' className="shop-now-hover btn btn">

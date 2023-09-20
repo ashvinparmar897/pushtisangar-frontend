@@ -80,7 +80,7 @@ const Deals_Of_the_day = () => {
             {dealsData.map((deal) => (
               <div key={deal.id} className="col-xl-3 col-lg-4 col-md-6">
                 <div
-                  className="product-cart-wrap deal-card style-2 wow animate__ animate__fadeInUp animated"
+                  className="product-cart-wrap deal-card style-2 wow animate__ animate__fadeInUp animated mb-4"
                   data-wow-delay={0}
                   style={{
                     visibility: "visible",

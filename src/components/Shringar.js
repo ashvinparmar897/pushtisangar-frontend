@@ -72,7 +72,7 @@ const Shringar = () => {
   return (
     <div>
       <div className="container mb-5">
-        <div className="mt-5 mb-5 text-start">
+        <div className="mt-4 mb-4 text-start">
           {" "}
           <h1 className="fs-1">Shringar Products</h1>
         </div>

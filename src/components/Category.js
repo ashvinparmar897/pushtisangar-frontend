@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import './FeatureCategory.css'
 import './Category.css'
 import VastraCat from '../images/VastraCatagorySmall.jpg'
@@ -6,6 +6,9 @@ import VastraCat2 from '../images/VastraCategory2Small.png'
 import VastraCat3 from '../images/ShangarSmallCategory.png'
 import VastraCat4 from '../images/ShringarSmallCategory.jpg'
 import { Link } from "react-router-dom";
+import ShowMoreCategory from "./ShowMoreCategory";
+import { useNavigate } from "react-router-dom/dist";
+
 
 const categories = [
   {
@@ -47,14 +50,14 @@ const categories = [
     itemCount: 29,
     color: "#fff ",
   },
-  {
-    name: "Mukhravind",
-    image: VastraCat,
-    itemCount: 29,
-    color: "#fff ",
+  // {
+  //   name: "Mukhravind",
+  //   image: VastraCat,
+  //   itemCount: 29,
+  //   color: "#fff ",
     
 
-  },
+  // },
   // {
   //   name: "Shringar",
   //   image: VastraCat4,
@@ -111,6 +114,12 @@ const CategoryCard = ({ name, image, itemCount,color, }) => (
 );
 
 const Category = ({background}) => {
+  const navigate = useNavigate();
+
+  const handlecategoryClick = () => {
+    // Use navigate to go to the cart page
+    navigate('/all-category');
+  };
   const inlineStyle = {
     padding: '20px',
     paddingTop:'1px',
@@ -120,7 +129,7 @@ const Category = ({background}) => {
   return (
     <div style={inlineStyle}>
       <div className="container">
-            <h1 className="fs-1 mt-5 mb-4 fw-bold text-start">Our Category</h1>
+            <h1 className="fs-1 mt-4 mb-4 fw-bold text-start">Our Category</h1>
         <div className="row">
           
           {categories.map((category, index) => (
@@ -133,7 +142,12 @@ const Category = ({background}) => {
          
             />
           ))}
+           {/* Show More Categories card */}
+           
+            <ShowMoreCategory onClick={ handlecategoryClick} />
+         
         </div>
+       
       </div>
     </div>
   );

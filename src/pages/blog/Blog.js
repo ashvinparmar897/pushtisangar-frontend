@@ -12,6 +12,7 @@ import Subscribe from '../../components/Subscribe';
 import Featured from '../../components/Featured';
 import MidFooter from '../../components/MidFooter';
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
+import MobileSidebar from '../../components/MobileSidebar';
 
 const Blog = () => {
   const blogPosts = [
@@ -94,6 +95,7 @@ const Blog = () => {
   return (
     <div>
         <Header/>
+        <MobileSidebar/>
         <div class="page-header breadcrumb-wrap">
         <div className="container">
           <div className="breadcrumb">
@@ -125,7 +127,7 @@ const Blog = () => {
                 <div className="row">
                   {blogPosts.map((post) => (
                     
-                          <article key={post.id} className="col-xl-3 col-lg-4 col-md-6 text-center hover-up mb-30 animated">
+                          <article key={post.id} className="col-xl-3 col-lg-4 col-md-6 text-center hovr-up  animated mb-2">
                       <div className="post-thumb">
                         <Link to='/blog-details'>
                           <img className="border-radius-15" src={post.image} alt="" />

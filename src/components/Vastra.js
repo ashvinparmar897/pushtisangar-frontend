@@ -79,13 +79,13 @@ const Vastra = () => {
   
   return (
     <div style={{background:'rgb(251 248 240 / 74%)'}}>
-      <div className="container">
+      <div className="container mb-4">
         <div className=" row text-start">
           {" "}
-          <h1 className="fs-1 mt-5 mb-5">Vastra Products</h1>
+          <h1 className="fs-1 mt-4 mb-4">Vastra Products</h1>
         </div>
         <div className="row ">
-          <div class="col-lg-3 d-none d-lg-flex mb-5">
+          <div class="col-lg-3 d-none d-lg-flex mb-4">
             <div class="banner-img style-2 vastra">
               <div class="banner-text d-none">
                 <h2 class="mb-100">Bring Top Vastra into Your Home</h2>
@@ -96,7 +96,7 @@ const Vastra = () => {
             </div>
           </div>
 
-          <div className="col-lg-9 col-md-12 mb-5">
+          <div className="col-lg-9 col-md-12 mb-4">
             <Slider {...settings}>
               <div>
                 <div>
