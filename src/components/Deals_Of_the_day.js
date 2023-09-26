@@ -94,27 +94,8 @@ const Deals_Of_the_day = () => {
                       </Link>
                     </div>
                   </div>
-                  <div className="product-content-wrap">
-                    {/* <div className="deals-countdown-wrap">
-                      <div className="deals-countdown" data-countdown={deal.countdownDate}>
-                        <span className="countdown-section">
-                          <span className="countdown-amount hover-up">566</span>
-                          <span className="countdown-period"> days </span>
-                        </span>
-                        <span className="countdown-section">
-                          <span className="countdown-amount hover-up">08</span>
-                          <span className="countdown-period"> hours </span>
-                        </span>
-                        <span className="countdown-section">
-                          <span className="countdown-amount hover-up">24</span>
-                          <span className="countdown-period"> mins </span>
-                        </span>
-                        <span className="countdown-section">
-                          <span className="countdown-amount hover-up">40</span>
-                          <span className="countdown-period"> sec </span>
-                        </span>
-                      </div>
-                    </div> */}
+                  <div className="product-content-wrap deal-product-content">
+                    
                     <div className="timer-container">
                       <div className="timer">
                         {days}
@@ -143,16 +124,16 @@ const Deals_Of_the_day = () => {
                       </div>
                     </div>
                     <div className="deals-content">
-                      <h2>
+                      <h2 className="deal-title">
                         <Link to="#">{deal.title}</Link>
                       </h2>
                       <div className="product-card-bottom">
                         <div className="product-price">
-                          <span>₹{deal.price}</span>
-                          <span className="old-price">₹{deal.oldPrice}</span>
+                          <span className="deal-new-price">₹{deal.price}</span>
+                          <span className="old-price deal-old-price">₹{deal.oldPrice}</span>
                         </div>
                         <div className="add-cart">
-                          <Link className="add" to="#">
+                          <Link className="add deal-cart" to="#">
                             <i className="fi-rs-shopping-cart mr-5" />
                             Add
                           </Link>

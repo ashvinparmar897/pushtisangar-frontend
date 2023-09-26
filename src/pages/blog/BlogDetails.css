@@ -254,7 +254,7 @@ blockquote p {
     margin-left: -5px;
 }
 
-.entry-meta.meta-0 span::before {
+/* .entry-meta.meta-0 span::before {
     content: "";
     width: 6px;
     height: 6px;
@@ -267,7 +267,7 @@ blockquote p {
     left: 8px;
     margin-top: -3px;
     border: 1px solid #3BB77E;
-}
+} */
 
 .entry-meta .author-avatar img {
     max-width: 30px;
@@ -352,7 +352,7 @@ h6.post-title {
 
 .loop-grid .entry-content-2 {
     padding: 20px 30px;
-    background: rgb(242, 252, 228);
+    background: rgb(252 252 252);
 }
 
 .loop-grid.loop-list article {
@@ -600,7 +600,7 @@ h6.post-title {
 .form-group input {
     background: #fff;
     border: 1px solid #ececec;
-    height: 64px;
+   
     box-shadow: none;
     padding-left: 20px;
     font-size: 16px;
@@ -631,7 +631,7 @@ label {
     padding: 0;
     vertical-align: middle;
 }
-.custome-checkbox .form-check-label::before {
+/* .custome-checkbox .form-check-label::before {
     content: "";
     border: 2px solid #ced4da;
     height: 17px;
@@ -640,8 +640,8 @@ label {
     display: inline-block;
     vertical-align: middle;
     border-radius: 2px;
-}
-.custome-checkbox input[type="checkbox"]:checked + .form-check-label::after {
+} */
+/* .custome-checkbox input[type="checkbox"]:checked + .form-check-label::after {
     opacity: 1;
 }
 .custome-checkbox input[type="checkbox"] + .form-check-label::after {
@@ -655,7 +655,7 @@ label {
     border-left: 2px solid #fff;
     border-bottom: 2px solid #fff;
     transform: translateY(-65%) rotate(-45deg);
-}
+} */
 .login_footer {
     margin-bottom: 20px;
     margin-top: 5px;

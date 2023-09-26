@@ -1,6 +1,6 @@
 import React from "react";
 import './MidFooter.css'
-import logo1 from '../images/logo1.png'
+import logo1 from '../images/footer-logo.png'
 import { MdLocationPin , MdCall , MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaFacebook,FaInstagram,FaPinterest,FaTwitter, FaYoutube } from 'react-icons/fa';
@@ -9,8 +9,8 @@ import { FaFacebook,FaInstagram,FaPinterest,FaTwitter, FaYoutube } from 'react-i
 
 const MidFooter = () => {
   return (
-    <div style={{background:'rgba(251, 248, 240, 0.74)'}}>
-      <section className="section-padding footer-mid ">
+    <div >
+      <section className="section-padding footer-mid bg-dark " >
         <div className="container pt-15 pb-20">
           <div className="row">
             <div className="col">
@@ -40,19 +40,19 @@ const MidFooter = () => {
                   </li>
                   <li className="text-start d-flex jusify-content-start">
                   <div className="mobile-social-icon ">
-        <h6 className="fs-5">Follow Us</h6>
-        <Link to="#" className="text-white"><FaFacebook/></Link>
-        <Link to="#" className="text-white"><FaTwitter/></Link>
-        <Link to="#" className="text-white"><FaInstagram/></Link>
-        <Link to="#" className="text-white"><FaPinterest/></Link>
-        <Link to="#" className="text-white"><FaYoutube/></Link>
+        <h6 className="fs-5 text-white">Follow Us</h6>
+        <Link to="#" className="text-dark"><FaFacebook/></Link>
+        <Link to="#" className="text-dark"><FaTwitter/></Link>
+        <Link to="#" className="text-dark"><FaInstagram/></Link>
+        <Link to="#" className="text-dark"><FaPinterest/></Link>
+        <Link to="#" className="text-dark"><FaYoutube/></Link>
       </div>
                   </li>
                 </ul>
               </div>
             </div>
             <div className="footer-link-widget col">
-              <h4 className="widget-title text-start">Company</h4>
+              <h4 className="widget-title footer-title text-start">Company</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
                   <a href="#">About Us</a>
@@ -72,7 +72,7 @@ const MidFooter = () => {
               </ul>
             </div>
             <div className="footer-link-widget col">
-              <h4 className="widget-title text-start">Popular</h4>
+              <h4 className="widget-title footer-title text-start">Popular</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
                   <a href="#">Zari  Chira Vastra</a>
@@ -93,7 +93,7 @@ const MidFooter = () => {
               </ul>
             </div>
             <div className="footer-link-widget col">
-              <h4 className="widget-title text-start">Costomer Service</h4>
+              <h4 className="widget-title footer-title text-start">Customer Service</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
                   <a href="#">Site Map</a>
@@ -108,7 +108,7 @@ const MidFooter = () => {
             </div>
            
             <div className="footer-link-widget col">
-              <h4 className="widget-title text-start">Account</h4>
+              <h4 className="widget-title footer-title text-start">Account</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
                   <a href="#">Sign In</a>
@@ -130,24 +130,25 @@ const MidFooter = () => {
         </div>
       </section>
       
-<hr/>
-     <div className="container " >
+<section style={{background: '#212529',padding: '20px 4px',borderTop:'1px solid #6d6969'}}>
+     <div className="container  " >
   <div className="row ">
    
     <div className="d-flex justify-content-between lh-base mb-3 footer-text align-items-center">
 
       <div>
-        <p className="font-sm mb-0 text-start d-block">Copyright © 2023,<strong className="text-brand"> Pushti Shangar</strong> , All rights reserved</p>
+        <p className="font-sm mb-0 text-white text-start d-block">Copyright © 2023,<strong className=" fw-bold"> Pushti Shangar</strong> , All rights reserved</p>
       </div>
       <div>
 
-      <p className="font-sm mb-0 text-start d-block"> <span> Designed & Developed by <strong className="text-brand"><Link to='https://www.barodaweb.com'  target="_blank">Barodaweb</Link></strong> -The E-Catalogue Designer</span></p>
+      <p className="font-sm mb-0 text-start d-block text-white"> <span> Designed & Developed by <strong className="  fw-bold"><Link to='https://www.barodaweb.com'  target="_blank" className="bw-link">Barodaweb</Link></strong> -The E-Catalogue Designer</span></p>
       </div>
     </div>
     
    
   </div>
 </div>
+  </section>
 
     </div>
   );

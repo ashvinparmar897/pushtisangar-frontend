@@ -4,8 +4,6 @@ import Header from "../../components/Header";
 import MidFooter from "../../components/MidFooter";
 import "./ProductList.css";
 
-
-
 import Subscribe from "../../components/Subscribe";
 
 import "../../components/SeasonalProducts.css";
@@ -19,9 +17,9 @@ import S6 from "../../images/s6.jpg";
 import S7 from "../../images/s7.jpg";
 import S8 from "../../images/s8.jpg";
 import S9 from "../../images/s9.jpg";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import MobileSidebar from "../../components/MobileSidebar";
-
+import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 const ProductList = () => {
   // Define state variables for filters
   const [showFilters, setShowFilters] = useState(false);
@@ -32,12 +30,9 @@ const ProductList = () => {
   const [selectedShopBy, setSelectedShopBy] = useState([]);
   const [price, setPrice] = useState(40);
 
-  
-
   const handleInput = (e) => {
     setPrice(e.target.value);
   };
-  
 
   // Toggle filter visibility
   const toggleFilters = () => {
@@ -241,18 +236,30 @@ const ProductList = () => {
 
     // Add more product objects here
   ];
-  const [selectedValue, setSelectedValue] = useState('50');
+  const [selectedValue, setSelectedValue] = useState("50");
 
   const handleChange = (e) => {
     setSelectedValue(e.target.value);
   };
 
-  
   return (
-    
     <div>
       <Header />
-      <MobileSidebar/>
+      <MobileSidebar />
+      <div class="page-header breadcrumb-wrap">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link className="homeLink" to="/" rel="nofollow">
+              <i className="fi-rs-home ">
+                <AiOutlineHome />
+              </i>
+              Home{" "}
+            </Link>
+            <AiOutlineRight className="rightIcon" /> <span /> ProductList{" "}
+            <span />
+          </div>
+        </div>
+      </div>
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -373,14 +380,17 @@ const ProductList = () => {
                       <h5 className="mb-30 fw-bold fs-5 text-start">
                         By Categories
                       </h5>
-                      <div className="categories-dropdown-wrap font-heading" style={{ paddingLeft: "12px" }}>
+                      <div
+                        className="categories-dropdown-wrap font-heading"
+                        style={{ paddingLeft: "12px" }}
+                      >
                         {[
                           "Vastra",
                           "Shringar",
                           "Sangar",
                           "Shri Mastak",
                           "Shri Karna",
-                          "Mukhravind"
+                          "Mukhravind",
                         ].map((category) => (
                           <div
                             key={category}
@@ -413,14 +423,15 @@ const ProductList = () => {
                   <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5">
                     <div className="card">
                       <h5 className="mb-30 fw-bold fs-5 text-start">Shop by</h5>
-                      <div className="sidebar-widget widget-tags" style={{ paddingLeft: "12px" }}>
+                      <div
+                        className="sidebar-widget widget-tags"
+                        style={{ paddingLeft: "12px" }}
+                      >
                         {[
                           "New Arrival",
                           "Online Exclusive",
                           "Tranding",
                           "New Offer",
-                          
-                          
                         ].map((shopItem) => (
                           <div
                             key={shopItem}
@@ -470,42 +481,36 @@ const ProductList = () => {
           
         </div> */}
         <div className="row">
-          <div class="shop-product-fillter">
+          <div class="shop-product-fillter ">
             <div class="totall-product">
               <p>
-                We found <strong class="text-brand">29</strong> items for you!
+               
               </p>
             </div>
-            <div className="d-flex">
-            <div className="d-flex  page-show">
-              <div>
-
-      <label>Page:</label>
+            <div className="d-flex ">
+              <div className="d-flex  page-show">
+                <div>
+                  <label>Page:</label>
+                </div>
+                <select value={selectedValue} onChange={handleChange}>
+                  <option value="10">50</option>
+                  <option value="20">100</option>
+                  <option value="30">150</option>
+                  <option value="40">200</option>
+                </select>
               </div>
-      <select value={selectedValue} onChange={handleChange}>
-        <option value="10">50</option>
-        <option value="20">100</option>
-        <option value="30">150</option>
-        <option value="40">200</option>
-       
-      </select>
-    </div>
-    <div className="d-flex  page-show">
-      <div>
-
-      <label>Sortby:</label>
-      </div>
-      <select value={selectedValue} onChange={handleChange}>
-        <option value="10">Relevance</option>
-        <option value="20">New In</option>
-        <option value="30">Price(lowest first)</option>
-        <option value="40">Price(heighest first)</option>
-       
-      </select>
-    </div>
-
+              <div className="d-flex  page-show">
+                <div>
+                  <label>Sortby:</label>
+                </div>
+                <select value={selectedValue} onChange={handleChange}>
+                  <option value="10">Relevance</option>
+                  <option value="20">New In</option>
+                  <option value="30">Price(lowest first)</option>
+                  <option value="40">Price(heighest first)</option>
+                </select>
+              </div>
             </div>
-           
           </div>
           {products.map((product) => (
             <div className=" col-lg-3 col-md-4 col-sm-6 mb-4" key={product.id}>
@@ -525,28 +530,8 @@ const ProductList = () => {
                       />
                     </Link>
                   </div>
-                  {/* <div className="product-action-1">
-                    <Link
-                      aria-label="Quick view"
-                      className="action-btn small hover-up"
-                      data-bs-toggle="modal"
-                      data-bs-target="#quickViewModal"
-                      tabIndex={0}
-                    >
-                      <i className="fi-rs-eye bi bi-eye-fill" />
-                    </Link>
-                    <Link
-                      aria-label="Add To Wishlist"
-                      className="action-btn small hover-up"
-                      to="#"
-                      tabIndex={0}
-                    >
-                      <i className="fi-rs-heart bi bi-heart" />
-                    </Link>
-                  </div> */}
-                  {/* <div className="product-badges product-badges-position product-badges-mrg">
-                    <span className="best">Best sale</span>
-                  </div> */}
+                 
+                 
                 </div>
                 <div class="product-content-wrap">
                   <div class="product-category">
@@ -564,7 +549,7 @@ const ProductList = () => {
                       </span>
                     </div>
                     <div class="add-cart popular-card-cart">
-                      <Link class="add" to="#">
+                      <Link class="add add-cart-btn" to="#">
                         <i class="fi-rs-shopping-cart mr-5 bi bi-cart me-2"></i>
                         Add{" "}
                       </Link>

@@ -81,7 +81,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     width: 100%;
 }
 .header-style-1 .search-style-2 form {
-    border: 2px solid #93C572 ;
+    border: 2px solid #dfaaaa ;
     border-radius: 4px;
     max-width: 700px;
     background-color: #fff;
@@ -304,7 +304,7 @@ b {
     padding: 0 10px;
 }
 .header-action-2 .header-action-icon-2 > a {
-    font-size: 30px;
+    font-size: 25px;
     color: #333;
     line-height: 1;
     display: inline-block;
@@ -318,7 +318,7 @@ b {
     position: absolute;
     right: -11px;
     top: -5px;
-    color: #ffffff;
+    color: #434343;
     height: 20px;
     width: 20px;
     border-radius: 100%;
@@ -328,7 +328,7 @@ b {
     line-height: 20px;
 }
 .header-action-2 .header-action-icon-2 > a span.pro-count.blue {
-    background-color: #93C572 ;
+    background-color: #dfaaaa ;
 }
 .header-action-2 .header-action-icon-2 > a span {
     font-size: 14px;
@@ -396,7 +396,7 @@ h4 {
     font-size: 24px;
 }
 .cart-dropdown-wrap ul li .shopping-cart-title h4 a {
-    color: #81ca84;
+    color: #dfaaaa;
 }
 .cart-dropdown-wrap ul li .shopping-cart-delete {
     display: -webkit-box;
@@ -450,19 +450,20 @@ i[class^="fi-rs-"], span[class^="fi-rs-"] {
 }
 .cart-dropdown-wrap .shopping-cart-footer .shopping-cart-button a.outline {
     background-color: transparent;
-    border: 2px solid #93c572;
-    color: #93c572;
+    border: 2px solid #dfaaaa;
+    color: #dfaaaa;
 }
 .cart-dropdown-wrap .shopping-cart-footer .shopping-cart-button a {
     display: inline-block;
     font-size: 14px;
-    color: #ffffff;
+    color: #1d1d1d;
     border-radius: 4px;
     line-height: 1;
     padding: 10px 20px;
-    background-color: #93c572;
+    background-color: #dfaaaa;
     font-family: "Quicksand", sans-serif;
-    border: 2px solid #93c572;
+    border: 2px solid #dfaaaa;
+    font-weight: 800;
 }
 .header-action-2 .header-action-icon-2:last-child {
     padding: 0 0px 0 8px;
@@ -547,9 +548,9 @@ option {
     font-weight: 700;
 }
 .header-style-1 .main-categori-wrap > a {
-    color: #fff;
+    color: #434343;
     line-height: 70px;
-    background: #93C572 ;
+    background: #dfaaaa;
     padding: 0 30px;
 }
 .header-style-1 .main-categori-wrap > a.categories-button-active {
@@ -563,9 +564,7 @@ option {
     background-color: #e85151 !important;
 } */
 
-.header-style-1 .main-categori-wrap > a span {
-    color: white !important;
-}
+
 span.fi-rs-apps {
     font-size: 16px;
 }
@@ -693,7 +692,7 @@ span.fi-rs-apps {
     position: relative;
 }
 .main-menu > nav > ul > li > a:hover {
-    color: #93C572 ;
+    color: #dfaaaa ;
 }
 .main-menu > nav > ul > li > a {
     display: inline-block;
@@ -756,7 +755,7 @@ span.fi-rs-apps {
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 }
 .main-menu > nav > ul > li ul.mega-menu li.sub-mega-menu-width-22 {
-    width: 22%;
+    width: 13%;
 }
 
 .main-menu > nav > ul > li ul.mega-menu li a.menu-title {
@@ -764,6 +763,7 @@ span.fi-rs-apps {
     font-weight: 700;
     display: block;
     text-align: start;
+    min-height: 38px;
 }
 .main-menu > nav > ul > li ul.mega-menu li ul {
     margin-top: 28px;
@@ -839,7 +839,7 @@ span.fi-rs-apps {
     color: #ffffff;
     border-radius: 26px;
     padding: 12px 22px 14px;
-    background-color: #93c572;
+    background-color: #dfaaaa;
     position: relative;
     bottom: 10px;
 }
@@ -905,7 +905,7 @@ span.fi-rs-apps {
     margin-right: 12px;
 }
 .header-style-1 .hotline p {
-    color: #93C572  !important;
+    color: #dfaaaa  !important;
 }
 .hotline p {
     color: #e85151;
@@ -929,17 +929,17 @@ p:last-child {
 
 
 .menu-title:hover{
-    color: #93C572 ;
+    color: #dfaaaa ;
 }
 
 .main-menu > nav > ul > li ul.mega-menu li ul li a:hover{
-    color: #93C572 ;
+    color: #dfaaaa ;
 }
 .main-menu > nav > ul > li > a:hover{
-    color: #93C572 ;
+    color: #dfaaaa ;
 }
 .main-menu > nav > ul > li ul.sub-menu li a:hover{
-    color: #93C572 ;
+    color: #dfaaaa ;
 }
 
  .more_categories span.bi.bi-plus {
@@ -1044,4 +1044,8 @@ input:focus-visible {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
+}
+
+.login-btn{
+    color: #fff !important;
 }

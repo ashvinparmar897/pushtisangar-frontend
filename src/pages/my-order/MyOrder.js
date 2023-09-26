@@ -97,7 +97,7 @@ const MyOrder = () => {
                     <tbody>
                       <tr>
                         <td className="product-name">
-                          JFO34210651
+                          PSO34210651
                         </td>
                         <td className="product-name">
                           10/9/2020 12:21:37 PM
@@ -116,7 +116,7 @@ const MyOrder = () => {
                       </tr>
                       <tr>
                         <td className="product-name">
-                          JFO34210651
+                          PSO34210651
                         </td>
                         <td className="product-name">
                           10/9/2020 12:21:37 PM
@@ -135,7 +135,7 @@ const MyOrder = () => {
                       </tr>
                       <tr>
                         <td className="product-name">
-                          JFO34210651
+                          PSO34210651
                         </td>
                         <td className="product-name">
                           10/9/2020 12:21:37 PM

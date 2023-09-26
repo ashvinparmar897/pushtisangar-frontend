@@ -241,7 +241,7 @@ const ProductDetails = () => {
   <div className="row">
     <div className="col-xl-10 col-lg-12 m-auto">
       <div className="product-detail accordion-detail">
-        <div className="row mb-50 mt-30">
+        <div className="row mb-3 mt-30">
           <div className="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
             
           <div className='detail-gallery'>
@@ -633,7 +633,7 @@ Experience fashion that transcends earthly confines and reaches new heights of e
     </div>
   </div>
 </div>
-<div className="container">
+<div className="container mb-4">
         <div className="row popular-row">
           <h1 className="text-start fs-1 mt-4 mb-4">Related Products</h1>
         </div>
@@ -700,7 +700,7 @@ Experience fashion that transcends earthly confines and reaches new heights of e
                       <span class="old-price">₹{product.oldPrice.toFixed(2)}</span>
                     </div>
                     <div class="add-cart popular-card-cart">
-                      <Link class="add" to="#">
+                      <Link class="add add-cart-btn" to="#">
                         <i class="fi-rs-shopping-cart mr-5 bi bi-cart me-2"></i>Add{" "}
                       </Link>
                     </div>

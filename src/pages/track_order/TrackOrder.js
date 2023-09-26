@@ -110,7 +110,7 @@ const TrackOrder = () => {
                           <span className="text-success">Processing</span>
                         </td>
                         <td className="product-name">
-                          CCworkingKey: 32D3069EE972D109D242D706D7270C42 CCmerchant_id: 101170 CCstrAccessCode: AVZK65DF64AU30KZUA Txnid: JFT34210651 currency: INR PromoCode: Amount: 379.00 Product Info: JagdishFarshan Myhpayid: 109983836437 Status: Success merchant_param1_txnID: 34210651 merchant_param2_DeliveryCharge: 59.00 merchant_param3_Amount: 379.00 merchant_param4_OrderNo: JFO34210651 merchant_param5_OfferChage: 0.00 Payment By: CCAvenue Bank Ref No: 202064886688192 additionalCharges: No Additional Charges PG_TYPE: CCAvenue Error:
+                          CCworkingKey: 32D3069EE972D109D242D706D7270C42 CCmerchant_id: 101170 CCstrAccessCode: AVZK65DF64AU30KZUA Txnid: PST34210651 currency: INR PromoCode: Amount: 379.00 Product Info: PushtiShangar Myhpayid: 109983836437 Status: Success merchant_param1_txnID: 34210651 merchant_param2_DeliveryCharge: 59.00 merchant_param3_Amount: 379.00 merchant_param4_OrderNo: PSO34210651 merchant_param5_OfferChage: 0.00 Payment By: CCAvenue Bank Ref No: 202064886688192 additionalCharges: No Additional Charges PG_TYPE: CCAvenue Error:
                         </td>
                       </tr>
                       <tr>

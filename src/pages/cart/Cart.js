@@ -46,8 +46,8 @@ const Cart = () => {
     <>
       <Header />
       <MobileSidebar />
-      <div className="page-title-area item-bg-1"></div>
-      <section className="pt-4 vmobile-tag-kl">
+     
+      <section className="pt-4 ">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
@@ -153,13 +153,13 @@ const Cart = () => {
               <div className="cart-buttons">
                 <div className="row align-items-center">
                   <div className="col-lg-7 col-sm-7 col-md-7">
-                    <Link to="#" className="default-btn">
+                    <Link to="#" className="default-btn clear-cart-btn">
                       Clear Shopping Cart
                       <span />
                     </Link>
                   </div>
                   <div className="col-lg-5 col-sm-5 col-md-5 text-right">
-                    <Link to="#" className="default-btn">
+                    <Link to="#" className="default-btn update-cart-btn">
                       Update Shopping Cart
                       <span style={{ top: "17.8625px", left: "171.375px" }} />
                     </Link>

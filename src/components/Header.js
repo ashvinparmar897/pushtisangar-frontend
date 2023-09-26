@@ -326,7 +326,7 @@ const Header = () => {
                                     <div className="form-group">
                                       <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control login-input"
                                         placeholder="Email Address *"
                                         value={email}
                                         onChange={handleEmailChange}
@@ -343,7 +343,7 @@ const Header = () => {
                                     <div className="form-group">
                                       <input
                                         type="password"
-                                        className="form-control"
+                                        className="form-control login-input"
                                         placeholder="Password *"
                                         value={password}
                                         onChange={handlePasswordChange}
@@ -731,7 +731,7 @@ const Header = () => {
                           </li>
 
                           <li>
-                            <Link to="#">
+                            <Link to="/my-wishlist">
                               <i className="fi fi-rs-heart mr-10" />
                               My Wishlist
                             </Link>
@@ -773,11 +773,11 @@ const Header = () => {
                   to="#"
                   onClick={toggleDropdown}
                 >
-                  <span className="fi-rs-apps bi bi-grid me-1 text-white" />{" "}
-                  <span className="et text-white" onClick={toggleDropdown}>
+                  <span className="fi-rs-apps bi bi-grid me-1 " />{" "}
+                  <span className="et " onClick={toggleDropdown}>
                     Browse All Categories
                   </span>
-                  <i className="fi-rs-angle-down bi bi-chevron-down text-white" />
+                  <i className="fi-rs-angle-down bi bi-chevron-down " />
                 </Link>
                 {isOpen && (
                   <div className="categories-dropdown-wrap categories-dropdown-active-large font-heading">
@@ -961,65 +961,111 @@ const Header = () => {
                         <ul className="mega-menu">
                           <li className="sub-mega-menu sub-mega-menu-width-22">
                             <Link className="menu-title" to="#">
-                              Shri Mastak
+                              Silver Vessels
                             </Link>
                             <ul>
                               <li>
-                                <Link to="#">Shishful</Link>
+                                <Link to="#">Jhariji</Link>
                               </li>
                               <li>
-                                <Link to="#">Sirpech</Link>
+                                <Link to="#">Katori (Bowl)</Link>
                               </li>
                               <li>
-                                <Link to="#">Mukut</Link>
+                                <Link to="#">Dabra</Link>
                               </li>
                               <li>
-                                <Link to="#">Sehro</Link>
+                                <Link to="#">Thali (Plate)</Link>
                               </li>
                               <li>
-                                <Link>Tipara</Link>
+                                <Link>Spoon</Link>
                               </li>
                               <li>
-                                <Link>Kirit</Link>
+                                <Link>Mohra Patti</Link>
+                              </li>
+                              <li>
+                                <Link>Khilona</Link>
+                              </li>
+                              <li>
+                                <Link>Palna</Link>
+                              </li>
+                              <li>
+                                <Link>Hindola</Link>
                               </li>
                             </ul>
                           </li>
                           <li className="sub-mega-menu sub-mega-menu-width-22">
                             <Link className="menu-title" to="#">
-                              Shri Karna
+                            Sugandhi (Attar)
                             </Link>
                             <ul>
                               <li>
-                                <Link>Karnaful</Link>
+                                <Link>All Year Round</Link>
                               </li>
                               <li>
-                                <Link>Mayurakrit Kundal</Link>
+                                <Link>Varshakal (Monsoon)</Link>
                               </li>
                               <li>
-                                <Link>Matsyakrit Kundal</Link>
+                                <Link>Sheetkal (Winter)</Link>
                               </li>
                               <li>
-                                <Link>Makarakrit Kundal</Link>
+                                <Link>Ushnakal (Summer)</Link>
+                              </li>
+                              <li>
+                                <Link>Vasant (Spring)</Link>
                               </li>
                             </ul>
                           </li>
                           <li className="sub-mega-menu sub-mega-menu-width-22">
                             <Link className="menu-title" to="#">
-                              Mukhravind
+                            Seasonal Products
                             </Link>
                             <ul>
                               <li>
-                                <Link>Netra</Link>
+                                <Link>Varshakal (Monsoon)</Link>
                               </li>
                               <li>
-                                <Link>Chibuk</Link>
+                                <Link>Sheetkal (Winter)</Link>
                               </li>
                               <li>
-                                <Link>Nakveshvar</Link>
+                                <Link>Vasant (Spring)</Link>
                               </li>
                               <li>
-                                <Link>Tilak</Link>
+                                <Link>Ushnakal (Summer) </Link>
                               </li>
+                            </ul>
+                          </li>
+                          <li className="sub-mega-menu sub-mega-menu-width-22">
+                            <Link className="menu-title" to="#">
+                            Pichwai and Wall Art
+                            </Link>
+                            <ul>
+                              <li>
+                                <Link>Digital Printed Pichwai</Link>
+                              </li>
+                              <li>
+                                <Link>Hand Painted Pichwai</Link>
+                              </li>
+                              <li>
+                                <Link>Wall Plates</Link>
+                              </li>
+                              <li>
+                                <Link>Photo Frames</Link>
+                              </li>
+                            </ul>
+                          </li>
+                          <li className="sub-mega-menu sub-mega-menu-width-22">
+                            <Link className="menu-title" to="#">
+                            Fibre Items
+                            </Link>
+                            <ul>
+                              <li>
+                                <Link>Gop-Gopi</Link>
+                              </li>
+                              <li>
+                                <Link>Animal Swarups</Link>
+                              </li>
+                              
+                             
                             </ul>
                           </li>
                           <li className="sub-mega-menu sub-mega-menu-width-34">
@@ -1093,24 +1139,12 @@ const Header = () => {
             </div>
             <div className="hotline d-none d-lg-flex">
               <div className="me-3 mt-1">
-                {/* {" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
-                  classname="bi bi-envelope "
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
-                </svg> */}
-                <button className="btn" onClick={handleLoginClick}>
+              
+                <button className="btn " onClick={handleLoginClick}>
                   Login/SignUp
                 </button>
               </div>
-              {/* <p>
-                Email-Us<span> pushtishangar@gmail.com</span>
-              </p> */}
+              
             </div>
             <div className="header-action-icon-2 d-block d-lg-none">
               <div className="burger-icon burger-icon-white">

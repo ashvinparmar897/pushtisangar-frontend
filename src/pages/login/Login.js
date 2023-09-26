@@ -53,14 +53,14 @@ const Login = () => {
                               <h5>Sign in to PushtiShangar</h5>
                               <div className="billing-details mt-4">
                                 <div className="form-group">
-                                  <Field type="text" name="email" className="form-control" placeholder="Email Address *" />
+                                  <Field type="text" name="email" className="form-control login-input" placeholder="Email Address *" />
                                   <ErrorMessage name="email" component="div" className="text-danger" />
                                   <span>
                                     <i className="bx bx-user-circle bi bi-person-circle" />
                                   </span>
                                 </div>
                                 <div className="form-group">
-                                  <Field type="password" name="password" className="form-control" placeholder="Password *" />
+                                  <Field type="password" name="password" className="form-control login-input" placeholder="Password *" />
                                   <ErrorMessage name="password" component="div" className="text-danger" />
                                   <span>
                                     <i className="bx bxs-lock bi bi-lock-fill" />

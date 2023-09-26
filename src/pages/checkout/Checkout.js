@@ -23,7 +23,7 @@ const Checkout = () => {
     <div>
       <Header />
       <MobileSidebar/>
-      <section class="pt-4 vmobile-tag-kl">
+      <section class="pt-4 ">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
@@ -40,7 +40,7 @@ const Checkout = () => {
                 <i className="flaticon-share bi bi-reply" />
                 <span >
                   Returning customer?
-                  <Link to="#">Click here to login</Link>
+                  <Link to="/login">Click here to login</Link>
                 </span>
               </div>
             </div>

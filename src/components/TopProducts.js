@@ -12,6 +12,7 @@ import S7 from "../images/s7.jpg";
 import S8 from "../images/s8.jpg";
 import S9 from "../images/s9.jpg";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
 
 const TopProducts = () => {
   const products = [
@@ -137,6 +138,60 @@ const TopProducts = () => {
 
     // Add more product objects here
   ];
+  const NextArrow = ({ onClick }) => (
+    <div className="custom-arrow  position-absolute top-0 end-0 popular-next-arrow" onClick={onClick}>
+  <button>   <i className="bi bi-arrow-right"></i></button>
+    </div>
+  );
+  
+  const PrevArrow = ({ onClick }) => (
+    <div className="custom-arrow  position-absolute top-0 left-0 popular-prev-arrow  " onClick={onClick}>
+      <button><i className="bi bi-arrow-left "></i></button>
+    </div>
+  );
+var settings = {
+dots: false,
+infinite: true,
+speed: 500,
+slidesToShow: 10,
+slidesToScroll: 1,
+nextArrow: <NextArrow />,
+prevArrow: <PrevArrow />,
+ responsive: [
+    {
+      breakpoint: 1600,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 1,
+       
+        
+      }
+    },
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+       
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+  ]
+};
 
   return (
     <div style={{background:'rgba(251, 248, 240, 0.74)'}}>
@@ -145,8 +200,11 @@ const TopProducts = () => {
           <h1 className="text-start fs-1 mt-4 mb-4">Popular Products</h1>
         </div>
         <div className="row">
+          <Slider {...settings}>
+            
+       
           {products.map((product) => (
-            <div className=" col-lg-3 col-md-4 col-sm-6 mb-4" key={product.id}>
+            <div className=" col-lg-3 col-md-4 col-sm-6 mb-4 popular-card" key={product.id}>
              <Link to='/product-details'> <div
                 className="product-cart-wrap popular-card"
                 tabIndex={0}
@@ -154,17 +212,13 @@ const TopProducts = () => {
               >
                 <div className="product-img-action-wrap">
                   <div className="product-img product-img-zoom">
-                    <Link to="#" tabIndex={0}>
+                    <Link to="/product-details" tabIndex={0}>
                       <img
                         className="default-img"
                         src={product.imageUrl}
                         alt=""
                       />
-                      <img
-                        className="hover-img"
-                        src={product.hoverImageUrl}
-                        alt=""
-                      />
+                     
                     </Link>
                   </div>
                   
@@ -173,15 +227,15 @@ const TopProducts = () => {
                   <div class="product-category">
                     <Link to="#">{product.category}</Link>
                   </div>
-                  <h2>
-                    <Link to="#">
+                  <h2 className="new-product-name">
+                    <Link to="/product-details">
                       {product.name}
                     </Link>
                   </h2>
                  
                   
-                  <div class="product-card-bottom">
-                    <div class="product-price popular-card-price">
+                  <div class="product-card-bottom new-arrival-card-bottom">
+                    <div class="product-price popular-card-price new-arrival-price">
                       <span>₹{product.price.toFixed(2)}</span>
                       <span class="old-price">₹{product.oldPrice.toFixed(2)}</span>
                     </div>
@@ -195,6 +249,7 @@ const TopProducts = () => {
               </div></Link>
             </div>
           ))}
+             </Slider>
         </div>
       </div>
     </div>

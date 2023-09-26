@@ -41,7 +41,7 @@ const Signup = () => {
   return (
     <div>
       {isModalOpen && (
-        <div className="modal fade show" id="LoginRegister" style={{ display: 'block', paddingRight: 17 }} aria-modal="true">
+        <div className="modal fade show" id="LoginRegister" style={{ display: 'block' }} aria-modal="true">
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-body">

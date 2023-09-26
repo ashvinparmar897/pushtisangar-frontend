@@ -23,6 +23,7 @@ const ContactUs = () => {
       .max(12, "Phone number must be at least 12 characters"),
     name: Yup.string().required("Please enter your name !!!"),
     subject: Yup.string().required("Please enter your subject !!!"),
+    message: Yup.string().required("Please enter your message !!!"),
   });
   return (
     <React.Fragment>
@@ -44,11 +45,11 @@ const ContactUs = () => {
       </div>
       <Container>
         <div className="row">
-          <div className="col-xl-8 col-lg-8">
+          <div className="col-xl-12 col-lg-12">
             <div className="contact-from-area ">
               <h5 className="contactFormTitle">Contact form</h5>
               <h2 className="contactSubTitle">Drop Us a Line</h2>
-              <p className="text-muted mb-30 font-sm">
+              <p className="text-muted  font-sm">
                 Your email address will not be published. Required fields are
                 marked *
               </p>
@@ -87,7 +88,7 @@ const ContactUs = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.name}
-                                placeholder="Enter your name"
+                                placeholder="Enter your name*"
                                 className="inputLable"
                                 id="name"
                               />
@@ -105,7 +106,7 @@ const ContactUs = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.email}
-                                placeholder="Enter email id / username"
+                                placeholder="Enter email id / username*"
                                 className="inputLable"
                                 id="email"
                               />
@@ -123,7 +124,7 @@ const ContactUs = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.phoneNumber}
-                                placeholder="Your Phone"
+                                placeholder="Your Phone*"
                                 className="inputLable"
                                 id="phoneNumber"
                               />
@@ -143,7 +144,7 @@ const ContactUs = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.subject}
-                                placeholder="Subject"
+                                placeholder="Subject*"
                                 className="inputLable"
                                 id="subject"
                               />
@@ -160,12 +161,17 @@ const ContactUs = () => {
                               <textarea
                                 type="text"
                                 name="message"
-                                placeholder="Message"
+                                placeholder="Message*"
                                 defaultValue={""}
                                 className="textareaContactus"
                                 rows={4}
                                 cols={40}
                               />
+                               <p className="error">
+                                {errors.message &&
+                                  touched.message &&
+                                  errors.message}
+                              </p>
                             </div>
                           </Col>
                         </Row>
@@ -187,7 +193,7 @@ const ContactUs = () => {
 
       <Subscribe />
       <Featured />
-      <Container>
+      {/* <Container>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.149542991973!2d73.16583817442529!3d22.31018344253875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcf3fc43dfdeb%3A0x86ed8bbfb2c6c9ea!2sBarodaweb!5e0!3m2!1sen!2sin!4v1694838393547!5m2!1sen!2sin"
           width="100%"
@@ -197,7 +203,7 @@ const ContactUs = () => {
           referrerpolicy="no-referrer-when-downgrade"
           style={{ margin: "40px 0px" }}
         ></iframe>
-      </Container>
+      </Container> */}
       <MidFooter />
     </React.Fragment>
   );

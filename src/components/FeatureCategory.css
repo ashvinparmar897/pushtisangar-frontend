@@ -34,7 +34,7 @@
   }
   .card:hover{
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid #93C572 ;
+    border: 1px solid #dfaaaa ;
     transition: .2s;
   }
 .next-arrow button{
@@ -84,14 +84,14 @@
     border: none;
 }
 .prev-arrow button:hover{
-    background-color: #93c572;
+    background-color: #dfaaaa;
     color: #712005;
-    border-color: #93c572;
+    border-color: #dfaaaa;
 }
 .next-arrow button:hover{
-    background-color:#93c572;
+    background-color:#dfaaaa;
     color: #712005;
-    border-color: #93c572;
+    border-color: #dfaaaa;
 }
 .card-body {
     

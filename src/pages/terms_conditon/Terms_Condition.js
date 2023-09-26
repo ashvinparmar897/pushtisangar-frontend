@@ -38,10 +38,10 @@ const Terms_Condition = () => {
                 <div className="col-lg-9">
                   <div className="single-page pr-30 mb-lg-0 mb-sm-5">
                     <div className="single-header style-2">
-                      <h2>Terms of Service</h2>
+                      <h2>Terms & Conditions</h2>
                       <div className="entry-meta meta-1 meta-3 font-xs mt-15 mb-15">
                         <span className="post-by">
-                          By <a href="#">Jonh</a>
+                          By <a href="#">Manish</a>
                         </span>
                         <span className="post-on has-dot">9 April 2020</span>
                         <span className="time-reading has-dot">
@@ -53,8 +53,8 @@ const Terms_Condition = () => {
                     <div className="single-content mb-50">
                       <p>
                         Please read these Terms of Service (“Terms”, “Terms of
-                        Service”) carefully before using the https://Evara.com
-                        website (the “Service”) operated by Evara (“us”, “we”,
+                        Service”) carefully before using the https:pustisangar.com
+                        website (the “Service”) operated by Barodaweb (“us”, “we”,
                         or “our”).
                       </p>
                       <p>
@@ -181,7 +181,7 @@ const Terms_Condition = () => {
                               <img src={logo} alt />
                               Vastra
                             </Link>
-                            <span className="count">0</span>
+                            
                           </li>
                           <li>
                             <Link to="#">
@@ -189,7 +189,7 @@ const Terms_Condition = () => {
                               <img src={logo} alt />
                               Shringar
                             </Link>
-                            <span className="count">0</span>
+                            
                           </li>
                           <li>
                             <Link to="#">
@@ -197,7 +197,7 @@ const Terms_Condition = () => {
                               <img src={logo} alt />
                               Karnaful{" "}
                             </Link>
-                            <span className="count">0</span>
+                            
                           </li>
                           <li>
                             <Link to="#">
@@ -205,7 +205,7 @@ const Terms_Condition = () => {
                               <img src={logo} alt />
                               Mukhravind
                             </Link>
-                            <span className="count">0</span>
+                            
                           </li>
                           <li>
                             <Link to="#">
@@ -213,7 +213,7 @@ const Terms_Condition = () => {
                               <img src={logo} alt />
                               Netra
                             </Link>
-                            <span className="count">0</span>
+                            
                           </li>
                         </ul>
                       </div>

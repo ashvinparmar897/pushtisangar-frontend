@@ -26,6 +26,7 @@ import Gallery from './pages/Gallery/Gallery.jsx';
 import Terms_Condition from './pages/terms_conditon/Terms_Condition';
 import AllCategory from './pages/all_category/AllCategory';
 import GalleryDetails from './pages/Gallery/GaleryDetails.jsx';
+import Wishlist from './pages/wishlist/Wishlist';
 
 function App() {
   
@@ -62,6 +63,7 @@ function App() {
       <Route path='/terms-condition' element={<Terms_Condition/>} />
       <Route path='/all-category' element={<AllCategory/>} />
       <Route path='/gallery-details' element={<GalleryDetails/>} />
+      <Route path='/my-wishlist' element={<Wishlist/>} />
           
 
       

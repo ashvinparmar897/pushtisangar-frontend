@@ -107,4 +107,9 @@ export const SidebarData = [
     path: '/contact-us',
     icon: <IoIcons.IoMdHelpCircle />
   },
+  {
+    title: 'Account',
+    path: '/my-account',
+    icon: <IoIcons.IoMdHelpCircle />
+  },
 ];

@@ -46,7 +46,7 @@
     box-shadow: none;
     border: 0;
     border: 1px solid #ced4da;
-    padding-left: 40px !important;
+ 
     background-color: #f4f8f7;
 }
 #LoginRegister .billing-details .form-group span {
@@ -99,12 +99,15 @@
     box-shadow: none !important;
     width: 180px!important;
     max-width: 230px !important;
-    font-size: 13px !important;
+    font-size: 13px ;
     float: none !important;
     margin-top: 20px;
     color: #fff !important;
-    font-size: 13px !important;
+  
 }
 .modal-open #LoginRegister.modal {
     background-color: rgba(0, 0, 0, 0.71);
+}
+.login-input{
+    padding-left: 40px !important;
 }

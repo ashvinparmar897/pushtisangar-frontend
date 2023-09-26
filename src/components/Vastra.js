@@ -115,36 +115,10 @@ const Vastra = () => {
                             src={Vastra1}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg"
-                            alt
-                          />
+                       
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                    
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -152,7 +126,7 @@ const Vastra = () => {
                           Vastra
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to="#" tabIndex={0}>
                           Vastra Zari{" "}
                         </Link>
@@ -192,36 +166,10 @@ const Vastra = () => {
                             src={Vastra2}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-4-2.jpg"
-                            alt
-                          />
+                        
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                      
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -229,7 +177,7 @@ const Vastra = () => {
                           Vastra
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to="#" tabIndex={0}>
                         Kinkhab (Zari) Red _ 150{" "}
                         </Link>
@@ -269,36 +217,10 @@ const Vastra = () => {
                             src={Vastra3}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-1-2.jpg"
-                            alt
-                          />
+                         
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                    
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -306,7 +228,7 @@ const Vastra = () => {
                           Vastra
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to="#" tabIndex={0}>
                         Kinkhab (zari) Polka Dots_ Orange _ 150{" "}
                         </Link>
@@ -346,36 +268,10 @@ const Vastra = () => {
                             src={Vastra4}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
-                          />
+                       
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                    
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -383,7 +279,7 @@ const Vastra = () => {
                           Vastra
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to="#" tabIndex={0}>
                         Kinkhab (zari) Polka Dots_ Pink _ 150{" "}
                         </Link>
@@ -423,36 +319,10 @@ const Vastra = () => {
                             src={Vastra5}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
-                          />
+                       
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                     
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -460,7 +330,7 @@ const Vastra = () => {
                           Vastra
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to="#" tabIndex={0}>
                         Kinkhab (zari) Polka Dots_ Green _ 150{" "}
                         </Link>
@@ -500,36 +370,10 @@ const Vastra = () => {
                             src={Vastra1}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
-                          />
+                         
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                      
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -537,7 +381,7 @@ const Vastra = () => {
                           Vastra
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to="#" tabIndex={0}>
                         Kinkhab (zari)Blue _ 150{" "}
                         </Link>
@@ -577,36 +421,10 @@ const Vastra = () => {
                             src={Vastra2}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
-                          />
+                         
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                   
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -614,7 +432,7 @@ const Vastra = () => {
                           Vastra
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to="#" tabIndex={0}>
                         Kinkhab (zari) Polka Dots _ Pink _ 150{" "}
                         </Link>
@@ -655,36 +473,10 @@ const Vastra = () => {
                             src={Vastra3}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-1-2.jpg"
-                            alt
-                          />
+                        
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                      
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -692,7 +484,7 @@ const Vastra = () => {
                           Vastra
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to="#" tabIndex={0}>
                           Foster Farms Takeout Crispy Classic{" "}
                         </Link>

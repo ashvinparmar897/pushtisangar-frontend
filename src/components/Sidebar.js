@@ -5,8 +5,7 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
-import { IconContext } from "react-icons/lib";
-import logo from "../images/logo1.png";
+import smallsangar from "../images/smallsanagr.jpg";
 import { IoIosSearch } from "react-icons/io";
 import {
   FaFacebook,
@@ -14,8 +13,8 @@ import {
   FaInstagram,
   FaPinterest,
   FaYoutube,
-} from "react-icons/fa"; // Adjust the import path according to your icon library
-import smallsangar from "../images/smallsanagr.jpg";
+} from "react-icons/fa";
+import logo from "../images/logo1.png";
 
 const Nav = styled.div`
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.09);
@@ -38,6 +37,7 @@ const NavIcon = styled(Link)`
   position: relative;
   left: -17px;
 `;
+
 const Logo = styled.img`
   width: 150px;
   height: auto;
@@ -54,14 +54,26 @@ const Logo1 = styled.img`
 const CartButton = styled(Link)`
   font-size: 1.5rem;
   margin-left: 271px;
-
   color: black !important;
   text-decoration: none;
   display: flex;
   align-items: center;
+  position: relative;
 `;
+
+const CartCount = styled.span`
+  background-color: #dfaaaa;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 7px;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 14px;
+`;
+
 const SidebarNav = styled.nav`
-  background: white;
+  background: #dfaaaa;
   overflow-y: auto;
   width: 380px;
   height: 100vh;
@@ -71,7 +83,7 @@ const SidebarNav = styled.nav`
   top: 0;
   left: ${({ sidebar }) => (sidebar ? "0" : "-100%")};
   transition: 350ms;
-  z-index: 10;
+  z-index: 999;
 `;
 
 const SidebarWrap = styled.div`
@@ -105,35 +117,34 @@ const SearchInput = styled.input`
     border: 1px solid rgb(223, 126, 127);
   }
 `;
-const CartCount = styled.span`
-background-color: #93c572;
-color: white;
-border-radius: 50%;
-padding: 3px 7px;
-position: relative;
-top: -17px;
-right: 10px;
-font-size: 14px;
-`;
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(false);
-  const [cartCount, setCartCount] = useState(2); // Initialize cart count to 0
+  const [cartCount, setCartCount] = useState(2);
+  const [showCartTooltip, setShowCartTooltip] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
   const updateCartCount = (count) => {
     setCartCount(count);
   };
+
+  const toggleCartTooltip = () => {
+    setShowCartTooltip(!showCartTooltip);
+  };
+
   return (
     <>
-      <div className="mobile-header ">
+      <div className="mobile-header">
         <Nav className="main-nav-div">
           <NavIcon to="#" className="three-lines">
             <FaIcons.FaBars onClick={showSidebar} />
           </NavIcon>
-          <Logo className="nav-logo" src={logo} alt="logo" />{" "}
-          {/* Add your logo image source here */}
-          <CartButton className="nav-cart" to="#">
+          <Logo className="nav-logo" src={logo} alt="logo" />
+          <CartButton
+            className="nav-cart"
+            onMouseEnter={toggleCartTooltip}
+            onMouseLeave={toggleCartTooltip}
+          >
             <FaIcons.FaShoppingCart color="#5a5757" />
             {cartCount > 0 && <CartCount>{cartCount}</CartCount>}
           </CartButton>
@@ -151,7 +162,7 @@ const Sidebar = () => {
                   width: "26px",
                   border: "none",
                   borderRadius: "30px",
-                  background: "#DEF9EC",
+                 
                   fontWeight: "400",
                 }}
               />
@@ -170,15 +181,19 @@ const Sidebar = () => {
               return <SubMenu item={item} key={index} />;
             })}
             <div>
-            <div class="mobile-header-info-wrap">
-                    
-                    <div class="single-mobile-header-info">
-                        <Link to="/login"><i class="fi-rs-user bi bi-person"></i>Log In / Sign Up </Link>
-                    </div>
-                    <div class="single-mobile-header-info">
-                        <Link to="#"><i class="fi-rs-headphones bi bi-headphones"></i>(+91) 9234596789 </Link>
-                    </div>
+              <div class="mobile-header-info-wrap">
+                <div class="single-mobile-header-info">
+                  <Link to="/login">
+                    <i class="fi-rs-user bi bi-person"></i>Log In / Sign Up{" "}
+                  </Link>
                 </div>
+                <div class="single-mobile-header-info">
+                  <Link to="#">
+                    <i class="fi-rs-headphones bi bi-headphones"></i>(+91)
+                    9234596789{" "}
+                  </Link>
+                </div>
+              </div>
             </div>
             <div className="social-icon ">
               <h6 className="mb-15">Follow Us </h6>
@@ -186,50 +201,55 @@ const Sidebar = () => {
                 <Link to="#">
                   <FaFacebook
                     style={{
-                      fontSize: "24px",
+                      fontSize: "18px",
                       color: "#fff",
-                      background: "#93C572",
+                      background: "black",
                       borderRadius: "30px",
+                      marginTop:'6px'
                     }}
                   />
                 </Link>
                 <Link to="#">
                   <FaTwitter
                     style={{
-                      fontSize: "24px",
+                      fontSize: "18px",
                       color: "#fff",
-                      background: "#93C572",
+                      background: "black",
                       borderRadius: "30px",
+                      marginTop:'6px'
                     }}
                   />
                 </Link>
                 <Link to="#">
                   <FaInstagram
                     style={{
-                      fontSize: "24px",
+                      fontSize: "18px",
                       color: "#fff",
-                      background: "#93C572",
+                      background: "black",
                       borderRadius: "30px",
+                      marginTop:'6px'
                     }}
                   />
                 </Link>
                 <Link to="#">
                   <FaPinterest
                     style={{
-                      fontSize: "24px",
+                      fontSize: "18px",
                       color: "#fff",
-                      background: "#93C572",
+                      background: "black",
                       borderRadius: "30px",
+                      marginTop:'6px'
                     }}
                   />
                 </Link>
                 <Link to="#">
                   <FaYoutube
                     style={{
-                      fontSize: "24px",
+                      fontSize: "18px",
                       color: "#fff",
-                      background: "#93C572",
+                      background: "black",
                       borderRadius: "30px",
+                      marginTop:'6px'
                     }}
                   />
                 </Link>
@@ -238,6 +258,66 @@ const Sidebar = () => {
           </SidebarWrap>
         </SidebarNav>
       </div>
+      {showCartTooltip && (   
+        <div className="cart-tooltip">
+          {/* Add your cart tooltip content here */}
+          <div className="cart-dropdown-wrap cart-dropdown-hm2">
+                        <ul>
+                          <li>
+                            <div className="shopping-cart-img">
+                              <Link to="#">
+                                <img alt="cart" src={smallsangar} />
+                              </Link>
+                            </div>
+                            <div className="shopping-cart-title">
+                              <h4>
+                                <Link to="#">Sangar Har</Link>
+                              </h4>
+                              <h3>
+                                <span>1 × </span>₹800.00
+                              </h3>
+                            </div>
+                            <div className="shopping-cart-delete">
+                              <Link to="#">
+                                <i className="fi-rs-cross-small bi bi-x" />
+                              </Link>
+                            </div>
+                          </li>
+                          <li>
+                            <div className="shopping-cart-img">
+                              <Link to="#">
+                                <img alt="cart" src={smallsangar} />
+                              </Link>
+                            </div>
+                            <div className="shopping-cart-title">
+                              <h4>
+                                <Link to="#">God Har</Link>
+                              </h4>
+                              <h3>
+                                <span>1 × </span>₹3500.00
+                              </h3>
+                            </div>
+                            <div className="shopping-cart-delete">
+                              <Link to="#">
+                                <i className="fi-rs-cross-small bi bi-x" />
+                              </Link>
+                            </div>
+                          </li>
+                        </ul>
+                        <div className="shopping-cart-footer">
+                          <div className="shopping-cart-total">
+                            <h4 className="d-flex justify-content-between">
+                              <span>Total</span> <span>₹383.00</span>
+                            </h4>
+                          </div>
+                          <div className="shopping-cart-button">
+                            <Link to="/cart">View cart</Link>
+                            <Link to="/checkout">Checkout</Link>
+                          </div>
+                        </div>
+                      </div>
+        </div>
+      )}
     </>
   );
 };

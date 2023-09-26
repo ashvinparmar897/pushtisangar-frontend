@@ -107,36 +107,10 @@ const Shringar = () => {
                             src={S1}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg"
-                            alt
-                          />
+                         
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to='#'
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                      
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -144,7 +118,7 @@ const Shringar = () => {
                           Shringar
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to='#' tabIndex={0}>
                           Lord Shringar with different styles{" "}
                         </Link>
@@ -184,36 +158,10 @@ const Shringar = () => {
                             src={S2}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-4-2.jpg"
-                            alt
-                          />
+                        
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to='#'
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -221,7 +169,7 @@ const Shringar = () => {
                           Shringar
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to='#' tabIndex={0}>
                           Attar Bottle with different category{" "}
                         </Link>
@@ -261,36 +209,10 @@ const Shringar = () => {
                             src={S3}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-1-2.jpg"
-                            alt
-                          />
+                       
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to='#'
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                    
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -298,7 +220,7 @@ const Shringar = () => {
                           Shringar
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to='#' tabIndex={0}>
                           Moti with various colorful flavoures{" "}
                         </Link>
@@ -338,36 +260,10 @@ const Shringar = () => {
                             src={S4}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
-                          />
+                        
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to='#'
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                     
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -375,7 +271,7 @@ const Shringar = () => {
                           Shringar
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to='#' tabIndex={0}>
                           Har Product as your convinient{" "}
                         </Link>
@@ -415,36 +311,10 @@ const Shringar = () => {
                             src={S2}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
-                          />
+                        
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to='#'
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                    
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -452,7 +322,7 @@ const Shringar = () => {
                           Shringar
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to='#' tabIndex={0}>
                         Attar Bottle with different category{" "}
                         </Link>
@@ -492,36 +362,10 @@ const Shringar = () => {
                             src={S1}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
-                          />
+                         
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to='#'
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -529,7 +373,7 @@ const Shringar = () => {
                           Shringar
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to='#' tabIndex={0}>
                         Lord Shringar with different styles{" "}
                         </Link>
@@ -569,36 +413,10 @@ const Shringar = () => {
                             src={S2}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
-                          />
+                         
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to='#'
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                    
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
@@ -606,7 +424,7 @@ const Shringar = () => {
                           Shringar
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to='#' tabIndex={0}>
                         Attar Bottle with different category{" "}
                         </Link>
@@ -647,46 +465,20 @@ const Shringar = () => {
                             src={S3}
                             alt
                           />
-                          <img
-                            className="hover-img"
-                            src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-1-2.jpg"
-                            alt
-                          />
+                         
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to='#'
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div>
-                      <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                   
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">
                         <Link to='#' tabIndex={0}>
-                          Hodo Foods
+                          Shringar
                         </Link>
                       </div>
-                      <h2>
+                      <h2 className="vastra-title">
                         <Link to='#' tabIndex={0}>
-                          Foster Farms Takeout Crispy Classic{" "}
+                         Motihar with different styles{" "}
                         </Link>
                       </h2>
 

@@ -113,7 +113,7 @@ const BlogDetails = () => {
                             <img src={logo} alt />
                             Vastra
                           </Link>
-                          <span className="count">0</span>
+                          
                         </li>
                         <li>
                           <Link to="#">
@@ -121,7 +121,7 @@ const BlogDetails = () => {
                             <img src={logo} alt />
                             Shringar
                           </Link>
-                          <span className="count">0</span>
+                          
                         </li>
                         <li>
                           <Link to="#">
@@ -129,7 +129,7 @@ const BlogDetails = () => {
                             <img src={logo} alt />
                             Karnaful{" "}
                           </Link>
-                          <span className="count">0</span>
+                          
                         </li>
                         <li>
                           <Link to="#">
@@ -137,7 +137,7 @@ const BlogDetails = () => {
                             <img src={logo} alt />
                             Mukhravind
                           </Link>
-                          <span className="count">0</span>
+                          
                         </li>
                         <li>
                           <Link to="#">
@@ -145,7 +145,7 @@ const BlogDetails = () => {
                             <img src={logo} alt />
                             Netra
                           </Link>
-                          <span className="count">0</span>
+                          
                         </li>
                       </ul>
                     </div>

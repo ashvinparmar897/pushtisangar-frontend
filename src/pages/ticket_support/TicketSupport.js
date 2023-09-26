@@ -45,7 +45,7 @@ const TicketSupport = () => {
     <div>
       <Header />
       <MobileSidebar />
-      <section className="pt-4 vmobile-tag-kl">
+      <section className="mt-3">
         <div className="container">
           <div className="row">
             <div className="col-md-12">

@@ -47,10 +47,10 @@ button.submit, button[type='submit'] {
     font-size: 16px;
     font-weight: 500;
     padding: 15px 40px;
-    color: #ffffff;
+    color: #434343;
     border: none;
-    background-color: #93C572;
-    border: 1px solid #93C572 ;
+    background-color: #dfaaaa;
+    border: 1px solid #dfaaaa ;
     border-radius: 10px;
 }
 .newsletter .newsletter-inner img {

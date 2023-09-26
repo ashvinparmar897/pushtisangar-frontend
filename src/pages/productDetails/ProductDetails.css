@@ -1,7 +1,7 @@
 .page-header.breadcrumb-wrap {
     padding: 20px;
     background-color: #fff;
-    border-bottom: 1px solid #ececec;
+    
     font-family: "Quicksand", sans-serif;
 }
 .breadcrumb {
@@ -174,10 +174,10 @@ strong, .fw-600 {
 .detail-extralink .detail-qty {
     margin: 0 6px 15px 0;
     background: #fff;
-    border: 2px solid #3BB77E !important;
+    border: 2px solid #dfaaaa !important;
     font-size: 16px;
     font-weight: 700;
-    color: #3BB77E;
+    color: #dfaaaa;
     border-radius: 5px;
     padding: 11px 20px 11px 30px;
     max-width: 90px;
@@ -194,13 +194,13 @@ strong, .fw-600 {
     border-radius: 5px;
 }
 .detail-qty > a.qty-down {
-    bottom: -4px;
+    bottom: 0px;
 }
 .detail-qty > a {
     font-size: 16px;
     position: absolute;
     right: 8px;
-    color: #3BB77E;
+    color: #dfaaaa;
 }
 input.qty-val {
     border: 0;
@@ -278,9 +278,8 @@ input.qty-val {
 .float-start {
     float: left!important;
 }
-.mb-5 {
-    margin-bottom: 5px !important;
-}
+
+
 .mr-50 {
     margin-right: 50px !important;
 }
@@ -380,7 +379,7 @@ input.qty-val {
     list-style: none;
 }
 .tab-style3 .nav-tabs .nav-item a.active, .tab-style3 .nav-tabs .nav-item a:hover {
-    color: #3BB77E;
+    color: #dfaaaa;
     -webkit-box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 }
