@@ -246,7 +246,7 @@ const Cart = () => {
                     <button type="submit">Apply Coupon</button>
                   </div>
                   <small>
-                    Coupon code can be also be applied at checkout before payment.
+                    Coupon code can also be applied at checkout before payment.
                   </small>
                 </div>
                 <Link to="/checkout" className="default-btn">

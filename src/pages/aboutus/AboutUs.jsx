@@ -42,34 +42,12 @@ const AboutUs = () => {
               </div>
               <div className="col-lg-6">
                 <div className="pl-25">
-                  <h2 className="aboutTitle">Welcome to Pushti Shangar</h2>
+                  <h2 className="aboutTitle">About Pushti Sangar: Elevating Spirituality Through Divine Adornments</h2>
                   <p className="mb-25">
-                    Text will be coming soon...Text will be coming soon...Text
-                    will be coming soon...Text will be comming soon... Text will
-                    be coming soon...Text will be coming soon...Text will be
-                    coming soon...Text will be comming soon... Text will be
-                    coming soon...Text will be coming soon...Text will be coming
-                    soon...Text will be comming soon... Text will be coming
-                    soon...Text will be coming soon...Text will be coming
-                    soon...Text will be comming soon... Text will be coming
-                    soon...Text will be coming soon...Text will be coming
-                    soon...Text will be comming soon... Text will be coming
-                    soon...Text will be coming soon...Text will be coming
-                    soon...Text will be comming soon...
+                  Welcome to Pushti Sangar, your trusted source for an enchanting collection of God Cloths and shringar items that encapsulate the essence of divine devotion. We are dedicated to enriching your spiritual journey by providing you with carefully curated, high-quality products that reflect the beauty and reverence of your faith.
                   </p>
                   <p className="mb-50">
-                    Text will be coming soon...Text will be coming soon...Text
-                    will be coming soon...Text will be comming soon... Text will
-                    be coming soon...Text will be coming soon...Text will be
-                    coming soon...Text will be comming soon... Text will be
-                    coming soon...Text will be coming soon...Text will be coming
-                    soon...Text will be comming soon... Text will be coming
-                    soon...Text will be coming soon...Text will be coming
-                    soon...Text will be comming soon... Text will be coming
-                    soon...Text will be coming soon...Text will be coming
-                    soon...Text will be comming soon... Text will be coming
-                    soon...Text will be coming soon...Text will be coming
-                    soon...Text will be comming soon...
+                  At Pushti Sangar, we are more than just a store; we are a conduit for elevating your spirituality through exquisite divine adornments. Our journey is driven by a profound belief in the transformative power of faith and the beauty of devotion. We aspire to be your trusted partner on the path to spiritual enlightenment, offering a curated collection of God Cloths, shringar items, and sacred accessories that reflect the depth of your beliefs.
                   </p>
                
                 </div>
@@ -80,7 +58,7 @@ const AboutUs = () => {
               <div className="row">
                 <div className="col-lg-4 col-md-6 mb-24">
                   <Card className="featured-card">
-                    <div className="banner-icon">
+                    <div className="about-icon">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="60"
@@ -148,27 +126,22 @@ const AboutUs = () => {
                           </clipPath>
                         </defs>
                       </svg>
-                      {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-1.svg" alt /> */}
+                     
                     </div>
-                    <h4>Best Prices &amp; Offers</h4>
-                    <p>
-                      Text will be coming soon...Text will be coming soon...Text
-                      will be coming soon...Text will be comming soon... Text
-                      will be coming soon...Text will be coming soon...Text will
-                      be coming soon...Text will be comming soon... Text will be
-                      coming soon...Text will be coming soon...Text will be
-                      coming soon
+                    <h4 className="mt-3">Best Prices &amp; Offers</h4>
+                    <p className="mt-3">
+                    At Pushti Shangar, we are dedicated to providing you with not only the finest spiritual treasures but also the best prices and offers to enhance your shopping experience. We believe that your spiritual journey should be both enriching and affordable. That's why we take pride in offering competitive prices and exclusive deals on our collection of divine attire, sacred adornments, and spiritual accessories.
                     </p>
-                    {/* <a href="#">Read more</a> */}
+                    
                   </Card>
                 </div>
                 <div className="col-lg-4 col-md-6 mb-24">
                   <Card className="featured-card">
                     <div
-                      className="banner-left-icon d-flex align-items-center wow fadeIn animated animated"
+                      className="about-icon d-flex align-items-center wow fadeIn animated animated"
                       style={{ visibility: "visible" }}
                     >
-                      <div className="banner-icon">
+                      <div className="about-icon">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="60"
@@ -258,24 +231,20 @@ const AboutUs = () => {
                           </defs>
                         </svg>
 
-                        {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-4.svg" alt /> */}
+                       
                       </div>
                       <div className="banner-text text-start"></div>
                     </div>
-                    <h4>Wide Assortment</h4>
-                    <p>
-                      Text will be coming soon...Text will be coming soon...Text
-                      will be coming soon...Text will be comming soon... Text
-                      will be coming soon...Text will be coming soon...Text will
-                      be coming soon...Text will be comming soon... Text will be
-                      coming soon...
+                    <h4 className="mt-3">Wide Assortment</h4>
+                    <p className="mt-3">
+                    At Pushti Shangar, we take pride in offering you a vast and diverse assortment of spiritual treasures. Our collection is carefully curated to cater to a wide range of spiritual beliefs, traditions, and preferences. Whether you're seeking divine attire, sacred adornments, or spiritual accessories, you'll find an array of options that resonate with your unique.
                     </p>
                     {/* <a href="#">Read more</a> */}
                   </Card>
                 </div>
                 <div className="col-lg-4 col-md-6 mb-24">
                   <Card className="featured-card">
-                    <div className="banner-icon">
+                    <div className="about-icon">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="60"
@@ -346,21 +315,16 @@ const AboutUs = () => {
                       </svg>
                       {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-2.svg" alt /> */}
                     </div>
-                    <h4>Free Delivery</h4>
-                    <p>
-                      Text will be coming soon...Text will be coming soon...Text
-                      will be coming soon...Text will be comming soon... Text
-                      will be coming soon...Text will be coming soon...Text will
-                      be coming soon...Text will be comming soon... Text will be
-                      coming soon...Text will be coming soon...Text will be
-                      coming soon
+                    <h4 className="mt-3">Free Delivery</h4>
+                    <p className="mt-3">
+                    At Pushti Shangar, we are dedicated to providing you with an exceptional shopping experience that is not only convenient but also cost-effective. That's why we're delighted to offer Free Delivery on eligible orders, allowing you to enjoy your spiritual treasures without the worry of additional shipping fees.
                     </p>
                     {/* <a href="#">Read more</a> */}
                   </Card>
                 </div>
                 <div className="col-lg-4 col-md-6 mb-24">
                   <Card className="featured-card">
-                    <div className="banner-icon">
+                    <div className="about-icon">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="60"
@@ -420,14 +384,9 @@ const AboutUs = () => {
 
                       {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-5.svg" alt /> */}
                     </div>
-                    <h4>Easy Returns</h4>
-                    <p>
-                      Text will be coming soon...Text will be coming soon...Text
-                      will be coming soon...Text will be comming soon... Text
-                      will be coming soon...Text will be coming soon...Text will
-                      be coming soon...Text will be comming soon... Text will be
-                      coming soon...Text will be coming soon...Text will be
-                      coming soon
+                    <h4 className="mt-3">Easy Returns</h4>
+                    <p className="mt-3">
+                    At Pushti Shangar, we are committed to providing you with a hassle-free shopping experience that ensures your satisfaction. We understand that sometimes, despite our best efforts, a product may not meet your expectations. That's why we've designed our Easy Returns policy to make the return process simple and convenient for you.
                     </p>
                     {/* <a href="#">Read more</a> */}
                   </Card>
@@ -435,7 +394,7 @@ const AboutUs = () => {
               
                 <div className="col-lg-4 col-md-6 mb-24">
                   <Card className="featured-card">
-                    <div className="banner-icon">
+                    <div className="about-icon">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="60"
@@ -488,14 +447,9 @@ const AboutUs = () => {
 
                       {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-3.svg" alt /> */}
                     </div>
-                    <h4>Great Daily Deal</h4>
-                    <p>
-                      Text will be coming soon...Text will be coming soon...Text
-                      will be coming soon...Text will be comming soon... Text
-                      will be coming soon...Text will be coming soon...Text will
-                      be coming soon...Text will be comming soon... Text will be
-                      coming soon...Text will be coming soon...Text will be
-                      coming soon
+                    <h4 className="mt-3">Great Daily Deal</h4>
+                    <p className="mt-3">
+                    At Pushti Shangar, we're excited to bring you a special treat every day with our "Great Daily Deal." We believe that your spiritual journey should be not only enriching but also affordable. That's why we're committed to offering you a handpicked product each day at an irresistible price.
                     </p>
                     {/* <a href="#">Read more</a> */}
                   </Card>
@@ -513,20 +467,10 @@ const AboutUs = () => {
                     Your Partner for e-commerce Pushti Shangar
                   </h1>
                   <p className="">
-                    Text will be coming soon...Text will be coming soon...Text
-                    will be coming soon...Text will be comming soon... Text will
-                    be coming soon...Text will be coming soon...Text will be
-                    coming soon...Text will be comming soon... Text will be
-                    coming soon...Text will be coming soon...Text will be coming
-                    soon
+                  At Pushti Shangar, we are more than just an e-commerce platform; we are your dedicated partner on the journey to spiritual empowerment and divine connection. As your trusted companion in the world of online shopping, we offer a unique blend of spirituality, authenticity, and convenience.
                   </p>
                   <p>
-                    Text will be coming soon...Text will be coming soon...Text
-                    will be coming soon...Text will be comming soon... Text will
-                    be coming soon...Text will be coming soon...Text will be
-                    coming soon...Text will be comming soon... Text will be
-                    coming soon...Text will be coming soon...Text will be coming
-                    soon
+                  We understand that your spiritual journey is deeply personal. That's why we've crafted an online shopping experience that respects your devotion. From the comfort of your home, you can explore a wide range of God Cloths and shringar items, allowing you to connect with the divine at your own pace.
                   </p>
                 </div>
               </div>
@@ -534,34 +478,19 @@ const AboutUs = () => {
                 <div className="col-lg-4 pr-30 mb-md-5 mb-lg-0 mb-sm-5">
                   <h3 className="aboutHistoryTitle">Who we are</h3>
                   <p>
-                    Text will be coming soon...Text will be coming soon...Text
-                    will be coming soon...Text will be comming soon... Text will
-                    be coming soon...Text will be coming soon...Text will be
-                    coming soon...Text will be comming soon... Text will be
-                    coming soon...Text will be coming soon...Text will be coming
-                    soon...
+                  At Pushti Sangar, we are a team of devoted individuals with a shared passion for spirituality and a deep respect for the power of faith. We believe that spirituality is not just a part of life; it's the essence of life. It guides us, inspires us, and connects us to something greater than ourselves.
                   </p>
                 </div>
                 <div className="col-lg-4 pr-30 mb-md-5 mb-lg-0 mb-sm-5">
                   <h3 className="aboutHistoryTitle">Our history</h3>
                   <p>
-                    Text will be coming soon...Text will be coming soon...Text
-                    will be coming soon...Text will be comming soon... Text will
-                    be coming soon...Text will be coming soon...Text will be
-                    coming soon...Text will be comming soon... Text will be
-                    coming soon...Text will be coming soon...Text will be coming
-                    soon...
+                  Pushti Sangar isn't just a store; it's a manifestation of a deep-rooted passion for spirituality and a desire to share the transformative power of divine adornments with the world. Our journey began with a profound understanding that faith is a guiding force in our lives, and we wanted to create a space where individuals from diverse spiritual backgrounds could find sacred treasures that resonate with their hearts.
                   </p>
                 </div>
                 <div className="col-lg-4">
                   <h3 className="aboutHistoryTitle">Our mission</h3>
                   <p>
-                    Text will be coming soon...Text will be coming soon...Text
-                    will be coming soon...Text will be comming soon... Text will
-                    be coming soon...Text will be coming soon...Text will be
-                    coming soon...Text will be comming soon... Text will be
-                    coming soon...Text will be coming soon...Text will be coming
-                    soon...
+                  At Pushti Sangar, we are driven by a deep commitment to nurturing your spirituality. Our mission is to offer a diverse range of God Cloths and shringar items that are not just symbols of faith but also vessels of profound connection and spirituality. We believe that wearing these sacred garments and adorning yourself with divine jewelry is an expression of devotion that transcends the material world.
                   </p>
                 </div>
               </div>

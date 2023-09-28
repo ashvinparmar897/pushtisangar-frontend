@@ -5,6 +5,8 @@ import MidFooter from '../../components/MidFooter';
 import { CiMedicalCross } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 import MobileSidebar from '../../components/MobileSidebar';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const TicketSupport = () => {
   const [showAddTicket, setShowAddTicket] = useState(false);
@@ -25,20 +27,36 @@ const TicketSupport = () => {
     },
   ]);
 
+  const validationSchema = Yup.object({
+    subject: Yup.string().required('Subject is required'),
+    department: Yup.string().required('Department is required'),
+    description: Yup.string().required('Description is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      subject: '',
+      department: '',
+      description: '',
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      // Handle form submission here
+      console.log('Form values:', values);
+      const newTicket = {
+        id: tickets.length + 1,
+        ticketNumber: `TKT-${Math.floor(Math.random() * 10000)}`,
+        date: new Date().toLocaleString(),
+        title: values.subject, // You can use the subject as the title
+        status: 'Open',
+      };
+      setTickets([...tickets, newTicket]);
+      setShowAddTicket(false);
+    },
+  });
+
   const handleToggleAddTicket = () => {
     setShowAddTicket(!showAddTicket);
-  };
-
-  const handleAddTicket = () => {
-    const newTicket = {
-      id: tickets.length + 1,
-      ticketNumber: `TKT-${Math.floor(Math.random() * 10000)}`,
-      date: new Date().toLocaleString(),
-      title: 'New Ticket',
-      status: 'Open',
-    };
-    setTickets([...tickets, newTicket]);
-    setShowAddTicket(false);
   };
 
   return (
@@ -59,32 +77,32 @@ const TicketSupport = () => {
           <div className="row">
             <div className="col-lg-3 col-md-4">
               <aside className="widget-area" id="secondary">
-                <section className="widget widget_categories with-my">
-                  <h3 className="widget-title text-start">Account Dashboard</h3>
-                  <ul className="text-start">
-                    <li>
-                      <Link to="/my-account">My Account</Link>
-                    </li>
-                    <li>
-                      <Link to="/my-order">My Orders</Link>
-                    </li>
-                    <li>
-                      <Link to="/my-address">My Addresses</Link>
-                    </li>
-                    <li>
-                      <Link to="/my-profile">My Profile</Link>
-                    </li>
-                    <li>
-                      <Link to="/track-order">Track Order</Link>
-                    </li>
-                    <li>
-                      <Link to="/ticket-support">Support Ticket</Link>
-                    </li>
-                    <li>
-                      <Link to="/">Logout</Link>
-                    </li>
-                  </ul>
-                </section>
+              <section className="widget widget_categories with-my">
+            <h3 className="widget-title text-start">Account Dashboard</h3>
+            <ul className='text-start'>
+              <li>
+                <Link to="/my-account">My Account</Link>
+              </li>
+              <li className="active">
+                <Link to="/my-order">My Orders</Link>
+              </li>
+              <li>
+                <Link to="/my-address">My Addresses</Link>
+              </li>
+              <li>
+                <Link to="/my-profile">My Profile</Link>
+              </li>
+              <li>
+                <Link to="/track-order">Track Order</Link>
+              </li>
+              <li>
+                <Link to="/ticket-support">Support Ticket</Link>
+              </li>
+              <li>
+                <Link to="#">Logout</Link>
+              </li>
+            </ul>
+          </section>
               </aside>
             </div>
             <div className="col-lg-9 col-md-8">
@@ -120,14 +138,34 @@ const TicketSupport = () => {
                                 SUBJECT
                                 <span className="required">*</span>
                               </label>
-                              <input type="text" className="form-control" />
+                              <input
+                                type="text"
+                                className="form-control"
+                                name="subject"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.subject}
+                              />
+                              {formik.touched.subject && formik.errors.subject ? (
+                                <div className="error">{formik.errors.subject}</div>
+                              ) : null}
                             </div>
                             <div className="form-group col-md-6">
                               <label>
                                 DEPARTMENT
                                 <span className="required">*</span>
                               </label>
-                              <input type="text" className="form-control" />
+                              <input
+                                type="text"
+                                className="form-control"
+                                name="department"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.department}
+                              />
+                              {formik.touched.department && formik.errors.department ? (
+                                <div className="error">{formik.errors.department}</div>
+                              ) : null}
                             </div>
                             <div className="form-group col-md-12">
                               <label>
@@ -138,13 +176,19 @@ const TicketSupport = () => {
                                 placeholder
                                 className="form-control"
                                 rows={2}
-                                defaultValue={''}
+                                name="description"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.description}
                               />
+                              {formik.touched.description && formik.errors.description ? (
+                                <div className="error">{formik.errors.description}</div>
+                              ) : null}
                             </div>
                             <div className="col-md-12">
                               <button
                                 className="default-btn"
-                                onClick={handleAddTicket}
+                                onClick={formik.handleSubmit}
                               >
                                 Submit Now
                                 <span />

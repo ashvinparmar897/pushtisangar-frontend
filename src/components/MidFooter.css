@@ -53,7 +53,7 @@ strong, .fw-600 {
     list-style: outside none none;
     margin: 0;
     padding: 0;
-    min-width: 170px;
+    /* min-width: 170px; */
 }
 .footer-list li {
     display: block;

@@ -5,7 +5,8 @@ import Header from "../../components/Header";
 import MidFooter from "../../components/MidFooter";
 import { Link } from 'react-router-dom';
 import MobileSidebar from "../../components/MobileSidebar";
-
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 
 const stateOptions = [
   { value: "Gujarat", label: "Gujarat" },
@@ -18,7 +19,22 @@ const countryOptions = [{ value: "India", label: "India" }];
 
 const Checkout = () => {
   const [selectedState, setSelectedState] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
+
+
+  
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .required('Email is required')
+      .email('Invalid email format'),
+    firstName: Yup.string().required('First Name is required'),
+    lastName: Yup.string().required('Last Name is required'),
+    address: Yup.string().required('Address is required'),
+    selectedCountry: Yup.object().nullable(false).required("Country is required"),
+    selectedState: Yup.object().nullable(false).required("State is required"),
+    city: Yup.string().required('Town / City is required'),
+    postcode: Yup.string().required('Postcode / Zip is required'),
+    phone: Yup.string().required('Phone is required'),
+  });
   return (
     <div>
       <Header />
@@ -45,7 +61,36 @@ const Checkout = () => {
               </div>
             </div>
           </div>
-          <form>
+          <Formik
+              initialValues={{
+                email: '',
+                firstName: '',
+                lastName: '',
+                address: '',
+                selectedCountry: null,
+                selectedState: null,
+                city: '',
+                postcode: '',
+                phone: '',
+              }}
+              validationSchema={validationSchema}
+              onSubmit={(values) => {
+                // Handle form submission here
+                console.log(values);
+              }}>
+                {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              setFieldValue, // Add setFieldValue
+              setFieldTouched, // Add setFieldTouched
+            }) => (
+
+        
+          <form onSubmit={handleSubmit}>
             <div className="row">
               <div className="col-lg-5 col-md-12">
                 <div className="billing-details cart-buttons mt-0">
@@ -58,7 +103,11 @@ const Checkout = () => {
                           Email Address
                           <span className="required">*</span>
                         </label>
-                        <input type="email" className="form-control" />
+                        <input type="email" name="email" value={values.email}  onChange={handleChange}
+                              onBlur={handleBlur} className="form-control" />
+                              {errors.email && touched.email && (
+                              <div className="text-danger">{errors.email}</div>
+                            )}
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6">
@@ -67,7 +116,13 @@ const Checkout = () => {
                           First Name
                           <span className="required">*</span>
                         </label>
-                        <input type="text" className="form-control" />
+                        <input type="text" name="firstName"
+                              value={values.firstName}
+                              onChange={handleChange}
+                              onBlur={handleBlur} className="form-control" />
+                               {errors.firstName && touched.firstName && (
+                              <div className="text-danger">{errors.firstName}</div>
+                            )}
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6">
@@ -76,7 +131,13 @@ const Checkout = () => {
                           Last Name
                           <span className="required">*</span>
                         </label>
-                        <input type="text" className="form-control" />
+                        <input type="text"   name="lastName"
+                              value={values.lastName}
+                              onChange={handleChange}
+                              onBlur={handleBlur} className="form-control" />
+                               {errors.lastName && touched.lastName && (
+                              <div className="text-danger">{errors.lastName}</div>
+                            )}
                       </div>
                     </div>
                     <div className="col-lg-12 col-md-6">
@@ -85,29 +146,48 @@ const Checkout = () => {
                           Address
                           <span className="required">*</span>
                         </label>
-                        <input type="text" className="form-control" />
+                        <input type="text"  name="address"
+                              value={values.address}
+                              onChange={handleChange}
+                              onBlur={handleBlur} className="form-control" />
+                               {errors.address && touched.address && (
+                              <div className="text-danger">{errors.address}</div>
+                            )}
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6">
                     <div className="form-group">
                         <label>Country <span className="required">*</span></label>
                         <Select
-                          value={selectedCountry}
-                          onChange={setSelectedCountry}
+                          value={values.selectedCountry}
+                          onChange={(selectedOption) => {
+                            setFieldValue("selectedCountry",selectedOption); // Set the selected value
+                            setFieldTouched("selectedCountry", true); // Mark field as touched
+                          }}
                           options={countryOptions}
                           placeholder="Select Country"
                         />
+                        {touched.selectedCountry && errors.selectedCountry && (
+          <p className="error">{errors.selectedCountry}</p>
+        )}
+                        
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6">
                     <div className="form-group">
                         <label>State <span className="required">*</span></label>
                         <Select
-                          value={selectedState}
-                          onChange={setSelectedState}
+                         value={values.selectedState}
+                         onChange={(selectedOption) => {
+                           setFieldValue("selectedState", selectedOption); // Set the selected value using Formik
+                           setFieldTouched("selectedState", true); // Mark field as touched to trigger validation
+                         }}
                           options={stateOptions}
                           placeholder="Select State"
                         />
+                         {touched.selectedState && errors.selectedState && (
+    <p className="error">{errors.selectedState}</p>
+  )}
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6">
@@ -116,7 +196,13 @@ const Checkout = () => {
                           Town / City
                           <span className="required">*</span>
                         </label>
-                        <input type="text" className="form-control" />
+                        <input type="text"  name="city"
+                              value={values.city}
+                              onChange={handleChange}
+                              onBlur={handleBlur} className="form-control" />
+                               {errors.city && touched.city && (
+                              <div className="text-danger">{errors.city}</div>
+                            )}
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6">
@@ -125,7 +211,13 @@ const Checkout = () => {
                           Postcode / Zip
                           <span className="required">*</span>
                         </label>
-                        <input type="text" className="form-control" />
+                        <input type="text"  name="postcode"
+                              value={values.postcode}
+                              onChange={handleChange}
+                              onBlur={handleBlur} className="form-control" />
+                              {errors.postcode && touched.postcode && (
+                              <div className="text-danger">{errors.postcode}</div>
+                            )}
                       </div>
                     </div>
                     <div className="col-lg-12 col-md-12">
@@ -134,7 +226,13 @@ const Checkout = () => {
                           Phone
                           <span className="required">*</span>
                         </label>
-                        <input type="text" className="form-control" />
+                        <input type="text"  name="phone"
+                              value={values.phone}
+                              onChange={handleChange}
+                              onBlur={handleBlur} className="form-control" />
+                               {errors.phone && touched.phone && (
+                              <div className="text-danger">{errors.phone}</div>
+                            )}
                       </div>
                     </div>
                   </div>
@@ -177,7 +275,7 @@ const Checkout = () => {
                           <button type="submit">Apply Coupon</button>
                         </div>
                         <small>
-                          Coupon code can be also be applied at checkout before
+                          Coupon code can  also be applied at checkout before
                           payment.
                         </small>
                       </div>
@@ -268,7 +366,7 @@ const Checkout = () => {
                         </label>
                       </p>
                     </div>
-                    <Link to="#" className="default-btn order-btn">
+                    <Link to="#" type="submit" className="default-btn order-btn">
                       Place Order
                       <span />
                     </Link>
@@ -277,6 +375,8 @@ const Checkout = () => {
               </div>
             </div>
           </form>
+            )}
+          </Formik>
         </div>
       </section>
       <MidFooter />

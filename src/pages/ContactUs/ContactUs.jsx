@@ -61,6 +61,7 @@ const ContactUs = () => {
                   phoneNumber: "",
                   name: "",
                   subject: "",
+                  message: "",
                 }}
                 onSubmit={(values) => {
                   // Alert the input values of the form that we filled
@@ -160,9 +161,11 @@ const ContactUs = () => {
                             <div className="textarea-style">
                               <textarea
                                 type="text"
-                                name="message"
+                                name="message" // Make sure the name matches the schema
+                                value={values.message} // Connect to Formik values
+                                onChange={handleChange}
+                                onBlur={handleBlur}
                                 placeholder="Message*"
-                                defaultValue={""}
                                 className="textareaContactus"
                                 rows={4}
                                 cols={40}

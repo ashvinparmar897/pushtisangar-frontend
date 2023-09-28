@@ -38,6 +38,7 @@
   border-radius: 15px !important;
   border: 1px solid #ececec !important;
   background: #fff !important;
+  height: 400px;
 }
 .text-muted {
   color: #b6b6b6;
@@ -60,4 +61,10 @@
   color: #253d4e;
   font-weight: 700;
   line-height: 1.2;
+}
+.about-icon{
+  position: relative;
+    background: #F4F6FA;
+    padding: 5px;
+    border-radius: 10px;
 }

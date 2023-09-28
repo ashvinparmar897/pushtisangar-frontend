@@ -273,10 +273,10 @@ const ProductDetails = () => {
               <span className="mb-5 mt-3">SKU: <Link to="#">FWM15VKT</Link></span>
               <div className="clearfix product-price-cover mt-3">
                 <div className="product-price primary-color float-left">
-                  <span className="current-price text-brand fs-2">₹38</span>
+                  <span className="current-price text-brand fs-1">₹38</span>
                   <span>
                     <span className="save-price font-md color3 ml-15">26% Off</span>
-                    <span className="old-price font-md ml-15 fs-4">₹52</span>
+                    <span className="old-price font-md ml-15 fs-5">₹52</span>
                   </span>
                 </div>
               </div>
@@ -293,7 +293,7 @@ const ProductDetails = () => {
                   <li><input className='me-2' type='checkbox'style={{minWidth:'20px'}}/><span className='me-2'>Black</span></li>
                 </ul>
               </div>
-              <div className="detail-extralink mb-50 mb-5 ">
+              <div className="detail-extralink   ">
                 <div className="detail-qty border radius">
                   <Link to="#" className="qty-down"><i className="fi-rs-angle-small-down bi bi-chevron-down" /></Link>
                   <input type="text" name="quantity" className="qty-val" defaultValue={1} min={1} />

@@ -21,8 +21,8 @@ const Terms_Condition = () => {
               </i>
               Home
             </Link>
-            <AiOutlineRight className="rightIcon" /> <span /> Blogs <span />{" "}
-            <AiOutlineRight className="rightIcon" /><span>Blog Details</span>
+            <AiOutlineRight className="rightIcon" /> <span /> Terms & Conditions <span />
+            
           </div>
         </div>
       </div>

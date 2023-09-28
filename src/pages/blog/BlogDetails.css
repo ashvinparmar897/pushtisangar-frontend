@@ -301,7 +301,7 @@ h6.post-title {
 }
 
 .post-title a:hover {
-    color: #93c572;
+    color: #dfaaaa;
 }
 
 .post-thumb {
@@ -489,7 +489,7 @@ h6.post-title {
 
 .pagination-area .page-item.active .page-link, .pagination-area .page-item:hover .page-link {
     color: #fff;
-    background: #93c572;
+    background: #dfaaaa;
 }
 .mt-80{
     margin-top: 100px;

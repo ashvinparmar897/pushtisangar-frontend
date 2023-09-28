@@ -15,7 +15,7 @@ const MidFooter = () => {
           <div className="row">
             <div className="col">
               <div className="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
-                <div className="logo mb-30">
+                <div className="logo mb-2">
                   <a href="#" className="mb-15">
                     <img src={logo1} alt="logo" />
                   </a>
@@ -92,7 +92,7 @@ const MidFooter = () => {
               
               </ul>
             </div>
-            <div className="footer-link-widget col">
+            <div className="footer-link-widget costomer-block col">
               <h4 className="widget-title footer-title text-start">Customer Service</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>

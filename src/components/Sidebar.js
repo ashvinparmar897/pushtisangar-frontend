@@ -73,7 +73,7 @@ const CartCount = styled.span`
 `;
 
 const SidebarNav = styled.nav`
-  background: #dfaaaa;
+  background: white;
   overflow-y: auto;
   width: 380px;
   height: 100vh;
@@ -139,7 +139,9 @@ const Sidebar = () => {
           <NavIcon to="#" className="three-lines">
             <FaIcons.FaBars onClick={showSidebar} />
           </NavIcon>
+          <Link to='/'>
           <Logo className="nav-logo" src={logo} alt="logo" />
+          </Link>
           <CartButton
             className="nav-cart"
             onMouseEnter={toggleCartTooltip}

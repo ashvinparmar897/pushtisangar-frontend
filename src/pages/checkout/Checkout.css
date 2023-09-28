@@ -344,6 +344,4 @@ select.form-control:not([size]):not([multiple]) {
 .css-13cymwt-control:hover {
     border-color: hsl(0, 0%, 70%) !important;
 }
-.css-13cymwt-control{
-    border-color: white !important;
-}
+

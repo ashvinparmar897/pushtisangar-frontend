@@ -112,6 +112,9 @@ body {
 .main-menu.main-menu-padding-1 > nav > ul > li:first-child {
   padding-left: 15px !important;
 }
+.product-cart-wrap .product-card-bottom .add-cart .add{
+  padding: 10px !important;
+}
 }
 
 
@@ -211,11 +214,11 @@ body {
   font-size: 14px;
   display: block;
   font-weight: 500;
-  color: #253D4E;
+  color: #1d1d1d;
 }
 .single-mobile-header-info a i {
   font-size: 14px;
-  color: #253D4E;
+  color: #1d1d1d;
   margin-right: 8px;
 }
 .cart-tooltip{
@@ -223,9 +226,7 @@ body {
   right: 32px;
   top: 78px;
 }
-.offer-2{
-  width: 97%;
-}
+
 .popular-card{
   width: 99% !important;
 }
@@ -281,6 +282,7 @@ body {
 .detail-extralink > div {
   margin-left: 0px !important;
 }
+
 }
 
 
@@ -400,6 +402,10 @@ button.submit, button[type='submit']{
 .next-arrow button{
   left: -67px !important;
 }
+.shop-now-hover-2{
+  margin-left: -60px !important;
+
+}
 }
 
 
@@ -422,7 +428,7 @@ button.submit, button[type='submit']{
   left: -343px !important;
 }
 .next-arrow button{
-  left: -38px;
+  left: -38px !important;
 }
 .shringar-card {
   width: 350px !important;
@@ -437,7 +443,10 @@ button.submit, button[type='submit']{
 .newsletter .newsletter-inner .newsletter-content form {
   max-width: 283px !important;
 }
-
+.banner-left-icon .banner-icon {
+  margin-right: 25px !important;
+  margin-left: 0px !important;
+}
 
 }
 @media screen and (max-width: 361px){
@@ -501,8 +510,8 @@ input{
   width: 70%;
 }
 .shop-now-hover-2{
-  margin-left: -73px !important;
-  margin-top: 2rem !important;
+  margin-left: -53px !important;
+  margin-top: 1rem !important;
 }
 
 }
