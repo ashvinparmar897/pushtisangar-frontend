@@ -38,7 +38,7 @@ const OrderStatement = () => {
       <div className="col-sm-12 checkout-login">
         <div className="row align-items-center">
           <div className="col-md-5">
-            <img src={logo} className="img-fluid center-block text-center" style={{width: 200}} />
+            <img src={logo} className="img-fluid center-block text-center" alt='img' style={{width: 200}} />
           </div>
           <div className="col-md-7">
             <div className="invoice-address">
@@ -189,7 +189,7 @@ const OrderStatement = () => {
                     </td>
                     <td>
                       <div className="img-dlt text-center">
-                        <img src={image1} width={70} className="img-responsive center-block" />
+                        <img src={image1} width={70} alt='img' className="img-responsive center-block" />
                       </div>
                     </td>
                     <td>
@@ -216,7 +216,7 @@ const OrderStatement = () => {
                     </td>
                     <td>
                       <div className="img-dlt text-center">
-                        <img src={image2} width={70} className="img-responsive center-block" />
+                        <img src={image2} width={70} alt='img' className="img-responsive center-block" />
                       </div>
                     </td>
                     <td>

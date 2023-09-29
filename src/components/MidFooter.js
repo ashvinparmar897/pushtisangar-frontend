@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { FaFacebook,FaInstagram,FaPinterest,FaTwitter, FaYoutube } from 'react-icons/fa';
 
 
-
 const MidFooter = () => {
   return (
     <div >
@@ -16,9 +15,9 @@ const MidFooter = () => {
             <div className="col">
               <div className="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
                 <div className="logo mb-2">
-                  <a href="#" className="mb-15">
+                  <Link to="#" className="mb-15">
                     <img src={logo1} alt="logo" />
-                  </a>
+                  </Link>
                 </div>
                 <ul className="contact-infor list-unstyled text-start">
                   <li>
@@ -55,19 +54,19 @@ const MidFooter = () => {
               <h4 className="widget-title footer-title text-start">Company</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <a href="#">About Us</a>
+                  <Link to="#">About Us</Link>
                 </li>
                 <li>
-                  <a href="#">Delivery Information</a>
+                  <Link to="#">Delivery Information</Link>
                 </li>
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <Link to="#">Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="terms-condition">Terms &amp; Conditions</a>
+                  <Link to="terms-condition">Terms &amp; Conditions</Link>
                 </li>
                 <li>
-                  <a href="#">Contact Us</a>
+                  <Link to="#">Contact Us</Link>
                 </li>
               </ul>
             </div>
@@ -75,19 +74,19 @@ const MidFooter = () => {
               <h4 className="widget-title footer-title text-start">Popular</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <a href="#">Zari  Chira Vastra</a>
+                  <Link to="#">Zari  Chira Vastra</Link>
                 </li>
                 <li>
-                  <a href="#">Farookhi Sahi</a>
+                  <Link to="#">Farookhi Sahi</Link>
                 </li>
                 <li>
-                  <a href="#">Kinkhab Zari</a>
+                  <Link to="#">Kinkhab Zari</Link>
                 </li>
                 <li>
-                  <a href="#">Alkavali</a>
+                  <Link to="#">Alkavali</Link>
                 </li>
                 <li>
-                  <a href="#">Sehro</a>
+                  <Link to="#">Sehro</Link>
                 </li>
               
               </ul>
@@ -96,13 +95,13 @@ const MidFooter = () => {
               <h4 className="widget-title footer-title text-start">Customer Service</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <a href="#">Site Map</a>
+                  <Link to="#">Site Map</Link>
                 </li>
                 <li>
-                  <a href="#">Contact Us</a>
+                  <Link to="#">Contact Us</Link>
                 </li>
                 <li>
-                  <a href="#">Payments</a>
+                  <Link to="#">Payments</Link>
                 </li>
               </ul>
             </div>
@@ -111,16 +110,16 @@ const MidFooter = () => {
               <h4 className="widget-title footer-title text-start">Account</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <a href="#">Sign In</a>
+                  <Link to="#">Sign In</Link>
                 </li>
                 <li>
-                  <a href="#">View Cart</a>
+                  <Link to="#">View Cart</Link>
                 </li>
                 <li>
-                  <a href="#">My Wishlist</a>
+                  <Link to="#">My Wishlist</Link>
                 </li>
                 <li>
-                  <a href="#">Shipping Details</a>
+                  <Link to="#">Shipping Details</Link>
                 </li>
               </ul>
             </div>

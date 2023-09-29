@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React from "react";
 import Select from "react-select";
 import "./Checkout.css";
 import Header from "../../components/Header";
@@ -18,8 +18,7 @@ const countryOptions = [{ value: "India", label: "India" }];
 
 
 const Checkout = () => {
-  const [selectedState, setSelectedState] = useState(null);
-
+  
 
   
   const validationSchema = Yup.object().shape({

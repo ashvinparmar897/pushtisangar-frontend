@@ -4,9 +4,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import image1 from "../images/cdown.jpg";
 import image2 from "../images/cdown2.jpg";
-import image3 from "../images/cdown3.jpg";
 import image4 from "../images/cdown4.jpg";
-import image5 from "../images/cdown5.jpg";
 import image6 from "../images/cdown6.jpg";
 const dealsData = [
   {
@@ -71,10 +69,6 @@ const Deals_Of_the_day = () => {
             style={{ visibility: "visible", animationName: "fadeIn" }}
           >
             <h3 className="fs-1">Deals Of The Day</h3>
-            {/* <Link className="show-all" to="#">
-              All Deals
-              <i className="fi-rs-angle-right" />
-            </Link> */}
           </div>
           <div className="row">
             {dealsData.map((deal) => (
@@ -95,7 +89,6 @@ const Deals_Of_the_day = () => {
                     </div>
                   </div>
                   <div className="product-content-wrap deal-product-content">
-                    
                     <div className="timer-container">
                       <div className="timer">
                         {days}
@@ -130,7 +123,9 @@ const Deals_Of_the_day = () => {
                       <div className="product-card-bottom">
                         <div className="product-price">
                           <span className="deal-new-price">₹{deal.price}</span>
-                          <span className="old-price deal-old-price">₹{deal.oldPrice}</span>
+                          <span className="old-price deal-old-price">
+                            ₹{deal.oldPrice}
+                          </span>
                         </div>
                         <div className="add-cart">
                           <Link className="add deal-cart" to="#">

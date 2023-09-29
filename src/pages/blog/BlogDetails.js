@@ -5,7 +5,7 @@ import Subscribe from "../../components/Subscribe";
 import Featured from "../../components/Featured";
 import MidFooter from "../../components/MidFooter";
 import bdetail from "../../images/bt1.jpg";
-import cmt from "../../images/comment1.png";
+
 import author from "../../images/author-1.png";
 import sideimage from "../../images/side-image.jpg";
 import logo from "../../images/favIcon.png";
@@ -51,7 +51,7 @@ const BlogDetails = () => {
                         <div className="single-header-meta">
                           <div className="entry-meta meta-1 font-xs mt-15 mb-15">
                             <Link className="author-avatar" to="#">
-                              <img className="img-circle" src={author} alt />
+                              <img className="img-circle" src={author} alt='img'/>
                             </Link>
                             <span className="post-by">
                               By <Link to="#">Manish Sharma</Link>
@@ -80,7 +80,7 @@ const BlogDetails = () => {
                     </div>
                   </div>
                   <figure className="single-thumbnail">
-                    <img src={bdetail} alt />
+                    <img src={bdetail} alt='img'/>
                   </figure>
                   <div className="single-content">
                     <div className="row">
@@ -110,7 +110,7 @@ const BlogDetails = () => {
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Vastra
                           </Link>
                           
@@ -118,7 +118,7 @@ const BlogDetails = () => {
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Shringar
                           </Link>
                           
@@ -126,7 +126,7 @@ const BlogDetails = () => {
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Karnaful{" "}
                           </Link>
                           
@@ -134,7 +134,7 @@ const BlogDetails = () => {
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Mukhravind
                           </Link>
                           
@@ -142,7 +142,7 @@ const BlogDetails = () => {
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Netra
                           </Link>
                           
@@ -154,7 +154,7 @@ const BlogDetails = () => {
                       className="banner-img wow fadeIn mb-0 animated d-lg-block d-none animated"
                       style={{ visibility: "visible", minHeight:'300px' }}
                     >
-                      <img src={sideimage} alt />
+                      <img src={sideimage} alt='img'/>
                       <div className="baner-text">
                         <span>HOT DEALS</span>
                         <h4 className="fs-6 mt-4">
@@ -170,7 +170,7 @@ const BlogDetails = () => {
               </div>
               <div className="row">
                 <div className="col-md-4">
-                  <img src={bimage} />
+                  <img src={bimage} alt='' />
                 </div>
                 <div className="col-md-8">
                   <p>
@@ -208,7 +208,7 @@ const BlogDetails = () => {
                   <div className="author-bio p-30 mt-80 border-radius-15 bg-white">
                     <div className="author-image mb-4">
                       <Link to="#">
-                        <img src={author} alt className="avatar" />
+                        <img src={author} alt='img'className="avatar" />
                       </Link>
                       <div className="author-infor">
                         <h5 className="mb-5">Manish Sharma</h5>
@@ -233,7 +233,7 @@ const BlogDetails = () => {
                   <div className="author-bio p-30 mt-3 border-radius-15 bg-white">
                     <div className="author-image mb-4">
                       <Link to="#">
-                        <img src={author} alt className="avatar" />
+                        <img src={author} alt='img'className="avatar" />
                       </Link>
                       <div className="author-infor">
                         <h5 className="mb-5">Manish Sharma</h5>

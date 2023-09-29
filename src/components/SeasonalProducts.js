@@ -106,12 +106,12 @@ const SeasonalProducts = () => {
                           <img
                             className="default-img"
                             src={S1}
-                            alt
+                            alt=''
                           />
                           <img
                             className="hover-img"
                             src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg"
-                            alt
+                            alt=''
                           />
                         </Link>
                       </div>
@@ -183,12 +183,12 @@ const SeasonalProducts = () => {
                           <img
                             className="default-img"
                             src={S2}
-                            alt
+                            alt=''
                           />
                           <img
                             className="hover-img"
                             src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-4-2.jpg"
-                            alt
+                            alt=''
                           />
                         </Link>
                       </div>
@@ -260,12 +260,12 @@ const SeasonalProducts = () => {
                           <img
                             className="default-img"
                             src={S3}
-                            alt
+                            alt=''
                           />
                           <img
                             className="hover-img"
                             src={S4}
-                            alt
+                            alt=''
                           />
                         </Link>
                       </div>
@@ -337,12 +337,12 @@ const SeasonalProducts = () => {
                           <img
                             className="default-img"
                             src={S5}
-                            alt
+                            alt=''
                           />
                           <img
                             className="hover-img"
                             src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
+                            alt=''
                           />
                         </Link>
                       </div>
@@ -414,12 +414,12 @@ const SeasonalProducts = () => {
                           <img
                             className="default-img"
                             src={S6}
-                            alt
+                            alt=''
                           />
                           <img
                             className="hover-img"
                             src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
+                            alt=''
                           />
                         </Link>
                       </div>
@@ -491,12 +491,12 @@ const SeasonalProducts = () => {
                           <img
                             className="default-img"
                             src={S7}
-                            alt
+                            alt=''
                           />
                           <img
                             className="hover-img"
                             src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
+                            alt=''
                           />
                         </Link>
                       </div>
@@ -568,12 +568,12 @@ const SeasonalProducts = () => {
                           <img
                             className="default-img"
                             src={S8}
-                            alt
+                            alt=''
                           />
                           <img
                             className="hover-img"
                             src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-5-2.jpg"
-                            alt
+                            alt=''
                           />
                         </Link>
                       </div>
@@ -646,12 +646,12 @@ const SeasonalProducts = () => {
                           <img
                             className="default-img"
                             src={S1}
-                            alt
+                            alt=''
                           />
                           <img
                             className="hover-img"
                             src="https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-1-2.jpg"
-                            alt
+                            alt=''
                           />
                         </Link>
                       </div>

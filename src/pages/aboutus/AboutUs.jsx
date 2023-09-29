@@ -38,7 +38,7 @@ const AboutUs = () => {
           <div className="container">
             <section className="row align-items-center mb-50">
               <div className="col-lg-6">
-                <img src={AboutImg} alt className="border-radius-15 " />
+                <img src={AboutImg} alt='img'className="border-radius-15 " />
               </div>
               <div className="col-lg-6">
                 <div className="pl-25">
@@ -313,7 +313,7 @@ const AboutUs = () => {
                           </clipPath>
                         </defs>
                       </svg>
-                      {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-2.svg" alt /> */}
+                      {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-2.svg" alt='img'/> */}
                     </div>
                     <h4 className="mt-3">Free Delivery</h4>
                     <p className="mt-3">
@@ -382,7 +382,7 @@ const AboutUs = () => {
                         </defs>
                       </svg>
 
-                      {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-5.svg" alt /> */}
+                      {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-5.svg" alt='img'/> */}
                     </div>
                     <h4 className="mt-3">Easy Returns</h4>
                     <p className="mt-3">
@@ -445,7 +445,7 @@ const AboutUs = () => {
                         </defs>
                       </svg>
 
-                      {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-3.svg" alt /> */}
+                      {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-3.svg" alt='img'/> */}
                     </div>
                     <h4 className="mt-3">Great Daily Deal</h4>
                     <p className="mt-3">
@@ -459,7 +459,7 @@ const AboutUs = () => {
             <section className="container align-items-center mb-50">
               <div className="row mb-50 align-items-center">
                 <div className="col-lg-7 ">
-                  <img src={AboutImg} alt />
+                  <img src={AboutImg} alt='img'/>
                 </div>
                 <div className="col-lg-5">
                   <h4 className="mb-20 text-muted our-performence">Our performance</h4>

@@ -76,7 +76,6 @@ const Featured = () => {
                       </clipPath>
                     </defs>
                   </svg>
-                  {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-1.svg" alt /> */}
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Best prices &amp; offers</h3>
@@ -158,7 +157,6 @@ const Featured = () => {
                       </clipPath>
                     </defs>
                   </svg>
-                  {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-2.svg" alt /> */}
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Free delivery</h3>
@@ -196,7 +194,7 @@ const Featured = () => {
                     <script xmlns="" />
                     <script xmlns="" />
                     <g clip-path="url(#clip0)">
-                      <circle cx="47" cy="49" r="18"  />
+                      <circle cx="47" cy="49" r="18" />
                       <path
                         d="M50.6413 29.9514V16.8576C50.6413 16.4828 50.4682 16.1365 50.2233 15.8625L35.5432 0.447107C35.2692 0.158889 34.8796 0 34.4906 0H11.2157C6.91879 0 3.48657 3.50401 3.48657 7.80142V51.8127C3.48657 56.1101 6.91879 59.5566 11.2157 59.5566H29.5877C33.0627 65.3247 39.3792 69.1892 46.5746 69.1892C57.5053 69.1892 66.4316 60.3062 66.4316 49.3613C66.4464 39.8005 59.5819 31.8117 50.6413 29.9514ZM35.9327 5.06176L45.7818 15.4297H39.3935C37.49 15.4297 35.9327 13.8582 35.9327 11.9547V5.06176ZM11.2157 56.6723C8.5193 56.6723 6.37086 54.5091 6.37086 51.8127V7.80142C6.37086 5.09027 8.5193 2.88429 11.2157 2.88429H33.0484V11.9547C33.0484 15.4587 35.8894 18.314 39.3935 18.314H47.7571V29.5761C47.3247 29.5619 46.9784 29.5186 46.6037 29.5186C41.5709 29.5186 36.942 31.4511 33.4523 34.4795H15.1383C14.3449 34.4795 13.6961 35.1283 13.6961 35.9211C13.6961 36.7145 14.3449 37.3633 15.1383 37.3633H30.7701C29.7461 38.8054 28.8951 40.2476 28.2321 41.8338H15.1383C14.3449 41.8338 13.6961 42.4826 13.6961 43.276C13.6961 44.0688 14.3449 44.7181 15.1383 44.7181H27.2946C26.9341 46.1603 26.7467 47.7608 26.7467 49.3613C26.7467 51.9568 27.2514 54.5239 28.1598 56.6871H11.2157V56.6723ZM46.5894 66.3197C37.245 66.3197 29.6453 58.7199 29.6453 49.3755C29.6453 40.0312 37.2302 32.4314 46.5894 32.4314C55.948 32.4314 63.533 40.0312 63.533 49.3755C63.533 58.7199 55.9338 66.3197 46.5894 66.3197Z"
                         fill="#dfaaaa"
@@ -221,8 +219,6 @@ const Featured = () => {
                       </clipPath>
                     </defs>
                   </svg>
-
-                  {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-3.svg" alt /> */}
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Great daily deal</h3>
@@ -321,8 +317,6 @@ const Featured = () => {
                       </clipPath>
                     </defs>
                   </svg>
-
-                  {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-4.svg" alt /> */}
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Wide assortment</h3>
@@ -392,8 +386,6 @@ const Featured = () => {
                       </clipPath>
                     </defs>
                   </svg>
-
-                  {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-5.svg" alt /> */}
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Easy returns</h3>
@@ -453,7 +445,6 @@ const Featured = () => {
                       </clipPath>
                     </defs>
                   </svg>
-                  {/* <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/icon-6.svg" alt /> */}
                 </div>
                 <div className="banner-text text-start">
                   <h3 className="icon-box-title">Safe delivery</h3>

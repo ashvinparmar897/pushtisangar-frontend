@@ -105,7 +105,7 @@ const Shringar = () => {
                           <img
                             className="default-img"
                             src={S1}
-                            alt
+                            alt=''
                           />
                          
                         </Link>
@@ -156,7 +156,7 @@ const Shringar = () => {
                           <img
                             className="default-img"
                             src={S2}
-                            alt
+                            alt=''
                           />
                         
                         </Link>
@@ -207,7 +207,7 @@ const Shringar = () => {
                           <img
                             className="default-img"
                             src={S3}
-                            alt
+                            alt=''
                           />
                        
                         </Link>
@@ -258,7 +258,7 @@ const Shringar = () => {
                           <img
                             className="default-img"
                             src={S4}
-                            alt
+                            alt=''
                           />
                         
                         </Link>
@@ -309,7 +309,7 @@ const Shringar = () => {
                           <img
                             className="default-img"
                             src={S2}
-                            alt
+                            alt=''
                           />
                         
                         </Link>
@@ -360,7 +360,7 @@ const Shringar = () => {
                           <img
                             className="default-img"
                             src={S1}
-                            alt
+                            alt=''
                           />
                          
                         </Link>
@@ -411,7 +411,7 @@ const Shringar = () => {
                           <img
                             className="default-img"
                             src={S2}
-                            alt
+                            alt=''
                           />
                          
                         </Link>
@@ -463,7 +463,7 @@ const Shringar = () => {
                           <img
                             className="default-img"
                             src={S3}
-                            alt
+                            alt=''
                           />
                          
                         </Link>

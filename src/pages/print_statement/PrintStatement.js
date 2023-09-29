@@ -26,7 +26,7 @@ const PrintStatement = () => {
       <div className="col-sm-12 checkout-login">
         <div className="row align-items-center">
           <div className="col-md-5">
-            <img src={logo} className="img-fluid center-block text-center" style={{width: 200}} />
+            <img src={logo} className="img-fluid center-block text-center" alt='img' style={{width: 200}} />
           </div>
           <div className="col-md-7">
             <div className="invoice-address">
@@ -177,7 +177,7 @@ const PrintStatement = () => {
                     </td>
                     <td>
                       <div className="img-dlt text-center">
-                        <img src="assets/img/order-statement/1.jpg" width={70} className="img-responsive center-block" />
+                        <img src="assets/img/order-statement/1.jpg" alt='img' width={70} className="img-responsive center-block" />
                       </div>
                     </td>
                     <td>
@@ -204,7 +204,7 @@ const PrintStatement = () => {
                     </td>
                     <td>
                       <div className="img-dlt text-center">
-                        <img src="assets/img/order-statement/2.jpg" width={70} className="img-responsive center-block" />
+                        <img src="assets/img/order-statement/2.jpg" alt='img' width={70} className="img-responsive center-block" />
                       </div>
                     </td>
                     <td>

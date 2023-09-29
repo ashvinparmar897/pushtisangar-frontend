@@ -113,7 +113,7 @@ const Vastra = () => {
                           <img
                             className="default-img"
                             src={Vastra1}
-                            alt
+                            alt='img'
                           />
                        
                         </Link>
@@ -164,7 +164,7 @@ const Vastra = () => {
                           <img
                             className="default-img"
                             src={Vastra2}
-                            alt
+                            alt='img'
                           />
                         
                         </Link>
@@ -215,7 +215,7 @@ const Vastra = () => {
                           <img
                             className="default-img"
                             src={Vastra3}
-                            alt
+                            alt='img'
                           />
                          
                         </Link>
@@ -266,7 +266,7 @@ const Vastra = () => {
                           <img
                             className="default-img"
                             src={Vastra4}
-                            alt
+                            alt='img'
                           />
                        
                         </Link>
@@ -317,7 +317,7 @@ const Vastra = () => {
                           <img
                             className="default-img"
                             src={Vastra5}
-                            alt
+                            alt='img'
                           />
                        
                         </Link>
@@ -368,7 +368,7 @@ const Vastra = () => {
                           <img
                             className="default-img"
                             src={Vastra1}
-                            alt
+                            alt='img'
                           />
                          
                         </Link>
@@ -419,7 +419,7 @@ const Vastra = () => {
                           <img
                             className="default-img"
                             src={Vastra2}
-                            alt
+                            alt='img'
                           />
                          
                         </Link>
@@ -471,7 +471,7 @@ const Vastra = () => {
                           <img
                             className="default-img"
                             src={Vastra3}
-                            alt
+                            alt='img'
                           />
                         
                         </Link>

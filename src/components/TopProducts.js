@@ -7,10 +7,7 @@ import S2 from "../images/s2.jpg";
 import S3 from "../images/s3.jpg";
 import S4 from "../images/s4.jpg";
 import S5 from "../images/s5.jpg";
-import S6 from "../images/s6.jpg";
-import S7 from "../images/s7.jpg";
-import S8 from "../images/s8.jpg";
-import S9 from "../images/s9.jpg";
+
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
@@ -64,77 +61,7 @@ const TopProducts = () => {
       price: 238.85,
       oldPrice: 245.8,
     },
-    // {
-    //   id: 1,
-    //   imageUrl: S6,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Second Most Popular Zari in Vastra",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S7,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Zari with different types of vastra",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    //   color: "#f74b81",
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S8,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Different color zari products",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S9,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Colourful Zari in vastra category",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S1,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Shangar",
-    //   name: "God Shanagar with best modification",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S5,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Vastra Zari By Pushtimarg Web Aplication",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S6,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Vastra Zari By Pushtimarg Web Aplication",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
+   
 
     // Add more product objects here
   ];

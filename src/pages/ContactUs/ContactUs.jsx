@@ -189,7 +189,7 @@ const ContactUs = () => {
             </div>
           </div>
           <div className="col-lg-4  col-md-6 pl-50 d-lg-block d-none">
-            <img className="border-radius-15 mt-50" src='' alt />
+            <img className="border-radius-15 mt-50" src='' alt='img'/>
           </div>
         </div>
       </Container>

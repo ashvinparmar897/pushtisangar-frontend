@@ -16,10 +16,7 @@ import S2 from "../../images/s2.jpg";
 import S3 from "../../images/s3.jpg";
 import S4 from "../../images/s4.jpg";
 import S5 from "../../images/s5.jpg";
-import S6 from "../../images/s6.jpg";
-import S7 from "../../images/s7.jpg";
-import S8 from "../../images/s8.jpg";
-import S9 from "../../images/s9.jpg";
+
 import { Link,  useNavigate } from "react-router-dom";
 import Preloader from '../../components/Loader'
 import MobileSidebar from '../../components/MobileSidebar'
@@ -32,7 +29,7 @@ import MobileSidebar from '../../components/MobileSidebar'
 
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(cover1); // Default selected image
-  const [selectedColors, setSelectedColors] = useState([]);
+  
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
   const navigate = useNavigate();
@@ -54,14 +51,7 @@ const ProductDetails = () => {
   const handleThumbClick = (imageURL) => {
     setSelectedImage(imageURL);
   };
-  const handleColorChange = (color) => {
-    // Toggle the selected color
-    if (selectedColors.includes(color)) {
-      setSelectedColors(selectedColors.filter((c) => c !== color));
-    } else {
-      setSelectedColors([...selectedColors, color]);
-    }
-  };
+ 
   const products = [
     {
       id: 1,
@@ -116,107 +106,7 @@ const ProductDetails = () => {
       price: 238.85,
       oldPrice: 245.8,
     },
-    // {
-    //   id: 1,
-    //   imageUrl: S6,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Second Most Popular Zari in Vastra",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S7,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Zari with different types of vastra",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    //   color: "#f74b81",
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S8,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Different color zari products",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S9,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Colourful Zari in vastra category",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S1,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Shangar",
-    //   name: "God Shanagar with best modification",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S5,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Vastra Zari By Pushtimarg Web Aplication",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S6,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Vastra Zari By Pushtimarg Web Aplication",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S4,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Shringar",
-    //   name: "Popular Product on Shringar Products",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S5,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Best Zari in Vastra Category",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S6,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Second Most Popular Zari in Vastra",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
+   
 
     // Add more product objects here
   ];
@@ -328,15 +218,7 @@ const ProductDetails = () => {
               <li className="nav-item">
                 <Link className="nav-link active" id="Description-tab" data-bs-toggle="tab" to='#'>Description</Link>
               </li>
-              {/* <li className="nav-item">
-                <Link className="nav-link" id="Additional-info-tab" data-bs-toggle="tab" to='#'>Additional info</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" id="Vendor-info-tab" data-bs-toggle="tab" to='#'>Vendor</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" id="Reviews-tab" data-bs-toggle="tab" to='#'>Reviews (3)</Link>
-              </li> */}
+           
             </ul>
             <div className="tab-content shop_info_tab entry-main-content">
               <div className="tab-pane fade show active" id="Description">
@@ -346,21 +228,15 @@ Our meticulously curated range of attire is a testament to craftsmanship, qualit
 When you adorn God Clothes, you're not just wearing clothing; you're embracing a sense of empowerment and grace. Our garments are more than mere fabric; they're a manifestation of divine inspiration, ensuring you feel your best and most confident, no matter the occasion.</p>
                   <p>From the moment you slip into our clothing, you'll notice the difference. The softness of the fabric, the attention to detail in the stitching, and the flattering cuts all combine to offer you a heavenly experience. Our designs are thoughtfully crafted to complement your individuality, making you feel like a deity of fashion.
 Our commitment to quality is unwavering. We source the finest materials and employ skilled artisans to create each piece, ensuring that every God Clothes garment is a masterpiece in its own right. We take pride in delivering fashion that stands the test of time, both in terms of durability and style.</p>
-                  {/* <ul className="product-more-infor mt-30">
-                    <li><span>Type Of Packing</span> Bottle</li>
-                    <li><span>Color</span> Green, Pink, Powder Blue, Purple</li>
-                    <li><span>Quantity Per Case</span> 100ml</li>
-                    <li><span>Ethyl Alcohol</span> 70%</li>
-                    <li><span>Piece In One</span> Carton</li>
-                  </ul> */}
+                 
                   <hr className="wp-block-separator is-style-dots" />
-                  {/* <p>Laconic overheard dear woodchuck wow this outrageously taut beaver hey hello far meadowlark imitatively egregiously hugged that yikes minimally unanimous pouted flirtatiously as beaver beheld above forward energetic across this jeepers beneficently cockily less a the raucously that magic upheld far so the this where crud then below after jeez enchanting drunkenly more much wow callously irrespective limpet.</p> */}
+                
                   <h4 className="mt-30">Packaging &amp; Delivery</h4>
                   <hr className="wp-block-separator is-style-wide" />
                   <p>Discover a range that encompasses a spectrum of choices, from casual wear that keeps you comfortable during your everyday adventures to exquisite ensembles that make you the center of attention at special events. Whether you're seeking timeless classics or the latest fashion trends with a divine twist, we have it all.
 At God Clothes, we believe that fashion should inspire confidence and empower self-expression. Each piece in our collection is an invitation to embrace your uniqueness and let your inner divinity shine.
 Experience fashion that transcends earthly confines and reaches new heights of elegance and grace. Explore God Clothes today and elevate your style to a celestial level.</p>
-                  {/* <p>Scallop or far crud plain remarkably far by thus far iguana lewd precociously and and less rattlesnake contrary caustic wow this near alas and next and pled the yikes articulate about as less cackled dalmatian in much less well jeering for the thanks blindly sentimental whimpered less across objectively fanciful grimaced wildly some wow and rose jeepers outgrew lugubrious luridly irrationally attractively dachshund.</p> */}
+                 
                  
                   
                 </div>
@@ -457,7 +333,7 @@ Experience fashion that transcends earthly confines and reaches new heights of e
               </div>
               <div className="tab-pane fade d-none" id="Vendor-info">
                 <div className="vendor-logo d-flex mb-30">
-                  <img src="assets/imgs/vendor/vendor-18.svg" alt />
+                  <img src="assets/imgs/vendor/vendor-18.svg" alt='img'/>
                   <div className="vendor-name ml-15">
                     <h6>
                       <Link to='#'>Noodles Co.</Link>
@@ -471,8 +347,8 @@ Experience fashion that transcends earthly confines and reaches new heights of e
                   </div>
                 </div>
                 <ul className="contact-infor mb-50">
-                  <li><img src="assets/imgs/theme/icons/icon-location.svg" alt /><strong>Address: </strong> <span>5171 W Campbell Ave undefined Kent, Utah 53127 United States</span></li>
-                  <li><img src="assets/imgs/theme/icons/icon-contact.svg" alt /><strong>Contact Seller:</strong><span>(+91) - 540-025-553</span></li>
+                  <li><img src="assets/imgs/theme/icons/icon-location.svg" alt='img'/><strong>Address: </strong> <span>5171 W Campbell Ave undefined Kent, Utah 53127 United States</span></li>
+                  <li><img src="assets/imgs/theme/icons/icon-contact.svg" alt='img'/><strong>Contact Seller:</strong><span>(+91) - 540-025-553</span></li>
                 </ul>
                 <div className="d-flex mb-55">
                   <div className="mr-30">
@@ -500,7 +376,7 @@ Experience fashion that transcends earthly confines and reaches new heights of e
                         <div className="single-comment justify-content-between d-flex mb-30">
                           <div className="user justify-content-between d-flex">
                             <div className="thumb text-center">
-                              <img src="assets/imgs/blog/author-2.png" alt />
+                              <img src="assets/imgs/blog/author-2.png" alt='img'/>
                               <Link to="#" className="font-heading text-brand">Sienna</Link>
                             </div>
                             <div className="desc">
@@ -519,7 +395,7 @@ Experience fashion that transcends earthly confines and reaches new heights of e
                         <div className="single-comment justify-content-between d-flex mb-30 ml-30">
                           <div className="user justify-content-between d-flex">
                             <div className="thumb text-center">
-                              <img src="assets/imgs/blog/author-3.png" alt />
+                              <img src="assets/imgs/blog/author-3.png" alt='img'/>
                               <Link to="#" className="font-heading text-brand">Brenna</Link>
                             </div>
                             <div className="desc">
@@ -538,7 +414,7 @@ Experience fashion that transcends earthly confines and reaches new heights of e
                         <div className="single-comment justify-content-between d-flex">
                           <div className="user justify-content-between d-flex">
                             <div className="thumb text-center">
-                              <img src="assets/imgs/blog/author-4.png" alt />
+                              <img src="assets/imgs/blog/author-4.png" alt='img'/>
                               <Link to="#" className="font-heading text-brand">Gemma</Link>
                             </div>
                             <div className="desc">

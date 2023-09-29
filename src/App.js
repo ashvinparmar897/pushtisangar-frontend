@@ -22,7 +22,7 @@ import Blog from './pages/blog/Blog';
 import AboutUs from './pages/aboutus/AboutUs';
 import BlogDetails from './pages/blog/BlogDetails';
 import ContactUs from './pages/ContactUs/ContactUs';
-import Gallery from './pages/Gallery/Gallery.jsx';
+import GalleryPage from './pages/Gallery/GalleryPage.jsx';
 import Terms_Condition from './pages/terms_conditon/Terms_Condition';
 import AllCategory from './pages/all_category/AllCategory';
 import GalleryDetails from './pages/Gallery/GaleryDetails.jsx';
@@ -59,7 +59,7 @@ function App() {
       <Route path='/blog-details' element={<BlogDetails/>} />
       <Route path='/about-us' element={<AboutUs/>} />
       <Route path='/contact-us' element={<ContactUs/>} />
-      <Route path='/gallery' element={<Gallery/>} />
+      <Route path='/gallery' element={<GalleryPage/>} />
       <Route path='/terms-condition' element={<Terms_Condition/>} />
       <Route path='/all-category' element={<AllCategory/>} />
       <Route path='/gallery-details' element={<GalleryDetails/>} />

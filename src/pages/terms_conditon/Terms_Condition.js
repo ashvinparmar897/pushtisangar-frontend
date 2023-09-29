@@ -41,7 +41,7 @@ const Terms_Condition = () => {
                       <h2>Terms & Conditions</h2>
                       <div className="entry-meta meta-1 meta-3 font-xs mt-15 mb-15">
                         <span className="post-by">
-                          By <a href="#">Manish</a>
+                          By <Link to='#'>Manish</Link>
                         </span>
                         <span className="post-on has-dot">9 April 2020</span>
                         <span className="time-reading has-dot">
@@ -178,7 +178,7 @@ const Terms_Condition = () => {
                           <li>
                             <Link to="#">
                               {" "}
-                              <img src={logo} alt />
+                              <img src={logo} alt='img'/>
                               Vastra
                             </Link>
                             
@@ -186,7 +186,7 @@ const Terms_Condition = () => {
                           <li>
                             <Link to="#">
                               {" "}
-                              <img src={logo} alt />
+                              <img src={logo} alt='img'/>
                               Shringar
                             </Link>
                             
@@ -194,7 +194,7 @@ const Terms_Condition = () => {
                           <li>
                             <Link to="#">
                               {" "}
-                              <img src={logo} alt />
+                              <img src={logo} alt='img'/>
                               Karnaful{" "}
                             </Link>
                             
@@ -202,7 +202,7 @@ const Terms_Condition = () => {
                           <li>
                             <Link to="#">
                               {" "}
-                              <img src={logo} alt />
+                              <img src={logo} alt='img'/>
                               Mukhravind
                             </Link>
                             
@@ -210,7 +210,7 @@ const Terms_Condition = () => {
                           <li>
                             <Link to="#">
                               {" "}
-                              <img src={logo} alt />
+                              <img src={logo} alt='img'/>
                               Netra
                             </Link>
                             
@@ -222,7 +222,7 @@ const Terms_Condition = () => {
                         className="banner-img wow fadeIn mb-0 animated d-lg-block d-none animated"
                         style={{ visibility: "visible", minHeight: "300px" }}
                       >
-                        <img src={sideimage} alt />
+                        <img src={sideimage} alt='img'/>
                         <div className="baner-text">
                           <span>HOT DEALS</span>
                           <h4 className="fs-6 mt-4">

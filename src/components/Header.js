@@ -8,7 +8,8 @@ import smallImage from "../images/small-image-2.jpg";
 import smallsangar from "../images/smallsanagr.jpg";
 import { Link } from "react-router-dom";
 import { BsPerson, BsCart } from "react-icons/bs";
-
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 const options = [
   { value: "Shringar", label: "Shringar" },
   { value: "Vastra", label: "Vastra" },
@@ -22,9 +23,9 @@ const options = [
 const Header = () => {
   const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
   const [isAccountDropdownOpen, setAccountDropdownOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+ 
   const [selectedOption, setSelectedOption] = useState(null);
-  const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+
 
   const [isVenderDropdownOpen, setVenderDropdownOpen] = useState(false);
   const [isMegaMenuDropdownOpen, setMegaMenuDropdownOpen] = useState(false);
@@ -77,9 +78,7 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
-  const closeDropdown = () => {
-    setIsOpen(false);
-  };
+ 
 
   const handlePageHover = () => {
     setPagesDropDownOpen(true);
@@ -102,12 +101,10 @@ const Header = () => {
     setVenderDropdownOpen(false);
   };
 
-  const handleCategoryHover = () => {
-    setCategoryDropdownOpen(true);
-  };
-  const handleCategoryLeave = () => {
-    setCategoryDropdownOpen(false);
-  };
+  // const handleCategoryHover = () => {
+  //   setCategoryDropdownOpen(true);
+  // };
+
 
   const handleCartHover = () => {
     setCartDropdownOpen(true);
@@ -124,132 +121,91 @@ const Header = () => {
   const handleAccountLeave = () => {
     setAccountDropdownOpen(false);
   };
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-  const validateEmail = (email) => {
-    // Implement email validation logic here
-    if (!email) {
-      return "Email is required.";
-    }
-    // Add more validation rules as needed
-    return "";
-  };
+ 
+ 
 
-  const validatePassword = (password) => {
-    // Implement password validation logic here
-    if (!password) {
-      return "Password is required.";
-    }
-    // Add more validation rules as needed
-    return "";
+
+
+
+
+
+
+  // Initial values for the forms
+  const initialValuesLogin = {
+    email: "",
+    password: "",
   };
 
-  const handleEmailChange = (e) => {
-    const { value } = e.target;
-    setEmail(value);
-    const errorMessage = validateEmail(value);
-    setErrors({ ...errors, email: errorMessage });
+  const initialValuesForgotPassword = {
+    email: "",
   };
 
-  const handlePasswordChange = (e) => {
-    const { value } = e.target;
-    setPassword(value);
-    const errorMessage = validatePassword(value);
-    setErrors({ ...errors, password: errorMessage });
+  const initialValuesSignup = {
+    firstName: "",
+    lastName: "",
+    signupEmail: "",
+    signupPassword: "",
+    confirmPassword: "",
+    mobileNumber: "",
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Validation schemas
+  const loginSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().required("Password is required"),
+  });
 
-    const emailError = validateEmail(email);
-    const passwordError = validatePassword(password);
+  const forgotPasswordSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+  });
 
-    if (!emailError && !passwordError) {
-      // All validation checks passed, you can proceed with form submission
-      // Implement your login logic here
-    } else {
-      // Update the errors state to display validation errors
-      setErrors({ email: emailError, password: passwordError });
-    }
-  };
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  const signupSchema = Yup.object().shape({
+    firstName: Yup.string().required("First Name is required"),
+    lastName: Yup.string().required("Last Name is required"),
+    signupEmail: Yup.string().email("Invalid email").required("Email is required"),
+    signupPassword: Yup.string().required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("signupPassword"), null], "Passwords must match")
+      .required("Confirm Password is required"),
+    mobileNumber: Yup.string().required("Mobile Number is required"),
+  });
 
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [signupEmail, setSignupEmail] = useState('');
-  const [signupPassword, setSignupPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [signupErrors, setSignupErrors] = useState({});
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    const validationErrors = {};
 
-    // Validate first name
-    if (!firstName.trim()) {
-      validationErrors.firstName = 'First Name is required';
-    }
 
-    // Validate last name
-    if (!lastName.trim()) {
-      validationErrors.lastName = 'Last Name is required';
-    }
 
-    // Validate signup email
-    if (!signupEmail.trim()) {
-      validationErrors.signupEmail = 'Email is required';
-    } else if (!isValidEmail(signupEmail)) {
-      validationErrors.signupEmail = 'Invalid email address';
-    }
+ 
+  const handleLogin = (values, { setSubmitting }) => {
+    // Implement your login logic here using the 'values' object
+    // You can make API requests, set authentication tokens, etc.
 
-    // Validate signup password
-    if (!signupPassword.trim()) {
-      validationErrors.signupPassword = 'Password is required';
-    } else if (signupPassword.length < 6) {
-      validationErrors.signupPassword = 'Password must be at least 6 characters';
-    }
-
-    // Validate password confirmation
-    if (signupPassword !== confirmPassword) {
-      validationErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    // Validate mobile number
-    if (!mobileNumber.trim()) {
-      validationErrors.mobileNumber = 'Mobile Number is required';
-    } else if (!isValidMobileNumber(mobileNumber)) {
-      validationErrors.mobileNumber = 'Invalid mobile number';
-    }
-
-    // Check if there are any validation errors
-    if (Object.keys(validationErrors).length === 0) {
-      // If no errors, perform signup logic here
-      console.log('Signed up:', { firstName, lastName, signupEmail, mobileNumber });
-    } else {
-      // If there are errors, update the signupErrors state with error messages
-      setSignupErrors(validationErrors);
-    }
+    // Once the submission is complete, setSubmitting(false);
+    setSubmitting(false);
   };
 
-  // Helper function to validate email
-  const isValidEmail = (email) => {
-    // You can implement your email validation logic here
-    // For simplicity, this example uses a basic pattern
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
+
+  const handleForgotPasswordSubmit = (values, { setSubmitting }) => {
+    // Implement your forgot password logic here using the 'values' object
+    // You can make API requests to send a reset email, etc.
+
+    // Once the submission is complete, setSubmitting(false);
+    setSubmitting(false);
   };
 
-  // Helper function to validate mobile number
-  const isValidMobileNumber = (mobileNumber) => {
-    // You can implement your mobile number validation logic here
-    // For simplicity, this example checks if it contains only digits
-    return /^\d+$/.test(mobileNumber);
+  const handleSignupSubmit = (values, { setSubmitting }) => {
+    // Implement your sign-up logic here using the 'values' object
+    // You can make API requests to create a new user, etc.
+
+    // Once the submission is complete, setSubmitting(false);
+    setSubmitting(false);
   };
+
+  
+
+
+
+
   return (
     <header className="header-area header-style-1 header-height-2">
       <div className="header-top header-top-ptb-1  d-lg-block">
@@ -294,192 +250,215 @@ const Header = () => {
             </div>
 
             {showLoginModal && (
-              <div>
-                <div
-                  className="modal fade show"
-                  id="LoginRegister"
-                  style={{ display: "block" }}
-                  aria-modal="true"
-                >
-                  <div className="modal-dialog modal-lg">
-                    <div className="modal-content">
-                      {/* Modal body */}
-                      <div className="modal-body">
-                        <div
-                          className="login-part"
-                          style={{ display: "block" }}
-                        >
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            onClick={handleModalClose}
-                          >
-                            ×
-                          </button>
-                          <div className="row m-0">
-                            <div className="col-md-12 col-lg-8">
-                              <div className="lr-details">
-                                <h5>Sign in to PushtiShangar</h5>
-                                <form onSubmit={handleSubmit}>
-                                  <div className="billing-details mt-4">
-                                    <div className="form-group">
-                                      <input
-                                        type="text"
-                                        className="form-control login-input"
-                                        placeholder="Email Address *"
-                                        value={email}
-                                        onChange={handleEmailChange}
-                                      />
-                                      <span>
-                                        <i className="bx bx-user-circle bi bi-person-circle" />
-                                      </span>
-                                      {errors.email && (
-                                        <div className="error">
-                                          {errors.email}
-                                        </div>
-                                      )}
-                                    </div>
-                                    <div className="form-group">
-                                      <input
-                                        type="password"
-                                        className="form-control login-input"
-                                        placeholder="Password *"
-                                        value={password}
-                                        onChange={handlePasswordChange}
-                                      />
-                                      <span>
-                                        <i className="bx bxs-lock bi bi-lock-fill" />
-                                      </span>
-                                      {errors.password && (
-                                        <div className="error">
-                                          {errors.password}
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className="forogotlink text-start">
-                                    <Link
-                                      className="forgotlinking forgot_password"
-                                      onClick={handleForgotPasswordClick}
-                                      to="#"
-                                    >
-                                      Forgot Password ?
-                                    </Link>
-                                  </div>
-                                  <div className="text-center mt-3">
-                                    <button
-                                      type="submit"
-                                      className="default-btn w-50"
-                                    >
-                                      Sign In
-                                      <span />
-                                    </button>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                            <div className="col-md-12 col-lg-4 flex-col img-part">
-                              <div className="login-white-container">
-                                <h1>Hello, friend!</h1>
-                                <p>
-                                  Enjoy your personal details and start your
-                                  journey with us.
-                                </p>
-                                <div className="register">
-                                  <Link
-                                    className="createlinking register_button"
-                                    to="#"
-                                    onClick={handleSignupClick}
-                                    id
-                                  >
-                                    Sign Up
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+               <div
+               className="modal fade show"
+               id="LoginRegister"
+               style={{ display: "block" }}
+               aria-modal="true"
+             >
+               <div className="modal-dialog modal-lg">
+                 <div className="modal-content">
+                   {/* Modal body */}
+                   <div className="modal-body">
+                     <div className="login-part" style={{ display: "block" }}>
+                       <button
+                         type="button"
+                         className="close"
+                         data-dismiss="modal"
+                         onClick={handleModalClose}
+                       >
+                         ×
+                       </button>
+                       <div className="row m-0">
+                         <div className="col-md-12 col-lg-8">
+                           <div className="lr-details">
+                             <h5>Sign in to PushtiShangar</h5>
+                             <Formik
+                               initialValues={initialValuesLogin}
+                               validationSchema={loginSchema}
+                               onSubmit={handleLogin}
+                             >
+                               {({ isSubmitting }) => (
+                                 <Form>
+                                   <div className="billing-details mt-4">
+                                     <div className="form-group">
+                                       <Field
+                                         type="text"
+                                         name="email"
+                                         className="form-control login-input"
+                                         placeholder="Email Address *"
+                                       />
+                                       <span>
+                                         <i className="bx bx-user-circle bi bi-person-circle" />
+                                       </span>
+                                       <ErrorMessage
+                                         name="email"
+                                         component="div"
+                                         className="error"
+                                       />
+                                     </div>
+                                     <div className="form-group">
+                                       <Field
+                                         type="password"
+                                         name="password"
+                                         className="form-control login-input"
+                                         placeholder="Password *"
+                                       />
+                                       <span>
+                                         <i className="bx bxs-lock bi bi-lock-fill" />
+                                       </span>
+                                       <ErrorMessage
+                                         name="password"
+                                         component="div"
+                                         className="error"
+                                       />
+                                     </div>
+                                   </div>
+                                   <div className="forogotlink text-start">
+                                     <Link
+                                       className="forgotlinking forgot_password"
+                                       onClick={handleForgotPasswordClick}
+                                       to="#"
+                                     >
+                                       Forgot Password ?
+                                     </Link>
+                                   </div>
+                                   <div className="text-center mt-3">
+                                     <button
+                                       type="submit"
+                                       className="default-btn w-50"
+                                       disabled={isSubmitting}
+                                     >
+                                       Sign In
+                                       <span />
+                                     </button>
+                                   </div>
+                                 </Form>
+                               )}
+                             </Formik>
+                           </div>
+                         </div>
+                         <div className="col-md-12 col-lg-4 flex-col img-part">
+                           <div className="login-white-container">
+                             <h1>Hello, friend!</h1>
+                             <p>
+                               Enjoy your personal details and start your journey
+                               with us.
+                             </p>
+                             <div className="register">
+                               <Link
+                                 className="createlinking register_button"
+                                 to="#"
+                                 onClick={handleSignupClick}
+                                 id
+                               >
+                                 Sign Up
+                               </Link>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
             )}
             {showForgotPasswordModal && (
-              <div
-                className="modal fade show"
-                id="LoginRegister"
-                style={{ display: "block", paddingRight: 17 }}
-                aria-modal="true"
-              >
-                <div className="modal-dialog modal-lg">
-                  <div className="modal-content">
-                    {/* Modal body */}
-                    <div className="modal-body">
-                      <div className="forgot-password-part" style={{}}>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          onClick={handleForgotPasswordModalClose}
-                        >
-                          ×
-                        </button>
-                        <div className="row m-0">
-                          <div className="col-md-12 col-lg-8">
-                            <div className="lr-details">
-                              <h5>Forgot Password</h5>
-                              <div className="billing-details mt-4">
-                                <div className="form-group">
-                                  <h6 className="mb-2">
-                                    I want to Reset Password using
-                                  </h6>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Email Address *"
-                                  />
-                                </div>
-                              </div>
-                              <div className="text-center mt-3">
-                                <Link to="#" className="default-btn w-50">
-                                  Send Email
-                                  <span
-                                    style={{ top: "-1px", left: "87.7px" }}
-                                  />
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-md-12 col-lg-4 flex-col img-part">
-                            <div className="login-white-container">
-                              <h1>Hello, friend!</h1>
-                              <p>
-                                Enjoy your personal details and start your
-                                journey with us.
-                              </p>
-                              <div className="register">
-                                <Link
-                                  className="createlinking register_button"
-                                  to="#"
-                                  onClick={handleSignupClick}
-                                  id
-                                >
-                                  Sign Up
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                   <div
+                   className="modal fade show"
+                   id="LoginRegister"
+                   style={{ display: "block", paddingRight: 17 }}
+                   aria-modal="true"
+                 >
+                   <div className="modal-dialog modal-lg">
+                     <div className="modal-content">
+                       {/* Modal body */}
+                       <div className="modal-body">
+                         <div className="forgot-password-part" style={{}}>
+                           <button
+                             type="button"
+                             className="close"
+                             data-dismiss="modal"
+                             onClick={handleForgotPasswordModalClose}
+                           >
+                             ×
+                           </button>
+                           <div className="row m-0">
+                             <div className="col-md-12 col-lg-8">
+                               <div className="lr-details">
+                                 <h5>Forgot Password</h5>
+                                 <Formik
+                                   initialValues={initialValuesForgotPassword}
+                                   validationSchema={forgotPasswordSchema}
+                                   onSubmit={handleForgotPasswordSubmit}
+                                 >
+                                   {({ isSubmitting }) => (
+                                     <Form>
+                                       <div className="billing-details mt-4">
+                                         <div className="form-group">
+                                           <h6 className="mb-2">
+                                             I want to Reset Password using
+                                           </h6>
+                                           <Field
+                                             type="text"
+                                             name="email"
+                                             className="form-control"
+                                             placeholder="Email Address *"
+                                           />
+                                            <ErrorMessage
+                                         name="email"
+                                         component="div"
+                                         className="error"
+                                       />
+                                         </div>
+                                       </div>
+                                       <div className="text-center mt-3">
+                                         <button
+                                           type="submit"
+                                           className="default-btn w-50"
+                                           disabled={isSubmitting}
+                                         >
+                                           Send Email
+                                           <span
+                                             style={{ top: "-1px", left: "87.7px" }}
+                                           />
+                                         </button>
+                                       </div>
+                                     </Form>
+                                   )}
+                                 </Formik>
+                               </div>
+                             </div>
+                             <div className="col-md-12 col-lg-4 flex-col img-part">
+                               <div className="login-white-container">
+                                 <h1>Hello, friend!</h1>
+                                 <p>
+                                   Enjoy your personal details and start your journey
+                                   with us.
+                                 </p>
+                                 <div className="register">
+                                   <Link
+                                     className="createlinking register_button"
+                                     to="#"
+                                     onClick={handleSignupClick}
+                                     id
+                                   >
+                                     Sign Up
+                                   </Link>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+         
             )}
             {showSignupModal && (
-              <div
+                <div
                 className="modal fade show"
                 id="LoginRegister"
                 style={{ display: "block", paddingRight: 17 }}
@@ -522,85 +501,96 @@ const Header = () => {
                           <div className="col-md-12 col-lg-8">
                             <div className="lr-details">
                               <h5>Create Account</h5>
-                              <form onSubmit={handleSignup}>
-                        <div className="billing-details mt-4">
-                          <div className="row">
-                            <div className="form-group col-md-6">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="First Name *"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                              />
-                             
-                              <div className="forogotlink text-start error">{signupErrors.firstName}</div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Last Name *"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                              />
-                            
-                              <div className="forogotlink text-start error">{signupErrors.lastName}</div>
-                            </div>
-                            <div className="form-group col-md-12">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Email Address *"
-                                value={signupEmail}
-                                onChange={(e) => setSignupEmail(e.target.value)}
-                              />
-                              
-                              <div className="forogotlink text-start error">{signupErrors.signupEmail}</div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Password *"
-                                value={signupPassword}
-                                onChange={(e) => setSignupPassword(e.target.value)}
-                              />
-                             
-                              <div className="forogotlink text-start error">{signupErrors.signupPassword}</div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Confirm Password *"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                              />
-                             
-                              <div className="forogotlink text-start error">{signupErrors.confirmPassword}</div>
-                            </div>
-                            <div className="form-group col-md-12">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Mobile Number *"
-                                value={mobileNumber}
-                                onChange={(e) => setMobileNumber(e.target.value)}
-                              />
-                              
-                              <div className="forogotlink text-start error">{signupErrors.mobileNumber}</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <button type="submit" className="default-btn w-50">
-                            Submit Here
-                            <span />
-                          </button>
-                        </div>
-                      </form>
-                              
+                              <Formik
+                                initialValues={initialValuesSignup}
+                                validationSchema={signupSchema}
+                                onSubmit={handleSignupSubmit}
+                              >
+                                {({ isSubmitting }) => (
+                                  <Form>
+                                    <div className="billing-details mt-4">
+                                      <div className="row">
+                                        <div className="form-group col-md-6">
+                                          <Field
+                                            type="text"
+                                            name="firstName"
+                                            className="form-control"
+                                            placeholder="First Name *"
+                                          />
+                                          <div className="forogotlink text-start error">
+                                            <ErrorMessage name="firstName" />
+                                          </div>
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                          <Field
+                                            type="text"
+                                            name="lastName"
+                                            className="form-control"
+                                            placeholder="Last Name *"
+                                          />
+                                          <div className="forogotlink text-start error">
+                                            <ErrorMessage name="lastName" />
+                                          </div>
+                                        </div>
+                                        <div className="form-group col-md-12">
+                                          <Field
+                                            type="text"
+                                            name="signupEmail"
+                                            className="form-control"
+                                            placeholder="Email Address *"
+                                          />
+                                          <div className="forogotlink text-start error">
+                                            <ErrorMessage name="signupEmail" />
+                                          </div>
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                          <Field
+                                            type="password"
+                                            name="signupPassword"
+                                            className="form-control"
+                                            placeholder="Password *"
+                                          />
+                                          <div className="forogotlink text-start error">
+                                            <ErrorMessage name="signupPassword" />
+                                          </div>
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                          <Field
+                                            type="password"
+                                            name="confirmPassword"
+                                            className="form-control"
+                                            placeholder="Confirm Password *"
+                                          />
+                                          <div className="forogotlink text-start error">
+                                            <ErrorMessage name="confirmPassword" />
+                                          </div>
+                                        </div>
+                                        <div className="form-group col-md-12">
+                                          <Field
+                                            type="text"
+                                            name="mobileNumber"
+                                            className="form-control"
+                                            placeholder="Mobile Number *"
+                                          />
+                                          <div className="forogotlink text-start error">
+                                            <ErrorMessage name="mobileNumber" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="text-center mt-3">
+                                      <button
+                                        type="submit"
+                                        className="default-btn w-50"
+                                        disabled={isSubmitting}
+                                      >
+                                        Submit Here
+                                        <span />
+                                      </button>
+                                    </div>
+                                  </Form>
+                                )}
+                              </Formik>
                             </div>
                           </div>
                         </div>
@@ -765,8 +755,8 @@ const Header = () => {
             <div className="header-nav d-none d-lg-flex">
               <div
                 className="main-categori-wrap d-none d-lg-block"
-                onMouseEnter={handleCategoryHover}
-                onMouseLeave={handleCategoryLeave}
+             
+             
               >
                 <Link
                   className="categories-button-active"
@@ -786,35 +776,35 @@ const Header = () => {
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Vastra
                           </Link>
                         </li>
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Shangar
                           </Link>
                         </li>
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Shringar
                           </Link>
                         </li>
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             ShriMastak
                           </Link>
                         </li>
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             ShriKarna
                           </Link>
                         </li>
@@ -823,35 +813,35 @@ const Header = () => {
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Makhravind
                           </Link>
                         </li>
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Karnaful
                           </Link>
                         </li>
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Netra
                           </Link>
                         </li>
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Chibuk
                           </Link>
                         </li>
                         <li>
                           <Link to="#">
                             {" "}
-                            <img src={logo} alt />
+                            <img src={logo} alt='img'/>
                             Shri Ang
                           </Link>
                         </li>
@@ -864,14 +854,14 @@ const Header = () => {
                             <li>
                               <Link to="#">
                                 {" "}
-                                <img src={logo} alt />
+                                <img src={logo} alt='img'/>
                                 ShriHast
                               </Link>
                             </li>
                             <li>
                               <Link to="#">
                                 {" "}
-                                <img src={logo} alt />
+                                <img src={logo} alt='img'/>
                                 Nakveshvar
                               </Link>
                             </li>
@@ -880,14 +870,14 @@ const Header = () => {
                             <li>
                               <Link to="#">
                                 {" "}
-                                <img src={logo} alt />
+                                <img src={logo} alt='img'/>
                                 Shishful
                               </Link>
                             </li>
                             <li>
                               <Link to="#">
                                 {" "}
-                                <img src={logo} alt />
+                                <img src={logo} alt='img'/>
                                 Tipara
                               </Link>
                             </li>
