@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Header.css";
 import Select from "react-select";
 
@@ -8,6 +8,7 @@ import smallImage from "../images/small-image-2.jpg";
 import smallsangar from "../images/smallsanagr.jpg";
 import { Link } from "react-router-dom";
 import { BsPerson, BsCart } from "react-icons/bs";
+import SignContext from "../contextAPI/Context/SignContext";
 
 const options = [
   { value: "Shringar", label: "Shringar" },
@@ -20,20 +21,34 @@ const options = [
 ];
 
 const Header = () => {
+  const {
+    createCustomer,
+    UpdateCustomer,
+    loginCustomer,
+    getLoggedInCustomer,
+    changePassword,
+    resetCustomerPassword,
+    forgotCustomerPassword,
+  } = useContext(SignContext);
+
   const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
   const [isAccountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-
   const [isVenderDropdownOpen, setVenderDropdownOpen] = useState(false);
   const [isMegaMenuDropdownOpen, setMegaMenuDropdownOpen] = useState(false);
-
   const [isPagesDropDownOpen, setPagesDropDownOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
   const [isVisible, setIsVisible] = useState(true);
   const [buttonText, setButtonText] = useState("Show More...");
+  const [CustomerInfo, setCustomerInfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+  });
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -43,11 +58,10 @@ const Header = () => {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
-
-  
   const handleModalClose = () => {
     setShowLoginModal(false);
   };
+
   const handleLoginClick = () => {
     setShowLoginModal(true);
     setShowSignupModal(false);
@@ -124,9 +138,11 @@ const Header = () => {
   const handleAccountLeave = () => {
     setAccountDropdownOpen(false);
   };
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
+
   const validateEmail = (email) => {
     // Implement email validation logic here
     if (!email) {
@@ -159,12 +175,24 @@ const Header = () => {
     setErrors({ ...errors, password: errorMessage });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const res = await createCustomer(CustomerInfo);
+    console.log(res);
+    if (res.success) {
+      handleLoginClick();
+      console.log("Customer Added Successfully");
+      setCustomerInfo({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        phone: "",
+      });
+    }
+    
     const emailError = validateEmail(email);
     const passwordError = validatePassword(password);
-
     if (!emailError && !passwordError) {
       // All validation checks passed, you can proceed with form submission
       // Implement your login logic here
@@ -173,63 +201,84 @@ const Header = () => {
       setErrors({ email: emailError, password: passwordError });
     }
   };
+
+  const handleChange = (e) => {
+    setCustomerInfo({ ...CustomerInfo, [e.target.name]: e.target.value });
+  };
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
-
-
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [signupEmail, setSignupEmail] = useState('');
-  const [signupPassword, setSignupPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
+  const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
   const [signupErrors, setSignupErrors] = useState({});
 
-  const handleSignup = (e) => {
+  const handleSignup =async (e) => {
     e.preventDefault();
     const validationErrors = {};
-
+    const res = await createCustomer(CustomerInfo);
+    console.log(res);
+    if (res.success) {
+      handleLoginClick();
+      console.log("Customer Added Successfully");
+      setCustomerInfo({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        phone: "",
+      });
+    }
     // Validate first name
     if (!firstName.trim()) {
-      validationErrors.firstName = 'First Name is required';
+      validationErrors.firstName = "Username is required";
     }
 
     // Validate last name
-    if (!lastName.trim()) {
-      validationErrors.lastName = 'Last Name is required';
-    }
+    // if (!lastName.trim()) {
+    //   validationErrors.lastName = "Last Name is required";
+    // }
 
     // Validate signup email
     if (!signupEmail.trim()) {
-      validationErrors.signupEmail = 'Email is required';
+      validationErrors.signupEmail = "Email is required";
     } else if (!isValidEmail(signupEmail)) {
-      validationErrors.signupEmail = 'Invalid email address';
+      validationErrors.signupEmail = "Invalid email address";
     }
 
     // Validate signup password
     if (!signupPassword.trim()) {
-      validationErrors.signupPassword = 'Password is required';
+      validationErrors.signupPassword = "Password is required";
     } else if (signupPassword.length < 6) {
-      validationErrors.signupPassword = 'Password must be at least 6 characters';
+      validationErrors.signupPassword =
+        "Password must be at least 6 characters";
     }
 
     // Validate password confirmation
     if (signupPassword !== confirmPassword) {
-      validationErrors.confirmPassword = 'Passwords do not match';
+      validationErrors.confirmPassword = "Passwords do not match";
     }
 
     // Validate mobile number
     if (!mobileNumber.trim()) {
-      validationErrors.mobileNumber = 'Mobile Number is required';
+      validationErrors.mobileNumber = "Mobile Number is required";
     } else if (!isValidMobileNumber(mobileNumber)) {
-      validationErrors.mobileNumber = 'Invalid mobile number';
+      validationErrors.mobileNumber = "Invalid mobile number";
     }
 
     // Check if there are any validation errors
     if (Object.keys(validationErrors).length === 0) {
       // If no errors, perform signup logic here
-      console.log('Signed up:', { firstName, lastName, signupEmail, mobileNumber });
+      console.log("Signed up:", {
+        firstName,
+        // lastName,
+        signupEmail,
+        mobileNumber,
+      });
     } else {
       // If there are errors, update the signupErrors state with error messages
       setSignupErrors(validationErrors);
@@ -250,6 +299,7 @@ const Header = () => {
     // For simplicity, this example checks if it contains only digits
     return /^\d+$/.test(mobileNumber);
   };
+
   return (
     <header className="header-area header-style-1 header-height-2">
       <div className="header-top header-top-ptb-1  d-lg-block">
@@ -522,85 +572,107 @@ const Header = () => {
                           <div className="col-md-12 col-lg-8">
                             <div className="lr-details">
                               <h5>Create Account</h5>
-                              <form onSubmit={handleSignup}>
-                        <div className="billing-details mt-4">
-                          <div className="row">
-                            <div className="form-group col-md-6">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="First Name *"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                              />
-                             
-                              <div className="forogotlink text-start error">{signupErrors.firstName}</div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Last Name *"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                              />
-                            
-                              <div className="forogotlink text-start error">{signupErrors.lastName}</div>
-                            </div>
-                            <div className="form-group col-md-12">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Email Address *"
-                                value={signupEmail}
-                                onChange={(e) => setSignupEmail(e.target.value)}
-                              />
-                              
-                              <div className="forogotlink text-start error">{signupErrors.signupEmail}</div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Password *"
-                                value={signupPassword}
-                                onChange={(e) => setSignupPassword(e.target.value)}
-                              />
-                             
-                              <div className="forogotlink text-start error">{signupErrors.signupPassword}</div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Confirm Password *"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                              />
-                             
-                              <div className="forogotlink text-start error">{signupErrors.confirmPassword}</div>
-                            </div>
-                            <div className="form-group col-md-12">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Mobile Number *"
-                                value={mobileNumber}
-                                onChange={(e) => setMobileNumber(e.target.value)}
-                              />
-                              
-                              <div className="forogotlink text-start error">{signupErrors.mobileNumber}</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <button type="submit" className="default-btn w-50">
-                            Submit Here
-                            <span />
-                          </button>
-                        </div>
-                      </form>
-                              
+                              <form onSubmit={handleSubmit}>
+                                <div className="billing-details mt-4">
+                                  <div className="row">
+                                    <div className="form-group col-md-12">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Username*"
+                                        name="username"
+                                        value={CustomerInfo.username}
+                                        onChange={handleChange}
+                                      />
+
+                                      <p className="forogotlink text-start error">
+                                        {signupErrors.firstName}
+                                      </p>
+                                    </div>
+
+                                    {/* <div className="form-group col-md-6">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Last Name *"
+                                        value={lastName}
+                                        onChange={(e) =>
+                                          setLastName(e.target.value)
+                                        }
+                                      /> 
+
+                                      <div className="forogotlink text-start error">
+                                        {signupErrors.lastName}
+                                      </div>
+                                    </div> */}
+                                    <div className="form-group col-md-12">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Email Address *"
+                                        name="email"
+                                        value={CustomerInfo.email}
+                                        onChange={handleChange}
+                                      />
+
+                                      <div className="forogotlink text-start error">
+                                        {signupErrors.signupEmail}
+                                      </div>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                      <input
+                                        type="password"
+                                        className="form-control"
+                                        placeholder="Password *"
+                                        name="password"
+                                        value={CustomerInfo.password}
+                                        onChange={handleChange}
+                                      />
+
+                                      <p className="forogotlink text-start error">
+                                        {signupErrors.signupPassword}
+                                      </p>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                      <input
+                                        type="password"
+                                        className="form-control"
+                                        placeholder="Confirm Password *"
+                                        name="confirmPassword"
+                                        value={CustomerInfo.confirmPassword}
+                                        onChange={handleChange}
+                                      />
+
+                                      <div className="forogotlink text-start error">
+                                        {signupErrors.confirmPassword}
+                                      </div>
+                                    </div>
+                                    <div className="form-group col-md-12">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Mobile Number *"
+                                        name="phone"
+                                        value={CustomerInfo.phone}
+                                        onChange={handleChange}
+                                      />
+
+                                      <p className="forogotlink text-start error">
+                                        {signupErrors.mobileNumber}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="text-center mt-3">
+                                  <button
+                                    type="submit"
+                                    className="default-btn w-50"
+                                  >
+                                    Submit Here
+                                    <span />
+                                  </button>
+                                </div>
+                              </form>
                             </div>
                           </div>
                         </div>
@@ -995,7 +1067,7 @@ const Header = () => {
                           </li>
                           <li className="sub-mega-menu sub-mega-menu-width-22">
                             <Link className="menu-title" to="#">
-                            Sugandhi (Attar)
+                              Sugandhi (Attar)
                             </Link>
                             <ul>
                               <li>
@@ -1017,7 +1089,7 @@ const Header = () => {
                           </li>
                           <li className="sub-mega-menu sub-mega-menu-width-22">
                             <Link className="menu-title" to="#">
-                            Seasonal Products
+                              Seasonal Products
                             </Link>
                             <ul>
                               <li>
@@ -1036,7 +1108,7 @@ const Header = () => {
                           </li>
                           <li className="sub-mega-menu sub-mega-menu-width-22">
                             <Link className="menu-title" to="#">
-                            Pichwai and Wall Art
+                              Pichwai and Wall Art
                             </Link>
                             <ul>
                               <li>
@@ -1055,7 +1127,7 @@ const Header = () => {
                           </li>
                           <li className="sub-mega-menu sub-mega-menu-width-22">
                             <Link className="menu-title" to="#">
-                            Fibre Items
+                              Fibre Items
                             </Link>
                             <ul>
                               <li>
@@ -1064,8 +1136,6 @@ const Header = () => {
                               <li>
                                 <Link>Animal Swarups</Link>
                               </li>
-                              
-                             
                             </ul>
                           </li>
                           <li className="sub-mega-menu sub-mega-menu-width-34">
@@ -1139,12 +1209,10 @@ const Header = () => {
             </div>
             <div className="hotline d-none d-lg-flex">
               <div className="me-3 mt-1">
-              
                 <button className="btn " onClick={handleLoginClick}>
                   Login/SignUp
                 </button>
               </div>
-              
             </div>
             <div className="header-action-icon-2 d-block d-lg-none">
               <div className="burger-icon burger-icon-white">

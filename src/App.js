@@ -27,18 +27,16 @@ import Terms_Condition from './pages/terms_conditon/Terms_Condition';
 import AllCategory from './pages/all_category/AllCategory';
 import GalleryDetails from './pages/Gallery/GaleryDetails.jsx';
 import Wishlist from './pages/wishlist/Wishlist';
+import { SignState } from './contextAPI/State/SignState';
 
 function App() {
   
   return (
 
-
-    <BrowserRouter>
-    
-   
     <div className="App">
+      <BrowserRouter>
       <Routes>
-      <Route path='/' element={<Home/>} />
+      <Route path='/' element={<SignState><Home/></SignState>} />
       <Route path='/product-list' element={<ProductList/>} />
       <Route path='/product-details' element={<ProductDetails/>} />
       <Route path='/cart' element={<Cart/>} />
@@ -46,7 +44,6 @@ function App() {
       <Route path='/order-statement' element={<OrderStatement/>} />
       <Route path='/print-statement' element={<PrintStatement/>} />
       <Route path='/my-order' element={<MyOrder/>} />
-
       <Route path='/track-order' element={<TrackOrder/>} />
       <Route path='/my-account' element={<MyAccount/>} />
       <Route path='/my-address' element={<MyAddress/>} />
@@ -64,16 +61,10 @@ function App() {
       <Route path='/all-category' element={<AllCategory/>} />
       <Route path='/gallery-details' element={<GalleryDetails/>} />
       <Route path='/my-wishlist' element={<Wishlist/>} />
-          
-
-      
-     
-     
-
     </Routes>
+    </BrowserRouter>
     </div>
 
-    </BrowserRouter>
   );
 }
 

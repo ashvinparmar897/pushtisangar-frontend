@@ -15,11 +15,13 @@ import Subscribe from "./Subscribe";
 import TopProducts from "./TopProducts";
 import Vastra from "./Vastra";
 import Deals_Of_the_day from "./Deals_Of_the_day";
+import { SignState } from "../contextAPI/State/SignState";
 
 const Home = () => {
   return (
     <div>
-      <Header />
+      <SignState>
+        <Header />
 
       <MobileSidebar />
       <HomeSlider />
@@ -35,6 +37,7 @@ const Home = () => {
       <Subscribe />
       <Featured />
       <MidFooter />
+      </SignState>
     </div>
   );
 };
