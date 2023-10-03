@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useContext, useEffect, useState} from "react";
 import './FeatureCategory.css'
 import './Category.css'
 import VastraCat from '../images/VastraCatagorySmall.jpg'
@@ -8,6 +8,7 @@ import VastraCat4 from '../images/ShringarSmallCategory.jpg'
 import { Link } from "react-router-dom";
 import ShowMoreCategory from "./ShowMoreCategory";
 import { useNavigate } from "react-router-dom/dist";
+import SignContext from "../contextAPI/Context/SignContext";
 
 
 const categories = [
@@ -114,7 +115,21 @@ const CategoryCard = ({ name, image, itemCount,color, }) => (
 );
 
 const Category = ({background}) => {
+  const { getCategories } = useContext(SignContext)
   const navigate = useNavigate();
+
+  const [CategoryData, setCategoryData] = useState([]);
+
+  const Getcategories = async () => {
+    const res = await getCategories();
+    console.log(res);
+
+    const transformedData = res.map((category, index) => ({
+      ...category,
+      id: index + 1,
+    }));
+    setCategoryData(transformedData);
+  };
 
   const handlecategoryClick = () => {
     // Use navigate to go to the cart page
@@ -126,6 +141,11 @@ const Category = ({background}) => {
     marginTop:'-50px',
     background: background || '#f2fce4', // Use the prop value if provided, or red as a default
   };
+
+  useEffect(() => {
+    Getcategories();
+  }, []);
+
   return (
     <div style={inlineStyle}>
       <div className="container">

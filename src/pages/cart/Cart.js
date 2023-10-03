@@ -1,26 +1,80 @@
-import React, { useState } from "react";
-import './Cart.css';
-import Header from '../../components/Header';
-import MidFooter from '../../components/MidFooter';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from "react";
+import "./Cart.css";
+import Header from "../../components/Header";
+import MidFooter from "../../components/MidFooter";
+import { Link, useParams } from "react-router-dom";
 import MobileSidebar from "../../components/MobileSidebar";
 
-import image1 from '../../images/ShangarSmallCategory.png';
-import image2 from '../../images/VastraCatagorySmall.jpg';
-import image3 from '../../images/ShringarSmallCategory.jpg';
+import image1 from "../../images/ShangarSmallCategory.png";
+import image2 from "../../images/VastraCatagorySmall.jpg";
+import image3 from "../../images/ShringarSmallCategory.jpg";
+import SignContext from "../../contextAPI/Context/SignContext";
 
 const Cart = () => {
-  const [quantities, setQuantities] = useState({
-    item1: 1,
-    item2: 1,
-    item3: 1,
-  });
+  const url = `${process.env.REACT_APP_BASE_URL}`;
+  const { id } = useParams();
+  const { GetLoggedInCartItems , RemoveAllItemsFromCart , UpdateCartItem } = useContext(SignContext);
+  const [CartData, setCartData] = useState([]);
+  
 
-  const incrementQuantity = (itemKey) => {
-    setQuantities((prevState) => ({
-      ...prevState,
-      [itemKey]: prevState[itemKey] + 1,
-    }));
+  useEffect(() => {
+    console.log("customerId:", id);
+    getLoggedinCustomerCart(id);
+    console.log("inside useeffect");
+  }, [id]);
+
+  const getLoggedinCustomerCart = async (CustomerId) => {
+    const res = await GetLoggedInCartItems(CustomerId);
+    console.log("get cart", res);
+    if (res.success) {
+      setCartData(res.cartItems);
+    }
+  };
+
+  const handleRemoveAll = async (CustomerId) => {
+    const res = await RemoveAllItemsFromCart(CustomerId);
+    console.log("get cart", res);
+    if (res.success) {
+      setCartData(res.cartItems);
+    }
+  };
+
+  const handleUpdateSubmit = async () => {
+    try {
+      const customerId = id ; // Replace with the actual customer ID
+      const res = await UpdateCartItem(customerId, {cartItems : CartData});
+      console.log(res);
+      if (res.success) {
+        // Cart updated successfully
+        console.log("Cart updated successfully");
+        // navigate(`/cart/${customerId}`);
+      } else {
+        // Handle the error
+        console.error(res.msg);
+      }
+    } catch (error) {
+      // Handle unexpected errors
+      console.error("Unexpected error:", error);
+    }
+  };
+
+
+
+  const [quantities, setQuantities] = useState({});
+
+  useEffect(() => {
+    const initialQuantities = {};
+    CartData.forEach((item) => {
+      initialQuantities[item.quantity.key] = item.quantity;
+    });
+    setQuantities(initialQuantities);
+  }, [CartData]);
+
+  const handleQuantityChange = (productId, newQuantity) => {
+    const updatedCart = CartData.map((item) =>
+      item.product._id === productId ? { ...item, quantity: newQuantity } : item
+    );
+    setCartData(updatedCart);
   };
 
   const decrementQuantity = (itemKey) => {
@@ -42,11 +96,41 @@ const Cart = () => {
     }
   };
 
+  const updateQuantity = (itemKey, newQuantity) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [itemKey]: newQuantity,
+    }));
+  };
+
+  const calculateTotal = () => {
+    CartData.reduce((cv, item) => {
+      return cv + item.quantity * item.product.prices.discounted;
+    }, 0);
+  };
+
+ 
+
+  const totalPrice = CartData.reduce((acc, item) => {
+    // Ensure that item.quantity and item.discountedPrice are valid numbers
+    const quantity = parseFloat(item.quantity);
+    const discountedPrice = parseFloat(
+      item.product.prices ? item.product.prices.discounted : null
+    );
+
+    // Check for NaN or invalid values
+    if (isNaN(quantity) || isNaN(discountedPrice)) {
+      return acc; // Skip this item if it has invalid data
+    }
+
+    return acc + quantity * discountedPrice;
+  }, 0);
+
   return (
     <>
       <Header />
       <MobileSidebar />
-     
+
       <section className="pt-4 ">
         <div className="container">
           <div className="row">
@@ -77,73 +161,66 @@ const Cart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      {
-                        image: image1,
-                        name: "GOD HARMALA Sangar",
-                        productCode: "PS561303",
-                        price: "₹190.00",
-                        key: "item1",
-                      },
-                      {
-                        image: image2,
-                        name: "GOD VASTRA Vastra",
-                        productCode: "PS561303",
-                        price: "₹190.00",
-                        key: "item2",
-                      },
-                      {
-                        image: image3,
-                        name: "GOD MOTIHAR Sangar",
-                        productCode: "PS561303",
-                        price: "₹190.00",
-                        key: "item3",
-                      },
-                    ].map((item) => (
-                      <tr key={item.key}>
+                    {CartData.map((item) => (
+                      <tr key={item.product.key}>
                         <td className="product-thumbnail">
                           <Link to="#">
-                            <img src={item.image} alt="item" />
+                            <img
+                              src={`${url}/products/${item.product.imageGallery[0]}`}
+                              alt="item"
+                            />
                           </Link>
                         </td>
                         <td className="product-name">
                           <Link to="#">
-                            {item.name} <br /> Product Code: {item.productCode}
+                            {item.product.name} <br /> Product Code:{" "}
+                            {item.product.sku}
                           </Link>
                         </td>
                         <td className="product-price text-center">
-                          <span className="unit-amount">{item.price}</span>
+                          <span className="unit-amount">
+                            {item.product.prices.discounted}
+                          </span>
                         </td>
                         <td className="product-quantity text-center">
                           <div className="input-counter">
                             <span
                               className="minus-btn"
-                              onClick={() => decrementQuantity(item.key)}
+                              onClick={() =>
+                                handleQuantityChange(
+                                  item.product._id,
+                                  item.quantity - 1
+                                )
+                              }
                             >
                               <i className="bx bx-minus bi bi-dash" />
                             </span>
                             <input
                               type="text"
-                              value={quantities[item.key]}
+                              value={item.quantity}
                               onChange={(event) =>
-                                handleInputChange(event, item.key)
+                                updateQuantity(
+                                  item.quantity,
+                                  parseFloat(event.target.value)
+                                )
                               }
                             />
                             <span
                               className="plus-btn"
-                              onClick={() => incrementQuantity(item.key)}
+                              onClick={
+                                () =>
+                                  handleQuantityChange(
+                                    item.product._id,
+                                    item.quantity + 1
+                                  ) // Increase quantity by 1
+                              }
                             >
                               <i className="bx bx-plus bi bi-plus" />
                             </span>
                           </div>
                         </td>
-                        <td className="product-subtotal">
-                          <span className="subtotal-amount">
-                            ₹{parseInt(item.price.replace("₹", "")) * quantities[item.key]}
-                          </span>
-                          <Link to="#" className="remove">
-                            <i className="bx bx-trash bi bi-trash" />
-                          </Link>
+                        <td>
+                          ₹{item.product.prices.discounted * item.quantity}
                         </td>
                       </tr>
                     ))}
@@ -159,7 +236,7 @@ const Cart = () => {
                     </Link>
                   </div>
                   <div className="col-lg-5 col-sm-5 col-md-5 text-right">
-                    <Link to="#" className="default-btn update-cart-btn">
+                    <Link onClick={handleUpdateSubmit} className="default-btn update-cart-btn">
                       Update Shopping Cart
                       <span style={{ top: "17.8625px", left: "171.375px" }} />
                     </Link>
@@ -173,64 +250,16 @@ const Cart = () => {
                 <ul>
                   <li>
                     Subtotal
-                    <span>
-                      ₹
-                      {Object.values(quantities).reduce((acc, val, index) => {
-                        return (
-                          acc +
-                          val *
-                            parseInt(
-                              [
-                                {
-                                  price: "₹190.00",
-                                  key: "item1",
-                                },
-                                {
-                                  price: "₹190.00",
-                                  key: "item2",
-                                },
-                                {
-                                  price: "₹190.00",
-                                  key: "item3",
-                                },
-                              ][index].price.replace("₹", "")
-                            )
-                        );
-                      }, 0)}
-                    </span>
+                    <span>₹{totalPrice}</span>
                   </li>
                   <li>
                     Tax
-                    <span>₹0.00</span>
+                    <span>9.9%</span>
                   </li>
                   <li>
                     Order Total
                     <span>
-                      <b>
-                        ₹
-                        {Object.values(quantities).reduce((acc, val, index) => {
-                          return (
-                            acc +
-                            val *
-                              parseInt(
-                                [
-                                  {
-                                    price: "₹190.00",
-                                    key: "item1",
-                                  },
-                                  {
-                                    price: "₹190.00",
-                                    key: "item2",
-                                  },
-                                  {
-                                    price: "₹190.00",
-                                    key: "item3",
-                                  },
-                                ][index].price.replace("₹", "")
-                              )
-                          );
-                        }, 0)}
-                      </b>
+                      <b>₹{totalPrice +totalPrice * 9.9 / 100}</b>
                     </span>
                   </li>
                 </ul>
@@ -249,7 +278,7 @@ const Cart = () => {
                     Coupon code can also be applied at checkout before payment.
                   </small>
                 </div>
-                <Link to="/checkout" className="default-btn">
+                <Link to={`/checkout/${id}`} className="default-btn">
                   Proceed to Checkout
                   <span />
                 </Link>

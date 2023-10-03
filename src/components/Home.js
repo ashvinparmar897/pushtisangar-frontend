@@ -20,8 +20,7 @@ import { SignState } from "../contextAPI/State/SignState";
 const Home = () => {
   return (
     <div>
-      <SignState>
-        <Header />
+      <Header />
 
       <MobileSidebar />
       <HomeSlider />
@@ -37,7 +36,6 @@ const Home = () => {
       <Subscribe />
       <Featured />
       <MidFooter />
-      </SignState>
     </div>
   );
 };

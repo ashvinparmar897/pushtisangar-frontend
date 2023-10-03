@@ -5,7 +5,7 @@ import React from "react";
 
 export const SignState = (props) => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
-  console.log(url)
+  // console.log(url)
 
   // create customer
   const createCustomer = async (customerInfo) => {
@@ -27,9 +27,9 @@ export const SignState = (props) => {
   // login customer
   const loginCustomer = async (CustomerInfo) => {
     try {
-      const response = await axios.post(`${url}/customer/login`, {
+      const response = await axios.post(`${url}/customer/login`,
         CustomerInfo
-      });
+      );
       return response.data;
     } catch (error) {
       console.error("Error during API call:", error);
@@ -116,7 +116,7 @@ export const SignState = (props) => {
   // Get Categories
   const getCategories = async () => {
     try {
-      const response = await axios.post(`${url}/api/getcategories`);
+      const response = await axios.post(`${url}/category/getcategories`);
       return response.data;
     } catch (error) {
       return ({ success: false, msg: "server Error" })
@@ -126,7 +126,7 @@ export const SignState = (props) => {
   // Get Products
   const getProducts = async () => {
     try {
-      const response = await axios.post(`${url}/api/getallproducts`);
+      const response = await axios.post(`${url}/product/getallproducts`);
       return response.data;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -136,8 +136,7 @@ export const SignState = (props) => {
   // GetSpecific Product
   const getSpecificProduct = async (ProductId) => {
     try {
-      const response = await axios.post(`${url}/api/getspecificproduct`, {
-        id: ProductId,
+      const response = await axios.post(`${url}/product/getspecificproduct/${ProductId}`, {
       });
       return response.data;
     } catch (error) {
@@ -155,6 +154,70 @@ export const SignState = (props) => {
     }
   };
 
+  // Add To Cart
+  const addToCart = async (CustomerId , CartInfo) =>{
+    try {
+      const response = await axios.post(`${url}/customer/addtocart/${CustomerId}`, 
+        CartInfo
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
+
+  // GetLoggedInCustomerCartItems 
+  const GetLoggedInCartItems =  async (CustomerId) =>{
+    try {
+      const response = await axios.post(`${url}/customer/getcustomercart/${CustomerId}`, 
+        {}
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
+
+  // Remove all Items from Cart
+  const RemoveAllItemsFromCart = async (CustomerId) => {
+    try {
+      const response = await axios.post(`${url}/customer/removeallfromcart/${CustomerId}`, {});
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
+  // updateCartItem
+  const UpdateCartItem = async (CustomerId , CartInfo) =>{
+    try {
+      const response = await axios.post(`${url}/customer/updatecart/${CustomerId}`, 
+        CartInfo
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
+
+  // CreateOrder 
+  const CreateOrder = async (OrderInfo) => {
+    try {
+      const response = await axios.post(
+        `${url}/orders/addorder`,
+        OrderInfo
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error", error);
+      return {
+        success: false,
+        msg: "An error occurred while adding the category.",
+      };
+    }
+  };
+  
+
 
   return (
     <SignContext.Provider
@@ -171,6 +234,11 @@ export const SignState = (props) => {
         getCategories,
         getSpecificProduct,
         getSpecificSubcategories,
+        addToCart,
+        GetLoggedInCartItems,
+        RemoveAllItemsFromCart,
+        UpdateCartItem,
+        CreateOrder
       }}
     >
       {props.children}
