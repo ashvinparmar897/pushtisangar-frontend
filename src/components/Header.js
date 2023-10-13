@@ -29,6 +29,8 @@ const Header = () => {
     loginCustomer,
     getLoggedInCustomer,
     GetLoggedInCartItems,
+    removeItemFromCart,
+    forgotCustomerPassword,
     // GetSpecificCustomer,
     // UpdateCustomer,
     // deleteCustomer,
@@ -41,6 +43,10 @@ const Header = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [CustomerInfo, setCustomerInfo] = useState({});
+  const [Error, setError] = useState("");
+  const [errorBanner, setErrorBanner] = useState("");
+  // const [Error, setError] = useState("");
+  const [Success, setSuccess] = useState("");
 
   const [isVenderDropdownOpen, setVenderDropdownOpen] = useState(false);
   const [isMegaMenuDropdownOpen, setMegaMenuDropdownOpen] = useState(false);
@@ -61,7 +67,7 @@ const Header = () => {
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
-    console.log(res);
+    // console.log(res);
     if (res.success) {
       setCustomerInfo(res.customer);
     } else {
@@ -71,10 +77,34 @@ const Header = () => {
 
   const getLoggedinCustomerCart = async (CustomerId) => {
     const res = await GetLoggedInCartItems(CustomerId);
-    console.log("get cart", res);
+    // console.log("get cart", res);
     if (res.success) {
       setCartData(res.cartItems);
     }
+  };
+
+  const handleRemoveItemFromCart = async (productId) => {
+    try {
+      const customerId = CustomerInfo._id; // Replace with the actual customer ID
+      const res = await removeItemFromCart(customerId, productId);
+
+      if (res.success) {
+        // Cart updated successfully
+        console.log("Cart updated successfully");
+        // navigate(`/cart/${customerId}`);
+      } else {
+        // Handle the error
+        console.error(res.msg);
+      }
+    } catch (error) {
+      // Handle unexpected errors
+      console.error("Unexpected error:", error);
+    }
+  };
+
+  const handleSignout = async () => {
+    localStorage.removeItem("authToken");
+    console.log("authToken Removed");
   };
 
   const handleModalClose = () => {
@@ -143,7 +173,7 @@ const Header = () => {
 
   const handleCartHover = () => {
     setCartDropdownOpen(true);
-    getLoggedinCustomerCart(CustomerInfo._id)
+    getLoggedinCustomerCart(CustomerInfo._id);
   };
 
   const handleCartLeave = () => {
@@ -157,7 +187,7 @@ const Header = () => {
   const handleAccountLeave = () => {
     setAccountDropdownOpen(false);
   };
-  
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
@@ -168,9 +198,9 @@ const Header = () => {
   //   password: "",
   // };
 
-  const initialValuesForgotPassword = {
-    email: "",
-  };
+  // const initialValuesForgotPassword = {
+  //   email: "",
+  // };
 
   // const initialValuesSignup = {
   //   username: "",
@@ -202,52 +232,60 @@ const Header = () => {
 
   const handleLogin = async (Values) => {
     const res = await loginCustomer(Values);
-    console.log(res);
+    // console.log(res);
     if (res.success) {
       window.localStorage.setItem("loggedIn", true);
       window.localStorage.setItem("authToken", res.token);
-
       handleModalClose();
+    } else {
+      setErrorBanner(res.msg);
+      setTimeout(() => {
+        setErrorBanner("");
+      }, 2000);
     }
   };
-  
 
-  const handleForgotPasswordSubmit = (values, { setSubmitting }) => {
-    // Implement your forgot password logic here using the 'values' object
-    // You can make API requests to send a reset email, etc.
-
-    // Once the submission is complete, setSubmitting(false);
-    setSubmitting(false);
+  const handleForgotPasswordSubmit = async (Values) => {
+    const res = await forgotCustomerPassword(Values);
+    console.log(res)
+    if (res.success) {
+      setSuccess(res.msg);
+    } else {
+      setError(res.msg);
+      setTimeout(() => {
+        setError("");
+      }, 1000);
+    }
+    
   };
 
   const handleSignupSubmit = async (Values) => {
     const res = await createCustomer(Values);
-    console.log(res);
+    // console.log(res);
     if (res.success) {
       handleLoginClick();
     }
   };
 
   const totalPrice = CartData.reduce((acc, item) => {
- // Ensure that item.quantity and item.discountedPrice are valid numbers
- const quantity = parseFloat(item.quantity);
- const discountedPrice = parseFloat(item.product.prices?item.product.prices.discounted:null);
- 
+    // Ensure that item.quantity and item.discountedPrice are valid numbers
+    const quantity = parseFloat(item.quantity);
+    const discountedPrice = parseFloat(
+      item.product.prices.discounted ? item.product.prices.discounted : item.product.prices.calculatedPrice
+    );
 
- // Check for NaN or invalid values
- if (isNaN(quantity) || isNaN(discountedPrice)) {
- return acc; // Skip this item if it has invalid data
- }
+    // Check for NaN or invalid values
+    if (isNaN(quantity) || isNaN(discountedPrice)) {
+      return acc; // Skip this item if it has invalid data
+    }
 
- return acc + quantity * discountedPrice;
-}, 0);
+    return acc + quantity * discountedPrice;
+  }, 0);
 
   useEffect(() => {
     GetLoggedInCustomer(authToken);
     getLoggedinCustomerCart(CustomerInfo._id);
-  },[CustomerInfo._id]);
-
-  
+  }, [CustomerInfo._id]);
 
   return (
     <header className="header-area header-style-1 header-height-2">
@@ -321,6 +359,9 @@ const Header = () => {
                           <div className="col-md-12 col-lg-8">
                             <div className="lr-details">
                               <h5>Sign in to PushtiShangar</h5>
+                              {errorBanner &&<div class="alert alert-danger" role="alert">
+                                {errorBanner}
+                              </div>}
                               <Formik
                                 initialValues={{
                                   email: "",
@@ -356,7 +397,7 @@ const Header = () => {
                                           onBlur={handleBlur}
                                           value={values.email}
                                         />
-                                        <p classname="error text-danger">
+                                        <p className="error text-danger">
                                           {errors.email &&
                                             touched.email &&
                                             errors.email}
@@ -378,7 +419,7 @@ const Header = () => {
                                         <span>
                                           <i className="bx bxs-lock bi bi-lock-fill" />
                                         </span>
-                                        <p classname="error text-danger">
+                                        <p className="error text-danger">
                                           {errors.password &&
                                             touched.password &&
                                             errors.password}
@@ -460,12 +501,28 @@ const Header = () => {
                             <div className="lr-details">
                               <h5>Forgot Password</h5>
                               <Formik
-                                initialValues={initialValuesForgotPassword}
+                                initialValues={{
+                                  email: "",
+                                }}
                                 validationSchema={forgotPasswordSchema}
-                                onSubmit={handleForgotPasswordSubmit}
+                                onSubmit={async (values, { resetForm }) => {
+                                  await handleForgotPasswordSubmit(values);
+                                  resetForm();
+                                  // togglemodal();
+                                  // toast.success("User Added Successfully", { autoClose: 3000 });
+                                }}
                               >
-                                {({ isSubmitting }) => (
-                                  <Form>
+                                {({
+                                  isSubmitting,
+                                  handleChange,
+                                  handleSubmit,
+                                  errors,
+                                  touched,
+                                  values,
+                                  handleBlur,
+                                  setFieldValue,
+                                }) => (
+                                  <Form onSubmit={handleSubmit}>
                                     <div className="billing-details mt-4">
                                       <div className="form-group">
                                         <h6 className="mb-2">
@@ -476,12 +533,15 @@ const Header = () => {
                                           name="email"
                                           className="form-control"
                                           placeholder="Email Address *"
+                                          onChange={handleChange}
+                                          onBlur={handleBlur}
+                                          value={values.email}
                                         />
-                                        <ErrorMessage
-                                          name="email"
-                                          component="div"
-                                          className="error"
-                                        />
+                                        <p className="error text-danger">
+                                          {errors.email &&
+                                            touched.email &&
+                                            errors.email}
+                                        </p>
                                       </div>
                                     </div>
                                     <div className="text-center mt-3">
@@ -732,103 +792,122 @@ const Header = () => {
                   <input type="text" placeholder="Search for items..." />
                 </form>
               </div>
-              <div className="header-action-right">
-                <div className="header-action-2">
-                  <div
-                    className="header-action-icon-2"
-                    onMouseEnter={handleCartHover}
-                    onMouseLeave={handleCartLeave}
-                  >
-                    <Link className="mini-cart-icon" to="#">
-                      <BsCart />
-                      <span className="pro-count blue">{CartData.length}</span>
-                    </Link>
-                    <Link to="#">
-                      <span className="lable">Cart</span>
-                    </Link>
-                    {isCartDropdownOpen && (
-                      <div className="cart-dropdown-wrap cart-dropdown-hm2">
-                        <ul>
-                          {CartData.map(item=>(
-                          <li>
-                            <div className="shopping-cart-img">
-                              <Link to="#">
-                                <img alt="cart" 
-                                src={`${url}/products/${item.product.imageGallery[0]}`}
-                                 />
-                              </Link>
-                            </div>
-                            <div className="shopping-cart-title">
-                              <h4>
-                                <Link to="#">{item.product.name}</Link>
+              {authToken ? (
+                <div className="header-action-right">
+                  <div className="header-action-2">
+                    <div
+                      className="header-action-icon-2"
+                      onMouseEnter={handleCartHover}
+                      onMouseLeave={handleCartLeave}
+                    >
+                      <Link className="mini-cart-icon" to="#">
+                        <BsCart />
+                        <span className="pro-count blue">
+                          {CartData.length}
+                        </span>
+                      </Link>
+                      <Link to="#">
+                        <span className="lable">Cart</span>
+                      </Link>
+                      {isCartDropdownOpen && (
+                        <div className="cart-dropdown-wrap cart-dropdown-hm2">
+                          <ul>
+                            {CartData.map((item) => (
+                              <li>
+                                <div className="shopping-cart-img">
+                                  <Link to="#">
+                                    <img
+                                      alt="cart"
+                                      src={`${url}/products/${item.product.imageGallery[0]}`}
+                                    />
+                                  </Link>
+                                </div>
+                                <div className="shopping-cart-title">
+                                  <h4>
+                                    <Link to="#">{item.product.name}</Link>
+                                  </h4>
+                                  <h3>
+                                    <span>{item.quantity}× </span>
+                                    {item.product.prices.discounted
+                                      ? item.product.prices.discounted
+                                      : item.product.prices.calculatedPrice}
+                                  </h3>
+                                </div>
+                                <div className="shopping-cart-delete">
+                                  <Link
+                                    onClick={() => {
+                                      handleRemoveItemFromCart(
+                                        item.product._id
+                                      );
+                                    }}
+                                  >
+                                    <i className="fi-rs-cross-small bi bi-x" />
+                                  </Link>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="shopping-cart-footer">
+                            {/* <div className="shopping-cart-total">
+                              <h4 className="d-flex justify-content-between">
+                                <span>Total</span> <span>{totalPrice}</span>
                               </h4>
-                              <h3>
-                                <span>{item.quantity }× </span>{item.product.prices?item.product.prices.discounted:null}
-                              </h3>
-                            </div>
-                            <div className="shopping-cart-delete">
-                              <Link to="#">
-                                <i className="fi-rs-cross-small bi bi-x" />
+                            </div> */}
+                            <div className="shopping-cart-button">
+                              <Link to={`/cart/${CustomerInfo._id}`}>
+                                View cart
                               </Link>
+                              <Link to={`/checkout/${CustomerInfo._id}`}>Checkout</Link>
                             </div>
-                          </li>
-                          ))}
-                          
-                        </ul>
-                        <div className="shopping-cart-footer">
-                          <div className="shopping-cart-total">
-                            <h4 className="d-flex justify-content-between">
-                              <span>Total</span> <span>{totalPrice}</span>
-                            </h4>
-                          </div>
-                          <div className="shopping-cart-button">
-                            <Link to={`/cart/${CustomerInfo._id}`}>View cart</Link>
-                            <Link to="/checkout">Checkout</Link>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                  <div
-                    className="header-action-icon-2"
-                    onMouseEnter={handleAccountHover}
-                    onMouseLeave={handleAccountLeave}
-                  >
-                    <Link to="#">
-                      <BsPerson />
-                    </Link>
-                    <Link to="#">
-                      <span className="lable ml-0">Account</span>
-                    </Link>
-                    {isAccountDropdownOpen && (
-                      <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                        <ul className="">
-                          <li>
-                            <Link to="/my-account">
-                              <i className="fi fi-rs-user mr-10" />
-                              My Account
-                            </Link>
-                          </li>
+                      )}
+                    </div>
+                    <div
+                      className="header-action-icon-2"
+                      onMouseEnter={handleAccountHover}
+                      onMouseLeave={handleAccountLeave}
+                    >
+                      <Link to="#">
+                        <BsPerson />
+                      </Link>
+                      <Link to="#">
+                        <span className="lable ml-0">Account</span>
+                      </Link>
+                      {isAccountDropdownOpen && (
+                        <div className="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                          <ul className="">
+                            <li>
+                              <Link to="/my-account">
+                                <i className="fi fi-rs-user mr-10" />
+                                My Account
+                              </Link>
+                            </li>
 
-                          <li>
-                            <Link to="/my-wishlist">
-                              <i className="fi fi-rs-heart mr-10" />
-                              My Wishlist
-                            </Link>
-                          </li>
+                            <li>
+                              <Link to={`/my-wishlist/${CustomerInfo._id}`}>
+                                <i className="fi fi-rs-heart mr-10" />
+                                My Wishlist
+                              </Link>
+                            </li>
 
-                          <li>
-                            <Link to="#">
-                              <i className="fi fi-rs-sign-out mr-10" />
-                              Sign out
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
+                            <li>
+                              <Link onClick={handleSignout}>
+                                <i className="fi fi-rs-sign-out mr-10" />
+                                Sign out
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <button className="btn" onClick={handleLoginClick}>
+                  Login/SignUp
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -994,7 +1073,7 @@ const Header = () => {
                       <Link to="/about-us">About</Link>
                     </li>
 
-                    <li
+                    {/* <li
                       onMouseEnter={handleVenderHover}
                       onMouseLeave={handleVenderLeave}
                     >
@@ -1198,7 +1277,7 @@ const Header = () => {
                           </li>
                         </ul>
                       )}
-                    </li>
+                    </li> */}
 
                     <li>
                       <Link className="" to="/blog">
@@ -1217,14 +1296,13 @@ const Header = () => {
             </div>
             <div className="hotline d-none d-lg-flex">
               <div className="me-3 mt-1">
-
-                {authToken ? (
-                      <p>Welcome</p>
-                    ) : (
-                      <button className="btn" onClick={handleLoginClick}>
-                        Login/SignUp
-                      </button>
-                    )}
+                {/* {authToken ? ( */}
+                <p>Welcome</p>
+                {/* ) : ( */}
+                {/* <button className="btn" onClick={handleLoginClick}>
+                    Login/SignUp
+                  </button> */}
+                {/* )} */}
               </div>
             </div>
             <div className="header-action-icon-2 d-block d-lg-none">

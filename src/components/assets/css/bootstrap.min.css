@@ -4428,6 +4428,7 @@ tbody.collapse.show {
 
 .card-text:last-child {
     margin-bottom: 0;
+    text-align: center;
 }
 
 .card-link:hover {

@@ -34,7 +34,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/product-list" element={<ProductList />} />
+          <Route path="/product-list/:id" element={<ProductList />} />
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/cart/:id" element={<Cart />} />
           <Route path="/checkout/:id" element={<Checkout />} />
@@ -44,7 +44,7 @@ function App() {
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/my-account" element={<MyAccount />} />
           <Route path="/my-address" element={<MyAddress />} />
-          <Route path="/my-profile" element={<MyProfile />} />
+          <Route path="/my-profile/:id" element={<MyProfile />} />
           <Route path="/ticket-support" element={<TicketSupport />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -57,7 +57,7 @@ function App() {
           <Route path="/terms-condition" element={<Terms_Condition />} />
           <Route path="/all-category" element={<AllCategory />} />
           <Route path="/gallery-details" element={<GalleryDetails />} />
-          <Route path="/my-wishlist" element={<Wishlist />} />
+          <Route path="/my-wishlist/:id" element={<Wishlist />} />
         </Routes>
       </BrowserRouter>
     </div>

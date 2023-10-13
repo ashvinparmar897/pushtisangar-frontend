@@ -4,8 +4,10 @@ import React from "react";
 
 
 export const SignState = (props) => {
-  const url = `${process.env.REACT_APP_BASE_URL}`;
+  // const url = `${process.env.REACT_APP_BASE_URL}`;
   // console.log(url)
+  const url = `http://localhost:5000`;
+
 
   // create customer
   const createCustomer = async (customerInfo) => {
@@ -40,9 +42,8 @@ export const SignState = (props) => {
   //Forgot Password
   const forgotCustomerPassword = async (CustomerInfo) => {
     try {
-      const response = await axios.post(`${url}/customer/forgotpassword`, CustomerInfo);
-
-      return response;
+      const response = await axios.post(`${url}/customer/forgetpassword`, CustomerInfo);
+      return response.data;
     } catch (error) {
       return { success: false, msg: "server Error" };
     }
@@ -87,13 +88,12 @@ export const SignState = (props) => {
   };
 
   // Update Customer
-  const UpdateCustomer = async (customerInfo) => {
+  const UpdateCustomer = async ( customerId , customerInfo) => {
     try {
-      const response = await axios.post(`${url}/customer/updatecustomer`, {
-        id: customerInfo._id,
+      const response = await axios.post(`${url}/customer/updatecustomer/${customerId}`, {
         customerInfo,
       });
-      return response;
+      return response.data;
     } catch (error) {
       console.error("Error", error);
       return { success: false, msg: "An error occurred" };
@@ -107,7 +107,7 @@ export const SignState = (props) => {
         ...CustomerInfo,
         token: Token,
       });
-      return response;
+      return response.data;
     } catch (error) {
       return { success: false, msg: "server Error" };
     }
@@ -216,7 +216,97 @@ export const SignState = (props) => {
       };
     }
   };
+
+  // Get SpecificTax by Id
+  const GetSpecificTax = async (taxId) => {
+    try {
+      const response = await axios.post(`${url}/gst/getspecificgst/${taxId}`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+
+  // remove item from Cart 
+  const removeItemFromCart = async (CustomerId , ProductId) =>{
+    try {
+      const response = await axios.post(`${url}/customer/removefromcart/${CustomerId}`, 
+      {ProductId}
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  } 
+
+  // Add Wishlist
+  const addToWishlist = async (CustomerId , WishlistInfo) =>{
+    try {
+      const response = await axios.post(`${url}/customer/createwishlist/${CustomerId}`, 
+      WishlistInfo
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
   
+  // Get Wishlist
+  const GetLoggedInWishlistItems =  async (CustomerId) =>{
+    try {
+      const response = await axios.post(`${url}/customer/getcustomerwishlist/${CustomerId}`, 
+        {}
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
+
+  // remove item from Wishlist 
+  const removeItemFromWishlist = async (CustomerId , ProductId) =>{
+    try {
+      const response = await axios.post(`${url}/customer/removefromwishlist/${CustomerId}`, 
+      {ProductId}
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
+
+  // GetProductsbyCategoryId
+  const GetProductsbyCategoryId =  async (CategoryId) =>{
+    try {
+      const response = await axios.post(`${url}/product/getproductsbycategoryid/${CategoryId}`, 
+        {}
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
+
+  const GetallCoupons = async () => {
+    try {
+      const response = await axios.post(`${url}/coupons/getcoupons`);
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+ 
+  const GetCouponbyId =  async (couponId) => {
+    try {
+      const response = await axios.post(`${url}/coupons/getspecificcoupon/${couponId}`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
 
 
   return (
@@ -238,7 +328,15 @@ export const SignState = (props) => {
         GetLoggedInCartItems,
         RemoveAllItemsFromCart,
         UpdateCartItem,
-        CreateOrder
+        CreateOrder,
+        GetSpecificTax,
+        removeItemFromCart,
+        addToWishlist,
+        GetLoggedInWishlistItems,
+        removeItemFromWishlist,
+        GetProductsbyCategoryId,
+        GetallCoupons,
+        GetCouponbyId
       }}
     >
       {props.children}

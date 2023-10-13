@@ -115,29 +115,7 @@ const SeasonalProducts = () => {
                           />
                         </Link>
                       </div>
-                      {/* <div className="product-action-1">
-                        <Link
-                          aria-label="Quick view"
-                          className="action-btn small hover-up"
-                          data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"
-                          tabIndex={0}
-                        >
-                          {" "}
-                          <i className="fi-rs-eye bi bi-eye-fill" />
-                        </Link>
-                        <Link
-                          aria-label="Add To Wishlist"
-                          className="action-btn small hover-up"
-                          to="#"
-                          tabIndex={0}
-                        >
-                          <i className="fi-rs-heart bi bi-heart" />
-                        </Link>
-                      </div> */}
-                      {/* <div className="product-badges product-badges-position product-badges-mrg">
-                        <span className="best">Best sale</span>
-                      </div> */}
+                      
                     </div>
                     <div className="product-content-wrap">
                       <div className="product-category">

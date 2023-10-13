@@ -1,33 +1,88 @@
-import React from 'react';
-import Header from '../../components/Header';
-import MidFooter from '../../components/MidFooter';
-import { Link } from 'react-router-dom';
-import MobileSidebar from '../../components/MobileSidebar';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import React, { useContext, useEffect, useState } from "react";
+import Header from "../../components/Header";
+import MidFooter from "../../components/MidFooter";
+import { Link, useParams } from "react-router-dom";
+import MobileSidebar from "../../components/MobileSidebar";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import SignContext from "../../contextAPI/Context/SignContext";
 
 const MyProfile = () => {
+  const { id } = useParams();
+  const { getLoggedInCustomer, UpdateCustomer, changePassword } =
+    useContext(SignContext);
+  const authToken = localStorage.getItem("authToken");
+  const [CustomerInfo, setCustomerInfo] = useState({});
+
   const initialValues = {
-    firstName: '',
-    lastName: '',
-    newPassword: '',
-    confirmNewPassword: '',
+    oldPassword: "",
+    newPassword: "",
   };
 
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('First Name is required'),
-    lastName: Yup.string().required('Last Name is required'),
-    newPassword: Yup.string().required('New Password is required'),
-    confirmNewPassword: Yup.string()
-      .required('Confirm New Password is required')
-      .oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+  const usernameValidationSchema = Yup.object().shape({
+    username: Yup.string().required("User Name is required"),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    // Handle form submission logic here
-    console.log(values);
-    setSubmitting(false);
+  const passwordValidationSchema = Yup.object().shape({
+    oldPassword: Yup.string().required("Old Password is required"),
+    newPassword: Yup.string().required("New Password is required"),
+  });
+
+  const handleUsernameSubmit = async (values) => {
+    try {
+      const updateResult = await UpdateCustomer(id, values);
+      console.log(updateResult);
+      if (updateResult.success) {
+        // Update the state with the new username
+        setCustomerInfo((prevInfo) => ({
+          ...prevInfo,
+          username: values.username,
+        }));
+      } else {
+        // Handle the case where the update fails
+        console.error(updateResult.msg);
+      }
+    } catch (error) {
+      console.error("Error updating username:", error);
+    }
   };
+
+  const handlePasswordSubmit = async (values, { setSubmitting , resetForm }) => {
+    try {
+      const passwordResult = await changePassword(
+        { oldPassword: values.oldPassword, newPassword: values.newPassword },
+        id,
+        authToken
+      );
+  
+      if (passwordResult.success) {
+        // Handle success, e.g., show a success message
+        console.log("Password updated successfully");
+        resetForm();
+      } else {
+        // Handle the case where the password update fails
+        console.error(passwordResult.msg);
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+    }
+      setSubmitting(false);
+  };
+  
+
+  const GetLoggedInCustomer = async (token) => {
+    const res = await getLoggedInCustomer(token);
+    console.log(res);
+    if (res.success) {
+      setCustomerInfo(res.customer);
+    } else {
+      console.log(res.msg);
+    }
+  };
+
+  useEffect(() => {
+    GetLoggedInCustomer(authToken);
+  }, [authToken]);
 
   return (
     <div>
@@ -37,7 +92,7 @@ const MyProfile = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h3 className="text-center fs-4"> My Profile</h3>
+              <h3 className="text-center fs-4"> My Profile </h3>
             </div>
           </div>
         </div>
@@ -83,29 +138,65 @@ const MyProfile = () => {
                       <h5 className="text-start">Account Information</h5>
                       <hr />
                       <Formik
-                        initialValues={initialValues}
-                        validationSchema={validationSchema}
-                        onSubmit={handleSubmit}
+                        initialValues={{
+                          username: "",
+                        }}
+                        validationSchema={usernameValidationSchema}
+                        onSubmit={async (values, { resetForm }) => {
+                          await handleUsernameSubmit(values);
+                          // resetForm();
+                          // togglemodal();
+                        }}
                       >
-                        {({ isSubmitting }) => (
-                          <Form>
+                        {({
+                          isSubmitting,
+                          handleChange,
+                          handleSubmit,
+                          errors,
+                          touched,
+                          values,
+                          handleBlur,
+                          setFieldValue,
+                        }) => (
+                          <Form onSubmit={handleSubmit}>
                             <div className="billing-details">
                               <div className="form-group">
                                 <label>
-                                  FIRST NAME
+                                  USER NAME
                                   <span className="required">*</span>
                                 </label>
-                                <Field type="text" name="firstName" className="form-control" />
-                                <ErrorMessage name="firstName" component="div" className="text-danger" />
+                                <input
+                                  type="text"
+                                  name="username"
+                                  className="form-control"
+                                  value={values.username}
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                />
+                                <p className="error text-danger">
+                                  {errors.username &&
+                                    touched.username &&
+                                    errors.username}
+                                </p>
                               </div>
-                              <div className="form-group">
+                              {/* <div className="form-group">
                                 <label>
                                   LAST NAME
                                   <span className="required">*</span>
                                 </label>
                                 <Field type="text" name="lastName" className="form-control" />
                                 <ErrorMessage name="lastName" component="div" className="text-danger" />
-                              </div>
+                              </div> */}
+                            </div>
+                            <div className="text-left">
+                              <button
+                                type="submit"
+                                className="default-btn"
+                                disabled={isSubmitting}
+                              >
+                                Update Now
+                                <span />
+                              </button>
                             </div>
                           </Form>
                         )}
@@ -116,27 +207,43 @@ const MyProfile = () => {
                       <hr />
                       <Formik
                         initialValues={initialValues}
-                        validationSchema={validationSchema}
-                        onSubmit={handleSubmit}
+                        validationSchema={passwordValidationSchema}
+                        onSubmit={handlePasswordSubmit}
                       >
                         {({ isSubmitting }) => (
                           <Form>
                             <div className="billing-details">
                               <div className="form-group">
                                 <label>
-                                  NEW PASSWORD
+                                  OLD PASSWORD
                                   <span className="required">*</span>
                                 </label>
-                                <Field type="password" name="newPassword" className="form-control" />
-                                <ErrorMessage name="newPassword" component="div" className="text-danger" />
+                                <Field
+                                  type="password"
+                                  name="oldPassword"
+                                  className="form-control"
+                                />
+                                <ErrorMessage
+                                  name="newPassword"
+                                  component="div"
+                                  className="text-danger"
+                                />
                               </div>
                               <div className="form-group">
                                 <label>
-                                  CONFIRM NEW PASSWORD
+                                   NEW PASSWORD
                                   <span className="required">*</span>
                                 </label>
-                                <Field type="password" name="confirmNewPassword" className="form-control" />
-                                <ErrorMessage name="confirmNewPassword" component="div" className="text-danger" />
+                                <Field
+                                  type="password"
+                                  name="newPassword"
+                                  className="form-control"
+                                />
+                                <ErrorMessage
+                                  name="confirmNewPassword"
+                                  component="div"
+                                  className="text-danger"
+                                />
                               </div>
                               <div className="text-left">
                                 <button

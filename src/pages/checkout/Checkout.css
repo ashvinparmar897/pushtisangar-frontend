@@ -345,3 +345,7 @@ select.form-control:not([size]):not([multiple]) {
     border-color: hsl(0, 0%, 70%) !important;
 }
 
+.coupn_det p{
+    place-content: center;
+    padding: 10px 0;
+}

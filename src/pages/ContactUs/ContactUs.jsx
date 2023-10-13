@@ -44,8 +44,8 @@ const ContactUs = () => {
         </div>
       </div>
       <Container>
-        <div className="row">
-          <div className="col-xl-12 col-lg-12">
+        <div className="row justify-content-center">
+          <div className="col-xl-8 col-lg-8" style={{justifyContent : 'center'}}>
             <div className="contact-from-area ">
               <h5 className="contactFormTitle">Contact form</h5>
               <h2 className="contactSubTitle">Drop Us a Line</h2>
@@ -188,10 +188,11 @@ const ContactUs = () => {
               <p className="form-messege" />
             </div>
           </div>
-          <div className="col-lg-4  col-md-6 pl-50 d-lg-block d-none">
-            <img className="border-radius-15 mt-50" src='' alt />
-          </div>
         </div>
+          {/* <div className="col-lg-4  col-md-6 pl-50 d-lg-block d-none">
+            <img className="border-radius-15 mt-50" src='' alt />
+          </div> */}
+          
       </Container>
 
       <Subscribe />

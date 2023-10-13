@@ -3,9 +3,9 @@ import "./ProductDetails.css";
 import Header from "../../components/Header";
 import MidFooter from "../../components/MidFooter";
 
-import cover1 from "../../images/s1.jpg";
-import cover2 from "../../images/s4.jpg";
-import cover3 from "../../images/s3.jpg";
+// import cover1 from "../../images/s1.jpg";
+// import cover2 from "../../images/s4.jpg";
+// import cover3 from "../../images/s3.jpg";
 
 import "../../components/SeasonalProducts.css";
 import "../../components/TopProducts.css";
@@ -15,10 +15,10 @@ import S2 from "../../images/s2.jpg";
 import S3 from "../../images/s3.jpg";
 import S4 from "../../images/s4.jpg";
 import S5 from "../../images/s5.jpg";
-import S6 from "../../images/s6.jpg";
-import S7 from "../../images/s7.jpg";
-import S8 from "../../images/s8.jpg";
-import S9 from "../../images/s9.jpg";
+// import S6 from "../../images/s6.jpg";
+// import S7 from "../../images/s7.jpg";
+// import S8 from "../../images/s8.jpg";
+// import S9 from "../../images/s9.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Preloader from "../../components/Loader";
 import MobileSidebar from "../../components/MobileSidebar";
@@ -27,9 +27,16 @@ import SignContext from "../../contextAPI/Context/SignContext";
 const ProductDetails = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const { id } = useParams();
-  const { getSpecificProduct, getCategories, getSpecificSubcategories , getLoggedInCustomer , addToCart } =
-    useContext(SignContext);
+  const {
+    getSpecificProduct,
+    getCategories,
+    getSpecificSubcategories,
+    getLoggedInCustomer,
+    addToCart,
+    addToWishlist,
+  } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
+  const [DailyPrice, setDailyPrice] = useState([]);
   const [Quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(""); // Default selected image
   const [selectedColors, setSelectedColors] = useState([]);
@@ -47,15 +54,21 @@ const ProductDetails = () => {
   const getspecificProduct = async (ProductId) => {
     const res = await getSpecificProduct(ProductId);
     console.log(res);
+
     if (res.success) {
+      const product = res.product;
+
+      // Prices are available, set them directly
       setProductData(res.product);
 
-      if (res.product.category) {
-        getSpecificSubcategories(res.product.category);
+      if (product.category) {
+        getSpecificSubcategories(product.category);
       }
     }
+
     const categoryRes = await getCategories();
     console.log(categoryRes);
+
     if (categoryRes) {
       const mapping = {};
       categoryRes.forEach((category) => {
@@ -76,11 +89,11 @@ const ProductDetails = () => {
 
   const handleCartClick = async () => {
     try {
-      const customerId = CustomerInfo._id ; // Replace with the actual customer ID
+      const customerId = CustomerInfo._id; // Replace with the actual customer ID
       const cartInfo = {
         productId: ProductData._id,
         quantity: Quantity,
-      }
+      };
       const res = await addToCart(customerId, cartInfo);
 
       if (res.success) {
@@ -97,14 +110,36 @@ const ProductDetails = () => {
     }
   };
 
-  const handleIncrement = ()=> {
-    setQuantity(Quantity + 1);
-  }
-  const handleDecrement = ()=> {
-    if(Quantity >1){
-    setQuantity(Quantity - 1);
+  const handleWishlistClick = async () => {
+    try {
+      const customerId = CustomerInfo._id; // Replace with the actual customer ID
+      const cartInfo = {
+        productId: ProductData._id,
+      };
+      const res = await addToWishlist(customerId, cartInfo);
+      console.log(res);
+      if (res.success) {
+        // Cart updated successfully
+        console.log("Added in Wishlist successfully");
+        // navigate(`/cart/${customerId}`);
+      } else {
+        // Handle the error
+        console.error(res.msg);
+      }
+    } catch (error) {
+      // Handle unexpected errors
+      console.error("Unexpected error:", error);
     }
-  }
+  };
+
+  const handleIncrement = () => {
+    setQuantity(Quantity + 1);
+  };
+  const handleDecrement = () => {
+    if (Quantity > 1) {
+      setQuantity(Quantity - 1);
+    }
+  };
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
@@ -116,19 +151,23 @@ const ProductDetails = () => {
     }
   };
 
-  useEffect(() => {
-    getspecificProduct(id);
-    getCategories();
-    if (ProductData.category) {
-      getspecificSubcategories(ProductData.category);
-    }
-    const authToken = window.localStorage.getItem("authToken");
-    GetLoggedInCustomer(authToken);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    window.scrollTo(0, 0);
-  }, [id] , [Quantity]);
+  useEffect(
+    () => {
+      getspecificProduct(id);
+      getCategories();
+      if (ProductData.category) {
+        getspecificSubcategories(ProductData.category);
+      }
+      const authToken = window.localStorage.getItem("authToken");
+      GetLoggedInCustomer(authToken);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      window.scrollTo(0, 0);
+    },
+    [id],
+    [Quantity]
+  );
 
   const handleThumbClick = (imageURL) => {
     setSelectedImage(imageURL);
@@ -142,8 +181,6 @@ const ProductDetails = () => {
       setSelectedColors([...selectedColors, color]);
     }
   };
-
-
 
   const products = [
     {
@@ -308,7 +345,6 @@ const ProductDetails = () => {
     return <Preloader />; // Show the preloader while loading
   }
 
-  
   return (
     <div>
       <Header />
@@ -336,16 +372,16 @@ const ProductDetails = () => {
                     <div className="wrapper_preview_img" id="preview_img">
                       <img
                         src={`${url}/products/${
-                          selectedImage || ProductData.imageGallery[0]
+                          selectedImage || ProductData?.imageGallery?.[0] || ""
                         }`}
                         alt="Preview"
                       />
                     </div>
-                    <div className="wrapper_thumb" id="wrapper-thumb">
-                      {ProductData.imageGallery.map((image, index) => (
+                    <div className="wrapper_thumb p-2" id="wrapper-thumb">
+                      {ProductData.imageGallery?.map((image, index) => (
                         <div
                           key={index}
-                          className={`thumb ${
+                          className={`thumb p-2 ${
                             selectedImage === image ? "active" : ""
                           }`}
                           onClick={() => handleThumbClick(image)}
@@ -374,15 +410,26 @@ const ProductDetails = () => {
                     <div className="clearfix product-price-cover mt-3">
                       <div className="product-price primary-color float-left">
                         <span className="current-price text-brand fs-1">
-                          ₹{ProductData.prices.discounted}
+                          ₹
+                          {ProductData.prices &&
+                            (ProductData.prices.discounted
+                              ? ProductData.prices.discounted
+                              : ProductData.prices.calculatedPrice)}
                         </span>
+
                         <span>
                           {/* <span className="save-price font-md color3 ml-15">
                             26% Off
                           </span> */}
-                          <span className="old-price font-md ml-15 fs-5">
-                            ₹{ProductData.prices.original}
-                          </span>
+                          {!ProductData.calculationOnWeight && (
+                            <span className="old-price font-md ml-15 fs-5">
+                              ₹
+                              {ProductData.prices &&
+                              ProductData.prices.calculatedPrice
+                                ? ProductData.prices.calculatedPrice
+                                : "NA"}
+                            </span>
+                          )}
                         </span>
                       </div>
                     </div>
@@ -441,7 +488,11 @@ const ProductDetails = () => {
                     </div>
                     <div className="detail-extralink   ">
                       <div className="detail-qty border radius">
-                        <Link to="#" onClick={handleIncrement} className="qty-down">
+                        <Link
+                          to="#"
+                          onClick={handleIncrement}
+                          className="qty-down"
+                        >
                           <i className="fi-rs-angle-small-down bi bi-chevron-down" />
                         </Link>
                         <input
@@ -476,7 +527,7 @@ const ProductDetails = () => {
                           aria-label="Add To Wishlist"
                           className="action-btn hover-up"
                           style={{ marginLeft: "12px" }}
-                          to="#"
+                          onClick={handleWishlistClick}
                         >
                           <i className="fi-rs-heart bi bi-heart" />
                         </Link>
@@ -1082,28 +1133,6 @@ const ProductDetails = () => {
                       />
                     </Link>
                   </div>
-                  {/* <div className="product-action-1">
-                    <Link
-                      aria-label="Quick view"
-                      className="action-btn small hover-up"
-                      data-bs-toggle="modal"
-                      data-bs-target="#quickViewModal"
-                      tabIndex={0}
-                    >
-                      <i className="fi-rs-eye bi bi-eye-fill" />
-                    </Link>
-                    <Link
-                      aria-label="Add To Wishlist"
-                      className="action-btn small hover-up"
-                      to="#"
-                      tabIndex={0}
-                    >
-                      <i className="fi-rs-heart bi bi-heart" />
-                    </Link>
-                  </div> */}
-                  {/* <div className="product-badges product-badges-position product-badges-mrg">
-                    <span className="best">Best sale</span>
-                  </div> */}
                 </div>
                 <div class="product-content-wrap">
                   <div class="product-category">

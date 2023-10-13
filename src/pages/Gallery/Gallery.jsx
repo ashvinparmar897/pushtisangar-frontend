@@ -14,7 +14,7 @@ const Gallery = () => {
     <React.Fragment>
       <Header />
       <MobileSidebar/>
-      <div class="page-header breadcrumb-wrap">
+      {/* <div class="page-header breadcrumb-wrap">
         <div className="container">
           <div className="breadcrumb">
             <Link className="homeLink" to="/" rel="nofollow">
@@ -212,6 +212,12 @@ const Gallery = () => {
             </div>
           </div>
         </div>
+      </section> */}
+      <div class="page-header breadcrumb-wrap">
+        <h1 className="text-warning">This Page is Under Process</h1>
+      </div>
+      <section className="team-section sec-pad">
+      <h1 className="text-warning">This Page is Under Process</h1>
       </section>
       <Subscribe />
       <Featured />

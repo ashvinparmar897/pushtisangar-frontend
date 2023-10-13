@@ -8,6 +8,7 @@ import { FaFacebook,FaInstagram,FaPinterest,FaTwitter, FaYoutube } from 'react-i
 
 
 const MidFooter = () => {
+
   return (
     <div >
       <section className="section-padding footer-mid bg-dark " >
@@ -75,21 +76,20 @@ const MidFooter = () => {
               <h4 className="widget-title footer-title text-start">Popular</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <a href="#">Zari  Chira Vastra</a>
+                  <a href="#">Product - 01</a>
                 </li>
                 <li>
-                  <a href="#">Farookhi Sahi</a>
+                  <a href="#">Product -02</a>
                 </li>
                 <li>
-                  <a href="#">Kinkhab Zari</a>
+                  <a href="#">Product -03</a>
                 </li>
                 <li>
-                  <a href="#">Alkavali</a>
+                  <a href="#">Product -04</a>
                 </li>
                 <li>
-                  <a href="#">Sehro</a>
+                  <a href="#">Product -05</a>
                 </li>
-              
               </ul>
             </div>
             <div className="footer-link-widget costomer-block col">

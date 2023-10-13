@@ -1,5 +1,5 @@
 // ProductList.js
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import MidFooter from "../../components/MidFooter";
 import "./ProductList.css";
@@ -17,10 +17,52 @@ import S6 from "../../images/s6.jpg";
 import S7 from "../../images/s7.jpg";
 import S8 from "../../images/s8.jpg";
 import S9 from "../../images/s9.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import MobileSidebar from "../../components/MobileSidebar";
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
+import SignContext from "../../contextAPI/Context/SignContext";
 const ProductList = () => {
+  const url = `${process.env.REACT_APP_BASE_URL}`;
+  const {id} = useParams();
+  const navigate = useNavigate(); 
+  const { GetProductsbyCategoryId, getCategories , getLoggedInCustomer , addToCart } = useContext(SignContext);
+  const [ProductData, setProductData] = useState([]);
+  const [categoryNameMapping, setCategoryNameMapping] = useState({});
+  const [CustomerInfo, setCustomerInfo] = useState({});
+  const authToken = localStorage.getItem("authToken");
+
+  const Getproduct = async (id) => {
+    const res = await GetProductsbyCategoryId(id);
+    console.log(res);
+
+    const categoryRes = await getCategories();
+    console.log(categoryRes)
+    if (categoryRes) {
+      const mapping = {};
+      categoryRes.forEach((category) => {
+        mapping[category._id] = category.name;
+      });
+      console.log(mapping)
+      setCategoryNameMapping(mapping);
+    }
+
+    // const transformedData = res.products.map((product, index) => ({
+    //   ...product,
+    //   id: index + 1,
+    // }));
+    setProductData(res.products);
+  };
+
+  const GetLoggedInCustomer = async (token) => {
+    const res = await getLoggedInCustomer(token);
+    console.log(res);
+    if (res.success) {
+      setCustomerInfo(res.customer);
+    } else {
+      console.log(res.msg);
+    }
+  };
+
   // Define state variables for filters
   const [showFilters, setShowFilters] = useState(false);
   const [selectedColors, setSelectedColors] = useState([]);
@@ -242,6 +284,34 @@ const ProductList = () => {
     setSelectedValue(e.target.value);
   };
 
+  const handleCartClick = async (id) => {
+    try {
+      const customerId = CustomerInfo._id ; // Replace with the actual customer ID
+      const cartInfo = {
+        productId: id,
+        quantity: 1,
+      }
+      const res = await addToCart(customerId, cartInfo);
+
+      if (res.success) {
+        // Cart updated successfully
+        console.log("Cart updated successfully");
+        navigate(`/cart/${customerId}`);
+      } else {
+        // Handle the error
+        console.error(res.msg);
+      }
+    } catch (error) {
+      // Handle unexpected errors
+      console.error("Unexpected error:", error);
+    }
+  };
+
+  useEffect(() => {
+    Getproduct(id);
+    GetLoggedInCustomer(authToken);
+  }, [id]);
+
   return (
     <div>
       <Header />
@@ -255,7 +325,7 @@ const ProductList = () => {
               </i>
               Home{" "}
             </Link>
-            <AiOutlineRight className="rightIcon" /> <span /> ProductList{" "}
+            <AiOutlineRight className="rightIcon" /> <span /> Product List{" "}
             <span />
           </div>
         </div>
@@ -512,7 +582,7 @@ const ProductList = () => {
               </div>
             </div>
           </div>
-          {products.map((product) => (
+          {ProductData ?ProductData.map((product) => (
             <div className=" col-lg-3 col-md-4 col-sm-6 mb-4" key={product.id}>
               <div className="product-cart-wrap popular-card" tabIndex={0}>
                 <div className="product-img-action-wrap">
@@ -520,7 +590,7 @@ const ProductList = () => {
                     <Link to="#" tabIndex={0}>
                       <img
                         className="default-img"
-                        src={product.imageUrl}
+                        src={`${url}/products/${product.imageGallery[0]}`}
                         alt=""
                       />
                       <img
@@ -535,7 +605,7 @@ const ProductList = () => {
                 </div>
                 <div class="product-content-wrap">
                   <div class="product-category">
-                    <Link to="#">{product.category}</Link>
+                    <Link to="#">{categoryNameMapping[product.category]}</Link>
                   </div>
                   <h2>
                     <Link to="#">{product.name}</Link>
@@ -543,13 +613,13 @@ const ProductList = () => {
 
                   <div class="product-card-bottom">
                     <div class="product-price popular-card-price">
-                      <span>₹{product.price.toFixed(2)}</span>
+                      <span>₹{product.prices?product.prices.discounted:null}</span>
                       <span class="old-price">
-                        ₹{product.oldPrice.toFixed(2)}
+                        ₹{product.prices?product.prices.original:null}
                       </span>
                     </div>
                     <div class="add-cart popular-card-cart">
-                      <Link class="add add-cart-btn" to="#">
+                      <Link class="add add-cart-btn" onClick={()=>{handleCartClick(product._id)}}>
                         <i class="fi-rs-shopping-cart mr-5 bi bi-cart me-2"></i>
                         Add{" "}
                       </Link>
@@ -558,7 +628,7 @@ const ProductList = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )) : null}
         </div>
         <div>
           <div className="btn">Show More</div>
