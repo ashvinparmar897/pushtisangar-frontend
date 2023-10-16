@@ -87,8 +87,8 @@ const MyAccount = () => {
                           <Link to={`/my-profile/${CustomerInfo._id}`} className="text-color">
                             Edit
                           </Link>{" "}
-                          &nbsp;|&nbsp;{" "}
-                          <Link to="change-password.html">Change Password</Link>
+                          {/* &nbsp;|&nbsp;{" "} */}
+                          {/* <Link to="change-password.html">Change Password</Link> */}
                         </p>
                       </div>
                     </div>
