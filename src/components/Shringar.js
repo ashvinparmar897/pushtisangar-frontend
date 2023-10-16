@@ -85,16 +85,16 @@ const Shringar = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,  // Display 4 products in one row
-    slidesToScroll: 4,  // Scroll 4 products at a time
+    slidesToShow: ProductData?ProductData.length : null, // Display all products in one row
+    slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 1025,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToShow: ProductData? ProductData.length : null,
+          slidesToScroll: 1,
           infinite: true,
           dots: false,
         },
@@ -102,20 +102,20 @@ const Shringar = () => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,  // Adjust the number of products based on your design
-          slidesToScroll: 2,  // Adjust the number of products based on your design
+          slidesToShow: ProductData?ProductData.length : null,
+          slidesToScroll:ProductData? ProductData.length : null,
           initialSlide: 0,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: ProductData? ProductData.length : null,
+          slidesToScroll:ProductData? ProductData.length : null,
         },
       },
     ],
-  };
+  }
 
   const handleCartClick = async (id) => {
     try {
@@ -185,6 +185,9 @@ const Shringar = () => {
                               className="default-img"
                               src={`${url}/products/${product.imageGallery[0]}`}
                               alt=""
+                              onError={(e) => {
+                                e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+                              }}
                             />
                           </Link>
                         </div>
@@ -209,7 +212,7 @@ const Shringar = () => {
                             )}
                         </div>
                         <Link
-                          to="/product-details"
+                          // to="/product-details"
                           className="btn w-100 hover-up"
                           tabIndex={0}
                           onClick={()=>{handleCartClick(product._id)}}

@@ -4,9 +4,9 @@ import React from "react";
 
 
 export const SignState = (props) => {
-  // const url = `${process.env.REACT_APP_BASE_URL}`;
+  const url = `${process.env.REACT_APP_BASE_URL}`;
   // console.log(url)
-  const url = `http://localhost:5000`;
+  // const url = `http://localhost:5000`;
 
 
   // create customer
@@ -308,6 +308,24 @@ export const SignState = (props) => {
     }
   };
 
+  const getAllBanner = async () => {
+    try {
+      const response = await axios.post(`${url}/banner/get-banner`);
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
+
+  const getBlogs = async () => {
+    try {
+      const response = await axios.post(`${url}/blog/get-blog`);
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
 
   return (
     <SignContext.Provider
@@ -336,7 +354,9 @@ export const SignState = (props) => {
         removeItemFromWishlist,
         GetProductsbyCategoryId,
         GetallCoupons,
-        GetCouponbyId
+        GetCouponbyId,
+        getAllBanner,
+        getBlogs
       }}
     >
       {props.children}

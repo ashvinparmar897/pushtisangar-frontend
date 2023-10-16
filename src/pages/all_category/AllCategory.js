@@ -122,12 +122,12 @@ const CategoryCard = ({ name, image, itemCount, color , id }) => (
   const Getcategories = async () => {
     const res = await getCategories();
     // console.log(res);
-
+    if (res !== undefined) {
     const transformedData = res.map((category, index) => ({
       ...category,
       id: index + 1,
     }));
-    setCategoryData(transformedData);
+    setCategoryData(transformedData);}
   };
 
   useEffect(() => {

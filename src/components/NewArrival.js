@@ -2,15 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import "./SeasonalProducts.css";
 import "./TopProducts.css";
-import S1 from "../images/s1.jpg";
-import S2 from "../images/s2.jpg";
-import S3 from "../images/s3.jpg";
-import S4 from "../images/s4.jpg";
-import S5 from "../images/s5.jpg";
-import S6 from "../images/s6.jpg";
-import S7 from "../images/s7.jpg";
-import S8 from "../images/s8.jpg";
-import S9 from "../images/s9.jpg";
+
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import SignContext from "../contextAPI/Context/SignContext";
@@ -56,130 +48,6 @@ const NewArrival = () => {
       console.log(res.msg);
     }
   };
-
-  // const products = [
-  //   {
-  //     id: 1,
-  //     imageUrl: S1,
-
-  //     category: "Shangar",
-  //     name: "God Shanagar By Pushtimarg ",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //     color: "#67bcee",
-  //   },
-  //   {
-  //     id: 1,
-  //     imageUrl: S2,
-
-  //     category: "Sughandhi",
-  //     name: "Sughandhi Attar Different fragrances",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //     color: "#3BB77Es",
-  //   },
-  //   {
-  //     id: 1,
-  //     imageUrl: S3,
-
-  //     category: "Shringar",
-  //     name: "Moti product with category of Shringar",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //     color: "#f74b81",
-  //   },
-  //   {
-  //     id: 1,
-  //     imageUrl: S4,
-
-  //     category: "Shringar",
-  //     name: "Popular Product on Shringar Products",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //   },
-  //   {
-  //     id: 1,
-  //     imageUrl: S5,
-
-  //     category: "Vastra",
-  //     name: "Best Zari in Vastra Category",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //   },
-  //   // {
-  //   //   id: 1,
-  //   //   imageUrl: S6,
-  //   //   hoverImageUrl:
-  //   //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //   //   category: "Vastra",
-  //   //   name: "Second Most Popular Zari in Vastra",
-  //   //   price: 238.85,
-  //   //   oldPrice: 245.8,
-  //   // },
-  //   // {
-  //   //   id: 1,
-  //   //   imageUrl: S7,
-  //   //   hoverImageUrl:
-  //   //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //   //   category: "Vastra",
-  //   //   name: "Zari with different types of vastra",
-  //   //   price: 238.85,
-  //   //   oldPrice: 245.8,
-  //   //   color: "#f74b81",
-  //   // },
-  //   // {
-  //   //   id: 1,
-  //   //   imageUrl: S8,
-  //   //   hoverImageUrl:
-  //   //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //   //   category: "Vastra",
-  //   //   name: "Different color zari products",
-  //   //   price: 238.85,
-  //   //   oldPrice: 245.8,
-  //   // },
-  //   // {
-  //   //   id: 1,
-  //   //   imageUrl: S9,
-  //   //   hoverImageUrl:
-  //   //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //   //   category: "Vastra",
-  //   //   name: "Colourful Zari in vastra category",
-  //   //   price: 238.85,
-  //   //   oldPrice: 245.8,
-  //   // },
-  //   // {
-  //   //   id: 1,
-  //   //   imageUrl: S1,
-  //   //   hoverImageUrl:
-  //   //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //   //   category: "Shangar",
-  //   //   name: "God Shanagar with best modification",
-  //   //   price: 238.85,
-  //   //   oldPrice: 245.8,
-  //   // },
-  //   // {
-  //   //   id: 1,
-  //   //   imageUrl: S5,
-  //   //   hoverImageUrl:
-  //   //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //   //   category: "Vastra",
-  //   //   name: "Vastra Zari By Pushtimarg Web Aplication",
-  //   //   price: 238.85,
-  //   //   oldPrice: 245.8,
-  //   // },
-  //   // {
-  //   //   id: 1,
-  //   //   imageUrl: S6,
-  //   //   hoverImageUrl:
-  //   //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //   //   category: "Vastra",
-  //   //   name: "Vastra Zari By Pushtimarg Web Aplication",
-  //   //   price: 238.85,
-  //   //   oldPrice: 245.8,
-  //   // },
-
-  //   // Add more product objects here
-  // ];
 
   const NextArrow = ({ onClick }) => (
     <div
@@ -294,7 +162,10 @@ const NewArrival = () => {
                           <img
                             className="default-img"
                             src={`${url}/products/${product.imageGallery[0]}`}
-                            alt="no image"
+                            alt=""
+                            onError={(e) => {
+                              e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+                            }}
                           />
                         </Link>
                       </div>

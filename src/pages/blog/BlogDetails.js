@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState,useContext } from 'react';
+import {useDispatch,useSelector} from "react-redux"
 import "./BlogDetails.css";
 import Header from "../../components/Header";
 import Subscribe from "../../components/Subscribe";
@@ -9,11 +10,54 @@ import cmt from "../../images/comment1.png";
 import author from "../../images/author-1.png";
 import sideimage from "../../images/side-image.jpg";
 import logo from "../../images/favIcon.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import bimage from "../../images/s1.jpg";
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import MobileSidebar from "../../components/MobileSidebar";
+import axios from "axios";
+import { storeBlog } from '../../state/action';
+
+
 const BlogDetails = () => {
+
+  const id = useParams("id")
+
+  const dispatch = useDispatch();
+  const url = `${process.env.REACT_APP_BASE_URL}`;
+
+  const [selectedBlogPost,setSelectedBlogPost] = useState('');
+ 
+  const arrayOfBlog = useSelector((state) => state.blog);
+
+  const getAllBlogs = () => {
+    const url = `${process.env.REACT_APP_BASE_URL}`;
+    if (arrayOfBlog) {
+      axios.post(`${url}/blog/get-blog`)
+        .then((res) => {
+          const responseData = res.data.data;
+          if (Array.isArray(responseData) && responseData.length === 0) {
+            console.log("Received an empty array from the server.");
+          } else {
+            dispatch(storeBlog(responseData));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })   
+    }
+  };
+
+;
+
+  useEffect(() => {
+    console.log(id)
+    if (arrayOfBlog.length === 0) {
+    getAllBlogs();}
+    const selectedBlog = arrayOfBlog.filter(obj => obj._id === id.id);
+    setSelectedBlogPost(selectedBlog[0])
+    console.log(selectedBlog[0])
+  }, [id]);
+
   return (
     <div>
       <Header />
@@ -46,20 +90,29 @@ const BlogDetails = () => {
                     <div className="row">
                       <div className="col-xl-10 col-lg-12 m-auto">
                         <h2 className="mb-10 text-start ">
-                          The Chronicles of Lord Lalji: Wisdom Unveiled
+                          {selectedBlogPost.blogTitle}
                         </h2>
                         <div className="single-header-meta">
                           <div className="entry-meta meta-1 font-xs mt-15 mb-15">
-                            <Link className="author-avatar" to="#">
-                              <img className="img-circle" src={author} alt />
-                            </Link>
+                            {/* <Link className="author-avatar" to="#">
+                              <img className="img-circle"
+                              src={`${url}/blog-images/${selectedBlogPost.imagePath}`}
+                                alt />
+                            </Link> */}
                             <span className="post-by">
-                              By <Link to="#">Manish Sharma</Link>
+                              By <Link to="#">{selectedBlogPost.blogFeed}</Link>
                             </span>
-                            <span className="post-on has-dot">2 hours ago</span>
-                            <span className="time-reading has-dot">
+                            <span className="post-on has-dot"> {new Date(selectedBlogPost.date).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                  }
+                                )}</span>
+                            {/* <span className="time-reading has-dot">
                               8 mins read
-                            </span>
+                            </span> */}
                           </div>
                           <div className="social-icons single-share">
                             <ul className="text-grey-5 d-flex">
@@ -80,23 +133,17 @@ const BlogDetails = () => {
                     </div>
                   </div>
                   <figure className="single-thumbnail">
-                    <img src={bdetail} alt />
+                    <img 
+                     src={`${url}/blog-images/${selectedBlogPost.imagePath}`} 
+                    alt="" />
                   </figure>
                   <div className="single-content">
                     <div className="row">
-                      <div className="col-xl-10 col-lg-12 m-auto">
-                        <p className="">
-                          In the mystical world of "The Chronicles of Lord
-                          Lalji," embark on a journey through time and wisdom as
-                          we delve into the enigmatic life and teachings of the
-                          revered Lord Lalji. Unveil the secrets of his ancient
-                          scrolls, whispered legends, and timeless philosophies
-                          that have shaped the destinies of generations.
-                        </p>
+                    <div dangerouslySetInnerHTML={{ __html: selectedBlogPost.blog }} />
                    
                        
 
-                      </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -168,7 +215,7 @@ const BlogDetails = () => {
                   </div>
                 </div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-md-4">
                   <img src={bimage} />
                 </div>
@@ -202,7 +249,7 @@ const BlogDetails = () => {
                           we delve into the enigmatic life and teachings of the
                           revered Lord Lalji. </p>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-md-6">
                   <div className="author-bio p-30 mt-80 border-radius-15 bg-white">

@@ -1,11 +1,7 @@
-import React from 'react';
-
+import React, { useEffect, useState,useContext } from 'react';
+import {useDispatch,useSelector} from "react-redux"
 import './Blog.css';
-import image1 from '../../images/b1.png'
-import image2 from '../../images/b2.png'
-import image3 from '../../images/b3.png'
-import image4 from '../../images/b1.png'
-import image5 from '../../images/b1.png'
+import SignContext from '../../contextAPI/Context/SignContext';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Subscribe from '../../components/Subscribe';
@@ -13,89 +9,56 @@ import Featured from '../../components/Featured';
 import MidFooter from '../../components/MidFooter';
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import MobileSidebar from '../../components/MobileSidebar';
+import axios from "axios";
+import { storeBlog } from '../../state/action';
 
 const Blog = () => {
-  const blogPosts = [
-    {
-      id: 1,
+  const dispatch = useDispatch();
+  const arrayOfBlog = useSelector((state) => state.blog);
 
-      title: 'Text Will be coming soon .....',
-      date: '25 April 2022',
-   
-      readTime: 'Author',
-      image: image1,
-    },
-    {
-        id: 1,
-     
-        title: 'Text Will be coming soon .....',
-        date: '25 April 2022',
-    
-        readTime: 'Author',
-        image:image2,
-      },
-      {
-        id: 1,
-        
-        title: 'Text Will be coming soon .....',
-        date: '25 April 2022',
-     
-        readTime: 'Author',
-        image: image3,
-      },
-      {
-        id: 1,
-      
-        title: 'Text Will be coming soon .....',
-        date: '25 April 2022',
-     
-        readTime: 'Author',
-        image: image4,
-      },
-      {
-        id: 1,
-      
-        title: 'Text Will be coming soon .....',
-        date: '25 April 2022',
-        
-        readTime: 'Author',
-        image: image5,
-      },
-      {
-        id: 1,
-        category: 'Side Dish',
-        title: 'Text Will be coming soon .....',
-        date: '25 April 2022',
-       
-        readTime: 'Author',
-        image: image1,
-      },
-      {
-        id: 1,
-       
-        title: 'Text Will be coming soon .....',
-        date: '25 April 2022',
-       
-        readTime: 'Author',
-        image: image2,
-      },
-      {
-        id: 1,
-      
-        title: 'Text Will be coming soon .....',
-        date: '25 April 2022',
-     
-        readTime: 'Author',
-        image:image4,
-      },
-      
-    // Add more blog post data here
-  ];
+  const url = `${process.env.REACT_APP_BASE_URL}`;
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 12;
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = arrayOfBlog.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  const totalPages = Math.ceil(arrayOfBlog.length / recordsPerPage);
+
+
+  const [blogPosts,setBlogPosts] = useState([]);
+ 
+
+  const getAllBlogs = () => {
+    if (arrayOfBlog) {
+      axios.post(`${url}/blog/get-blog`)
+        .then((res) => {
+          const responseData = res.data.data;
+          if (Array.isArray(responseData) && responseData.length === 0) {
+            console.log("Received an empty array from the server.");
+          } else {
+            dispatch(storeBlog(responseData));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })   
+    }
+  };
+
+
+
+  useEffect(() => {
+    if (arrayOfBlog.length === 0) {
+    getAllBlogs();}
+    setBlogPosts(arrayOfBlog)
+    console.log(arrayOfBlog)
+  }, [arrayOfBlog]);
 
   return (
     <div>
         <Header/>
-        <MobileSidebar/>
+        <MobileSidebar/>  
         <div class="page-header breadcrumb-wrap">
         <div className="container">
           <div className="breadcrumb">
@@ -125,47 +88,53 @@ const Blog = () => {
               </div>
               <div className="loop-grid">
                 <div className="row">
-                  {blogPosts.map((post) => (
+                  {currentRecords?currentRecords.map((post) => (
                     
-                          <article key={post.id} className="col-xl-3 col-lg-4 col-md-6 text-center hovr-up  animated mb-2">
+                          <article key={post._id} className="col-xl-3 col-lg-4 col-md-6 text-center hovr-up  animated mb-2">
                       <div className="post-thumb">
-                        <Link to='/blog-details'>
-                          <img className="border-radius-15" src={post.image} alt="" />
+                      <Link to={`/blog-details/${post._id}`}>
+                          <img className="border-radius-15" src={`${url}/blog-images/${post.imagePath}`} alt="" />
                         </Link>
                        
                       </div>
                       <div className="entry-content-2">
                         {/* <h6 className="mb-10 font-sm"><Link className="entry-meta text-muted" to='#'>{post.category}</Link></h6> */}
                         <h4 className="post-title mb-15 text-start">
-                          <Link to='/blog-details'>{post.title}</Link>
+                          <Link to='/blog-details'>{post.blogTitle}</Link>
                         </h4>
                         <div className="entry-meta font-xs color-grey mt-10 pb-10 ">
                           <div className='d-flex justify-content-between'>
-                            <span className="post-on ">{post.date}</span>
+                            <span className="post-on ">{post.blogFeed}</span>
                             {/* <span className="hit-count has-dot mr-10">{post.views}</span> */}
-                            <span className="">{post.readTime}</span>
+                            <span className="">{new Date(post.date).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                  }
+                                )}</span>
                           </div>
                         </div>
                       </div>
                     </article>
                   
                   
-                  ))}
+                  )):null}
                 </div>
               </div>
               <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-start">
                                     <li class="page-item">
-                                        <Link class="page-link" to="#"><i class="fi-rs-arrow-small-left bi bi-arrow-left"></i></Link>
+                                        <a class="page-link" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}><i class="fi-rs-arrow-small-left bi bi-arrow-left"></i></a>
                                     </li>
-                                    <li class="page-item"><Link class="page-link" to="#">1</Link></li>
-                                    <li class="page-item active"><Link class="page-link" to="#">2</Link></li>
-                                    <li class="page-item"><Link class="page-link" to="#">3</Link></li>
-                                    <li class="page-item"><Link class="page-link dot" to="#">...</Link></li>
-                                    <li class="page-item"><Link class="page-link" to="#">6</Link></li>
+                                    <span> <li class="page-item"><a class="page-link">{currentPage}</a></li></span>
+                                    {/* <li class="page-item">of</li>
+                                    <span> <li class="page-item"><a class="page-link">{totalPages}</a></li></span> */}
+
                                     <li class="page-item">
-                                        <Link class="page-link" to="#"><i class="fi-rs-arrow-small-right bi bi-arrow-right"></i></Link>
+                                        <a class="page-link" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}><i class="fi-rs-arrow-small-right bi bi-arrow-right"></i></a>
                                     </li>
                                 </ul>
                             </nav>

@@ -4,10 +4,6 @@ import "./SeasonalProducts.css";
 import Slider from "react-slick";
 import "./Vastra.css";
 
-import S1 from "../images/s1.jpg";
-import S2 from "../images/s2.jpg";
-import S3 from "../images/s3.jpg";
-import S4 from "../images/s4.jpg";
 import { Link } from "react-router-dom";
 import SignContext from "../contextAPI/Context/SignContext";
 
@@ -172,6 +168,7 @@ const Vastra = () => {
             <Slider {...settings}>
               {products?products.map((product) => (
                 <div key={product.id}>
+                  {/* <ProductCard redirectTo imageLink productCategory></ProductCard> */}
                   <Link to={`/product-details/${product._id}`}>
                     <div
                       className="product-cart-wrap shringar-card slick-slide slick-current slick-active"
@@ -187,6 +184,9 @@ const Vastra = () => {
                               className="default-img"
                               src={`${url}/products/${product.imageGallery[0]}`}
                               alt=""
+                              onError={(e) => {
+                                e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+                              }}
                             />
                           </Link>
                         </div>

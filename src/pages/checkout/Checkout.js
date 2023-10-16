@@ -145,7 +145,7 @@ const Checkout = () => {
 
         // Check for NaN or invalid values
         if (isNaN(quantity) || isNaN(discountedPrice)) {
-          return acc; // Skip this item if it has invalid data
+          return acc; 
         }
 
         return acc + quantity * discountedPrice;
@@ -299,26 +299,6 @@ const Checkout = () => {
                       <h3 className="title">Shipping Address</h3>
 
                       <div className="row" id>
-                        {/* <div className="col-lg-12 col-md-12">
-                          <div className="form-group">
-                            <label>
-                              Email Address
-                              <span className="required">*</span>
-                            </label>
-                            <input
-                              type="email"
-                              name="email"
-                              value={values.email}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              className="form-control"
-                              disabled
-                            />
-                            {errors.email && touched.email && (
-                              <div className="text-danger">{errors.email}</div>
-                            )}
-                          </div>
-                        </div> */}
                         <div className="col-lg-6 col-md-6">
                           <div className="form-group">
                             <label>
@@ -560,7 +540,7 @@ const Checkout = () => {
                                     {/* <h5>Coupon Details</h5>
                                     <p>Name: {selectedCoupon.name}</p>
                                     <p>Discount: {selectedCoupon.discount}</p> */}
-                                    {/* <p>Type: {selectedCoupon.type}</p> */}
+                                    <p>Type: {selectedCoupon.type}</p>
                                     {/* <p>
                                       Start:{" "}
                                       {new Date(

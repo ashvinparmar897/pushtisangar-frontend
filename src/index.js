@@ -5,12 +5,22 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { SignState } from "./contextAPI/State/SignState";
 
+import { Provider } from 'react-redux';
+
+import { createStore } from 'redux';
+import rootReducer from './state/reducer'; // You'll create this file shortly
+const store = createStore(rootReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+      <Provider store={store}>
+
     <SignState>
       <App />
     </SignState>
+      </Provider>
   </React.StrictMode>
 );
 

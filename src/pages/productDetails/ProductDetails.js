@@ -34,6 +34,7 @@ const ProductDetails = () => {
     getLoggedInCustomer,
     addToCart,
     addToWishlist,
+    
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [DailyPrice, setDailyPrice] = useState([]);
@@ -375,6 +376,9 @@ const ProductDetails = () => {
                           selectedImage || ProductData?.imageGallery?.[0] || ""
                         }`}
                         alt="Preview"
+                        onError={(e) => {
+                          e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+                        }}
                       />
                     </div>
                     <div className="wrapper_thumb p-2" id="wrapper-thumb">
@@ -389,6 +393,9 @@ const ProductDetails = () => {
                           <img
                             src={`${url}/products/${image}`}
                             alt={`Thumbnail ${index + 1}`}
+                            onError={(e) => {
+                              e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+                            }}
                           />
                         </div>
                       ))}

@@ -613,10 +613,12 @@ const ProductList = () => {
 
                   <div class="product-card-bottom">
                     <div class="product-price popular-card-price">
-                      <span>₹{product.prices?product.prices.discounted:null}</span>
-                      <span class="old-price">
-                        ₹{product.prices?product.prices.original:null}
-                      </span>
+                      <span>₹{product.prices.discounted?product.prices.discounted:product.prices.calculatedPrice}</span>
+                      {!product.calculationOnWeight && (
+                          <span class="old-price">
+                            ₹{product.prices?product.prices.original:null}
+                          </span>
+                            )}
                     </div>
                     <div class="add-cart popular-card-cart">
                       <Link class="add add-cart-btn" onClick={()=>{handleCartClick(product._id)}}>
