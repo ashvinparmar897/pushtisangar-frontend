@@ -592,6 +592,9 @@ const ProductList = () => {
                         className="default-img"
                         src={`${url}/products/${product.imageGallery[0]}`}
                         alt=""
+                        onError={(e) => {
+                          e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+                        }}
                       />
                       <img
                         className="hover-img"

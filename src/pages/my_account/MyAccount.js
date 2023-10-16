@@ -53,18 +53,18 @@ const MyAccount = () => {
                     <li>
                       <Link to="/my-order">My Orders</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="/my-address">My Addresses</Link>
-                    </li>
+                    </li> */}
                     {/* <li>
                       <Link to="/my-profile">My Profile</Link>
                     </li> */}
                     {/* <li>
                       <Link to="/track-order">Track Order</Link>
                     </li> */}
-                    <li>
+                    {/* <li>
                       <Link to="/ticket-support">Support Ticket</Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link to="/">Logout</Link>
                     </li>

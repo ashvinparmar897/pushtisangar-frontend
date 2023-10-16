@@ -134,6 +134,9 @@ const Wishlist = () => {
           <img
             src={`${url}/products/${item.product.imageGallery[0]}`}
             alt="#"
+            onError={(e) => {
+              e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+            }}
           />
         </td>
         <td className="product-des product-name">
@@ -146,11 +149,11 @@ const Wishlist = () => {
         <td className="price" data-title="Price">
           <h3 className="text-grand fs-4">{item.product.prices.discounted?item.product.prices.discounted:item.product.prices.calculatedPrice}</h3>
         </td>
-        <td className="text-center detail-info" data-title="Stock">
+        {/* <td className="text-center detail-info" data-title="Stock">
           <span className="stock-status in-stock mb-0">
             {item.product.stock.quantity}
           </span>
-        </td>
+        </td> */}
         <td className="text-right" data-title="Cart">
           <button className="btn btn-sm" onClick={() => {
               handleCartClick(item.product._id);
@@ -210,7 +213,7 @@ const Wishlist = () => {
                       Product
                     </th>
                     <th scope="col">Price</th>
-                    <th scope="col">Stock</th>
+                    {/* <th scope="col">Stock</th> */}
                     <th scope="col">Action</th>
                     <th scope="col" className="end">
                       Remove

@@ -4,8 +4,8 @@ import Select from "react-select";
 
 import logo2 from "../images/logo1.png";
 import logo from "../images/favIcon.png";
-import smallImage from "../images/small-image-2.jpg";
-import smallsangar from "../images/smallsanagr.jpg";
+// import smallImage from "../images/small-image-2.jpg";
+// import smallsangar from "../images/smallsanagr.jpg";
 import { Link, useParams } from "react-router-dom";
 import { BsPerson, BsCart } from "react-icons/bs";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -267,20 +267,20 @@ const Header = () => {
     }
   };
 
-  const totalPrice = CartData.reduce((acc, item) => {
-    // Ensure that item.quantity and item.discountedPrice are valid numbers
-    const quantity = parseFloat(item.quantity);
-    const discountedPrice = parseFloat(
-      item.product.prices.discounted ? item.product.prices.discounted : item.product.prices.calculatedPrice
-    );
+  // const totalPrice = CartData.reduce((acc, item) => {
+  //   // Ensure that item.quantity and item.discountedPrice are valid numbers
+  //   const quantity = parseFloat(item.quantity);
+  //   const discountedPrice = parseFloat(
+  //     item.product.prices.discounted ? item.product.prices.discounted : item.product.prices.calculatedPrice
+  //   );
 
-    // Check for NaN or invalid values
-    if (isNaN(quantity) || isNaN(discountedPrice)) {
-      return acc; // Skip this item if it has invalid data
-    }
+  //   // Check for NaN or invalid values
+  //   if (isNaN(quantity) || isNaN(discountedPrice)) {
+  //     return acc; // Skip this item if it has invalid data
+  //   }
 
-    return acc + quantity * discountedPrice;
-  }, 0);
+  //   return acc + quantity * discountedPrice;
+  // }, 0);
 
   useEffect(() => {
     GetLoggedInCustomer(authToken);

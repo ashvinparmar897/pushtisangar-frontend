@@ -34,7 +34,7 @@ const ProductDetails = () => {
     getLoggedInCustomer,
     addToCart,
     addToWishlist,
-    
+    GetProductsbyCategoryId
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [DailyPrice, setDailyPrice] = useState([]);
@@ -57,14 +57,7 @@ const ProductDetails = () => {
     console.log(res);
 
     if (res.success) {
-      const product = res.product;
-
-      // Prices are available, set them directly
       setProductData(res.product);
-
-      if (product.category) {
-        getSpecificSubcategories(product.category);
-      }
     }
 
     const categoryRes = await getCategories();
@@ -78,6 +71,28 @@ const ProductDetails = () => {
       console.log(mapping);
       setCategoryNameMapping(mapping);
     }
+  };
+
+  const etproductsbyCategotId = async (id) => {
+    const res = await GetProductsbyCategoryId(id);
+    console.log(res);
+
+    const categoryRes = await getCategories();
+    console.log(categoryRes)
+    if (categoryRes) {
+      const mapping = {};
+      categoryRes.forEach((category) => {
+        mapping[category._id] = category.name;
+      });
+      console.log(mapping)
+      setCategoryNameMapping(mapping);
+    }
+
+    // const transformedData = res.products.map((product, index) => ({
+    //   ...product,
+    //   id: index + 1,
+    // }));
+    setProductData(res.products);
   };
 
   const getspecificSubcategories = async (categoryId) => {

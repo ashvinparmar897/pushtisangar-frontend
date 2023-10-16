@@ -636,7 +636,7 @@ const Checkout = () => {
                               </td>
                               <td className="product-subtotal">
                                 <span className="subtotal-amount">
-                                  ₹ {tPwithGST.toFixed(2) ? tPwithGST.toFixed(2)  : totalAmount}
+                                  ₹ {tPwithGST ? tPwithGST.toFixed(2)  : totalAmount}
                                 </span>
                               </td>
                             </tr>
@@ -664,7 +664,7 @@ const Checkout = () => {
                               name="radio-group"
                               className="me-2"
                             />
-                            <label htmlFor="paypal">PayPal</label>
+                            <label htmlFor="paypal">PayPallabel>
                           </p> */}
                           <p>
                             <input
