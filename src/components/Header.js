@@ -1296,13 +1296,11 @@ const Header = () => {
             </div>
             <div className="hotline d-none d-lg-flex">
               <div className="me-3 mt-1">
-                {/* {authToken ? ( */}
-                <p>Welcome</p>
-                {/* ) : ( */}
-                {/* <button className="btn" onClick={handleLoginClick}>
-                    Login/SignUp
-                  </button> */}
-                {/* )} */}
+                {authToken ? (
+                <p>Welcome , {CustomerInfo.username}</p>
+                 ) : (
+                  <p>Welcome</p>
+                 )} 
               </div>
             </div>
             <div className="header-action-icon-2 d-block d-lg-none">
