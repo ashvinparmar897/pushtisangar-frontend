@@ -673,7 +673,7 @@ const Header = () => {
                                             onBlur={handleBlur}
                                             value={values.username}
                                           />
-                                          <p classname="error text-danger">
+                                          <p className="error text-danger">
                                             {errors.username &&
                                               touched.username &&
                                               errors.username}
@@ -690,7 +690,7 @@ const Header = () => {
                                             onBlur={handleBlur}
                                             value={values.email}
                                           />
-                                          <p classname="error text-danger">
+                                          <p className="error text-danger">
                                             {errors.email &&
                                               touched.email &&
                                               errors.email}
@@ -706,7 +706,7 @@ const Header = () => {
                                             onBlur={handleBlur}
                                             value={values.password}
                                           />
-                                          <p classname="error text-danger">
+                                          <p className="error text-danger">
                                             {errors.password &&
                                               touched.password &&
                                               errors.password}
@@ -722,7 +722,7 @@ const Header = () => {
                                             onBlur={handleBlur}
                                             value={values.confirmPassword}
                                           />
-                                          <p classname="error text-danger">
+                                          <p className="error text-danger">
                                             {errors.confirmPassword &&
                                               touched.confirmPassword &&
                                               errors.confirmPassword}
@@ -735,7 +735,7 @@ const Header = () => {
                                             className="form-control"
                                             placeholder="Mobile Number *"
                                           />
-                                          <p classname="error text-danger">
+                                          <p className="error text-danger">
                                             {errors.phone &&
                                               touched.phone &&
                                               errors.phone}
