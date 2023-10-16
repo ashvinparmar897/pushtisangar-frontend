@@ -18,7 +18,7 @@ const Gallery = () => {
   const arrayOfGallery = useSelector((state) => state.gallery);
   const url = `${process.env.REACT_APP_BASE_URL}`;
 
-  const [galleryPosts,setGalleryPosts] = useState([]);
+  const [filterdPosts,setGalleryFilterdPosts] = useState([]);
  
 
   const getAllGallerys = () => {
@@ -43,8 +43,9 @@ const Gallery = () => {
   useEffect(()=>{
     if (arrayOfGallery.length === 0) {
       getAllGallerys();}
+      setGalleryFilterdPosts(arrayOfGallery)
       console.log(arrayOfGallery)
-  },[arrayOfGallery])
+  },[])
 
   return (
     <React.Fragment>
@@ -71,34 +72,35 @@ const Gallery = () => {
           </div>
           <div className="row clearfix">
           {
-            arrayOfGallery.map((item)=>{
-              <div className="col-lg-3 col-md-6 col-sm-12 team-block">
-              <Link to="/gallery-details">
-                <div className="galleryCard">
-                  <Link to="/gallery-details" />
-                  <div className="inner-box">
-                    <a href="/gallery-details">
-                      <div className="image-box">
-                        <figure className="image">
-                          <img 
-                          src={`${url}/getgallerycat/${item.imagePath}`} 
-                          alt=''
-                          />
-                        </figure>
-                      </div>
-                    </a>
-                    <div className="lower-content">
-                      <a href="/gallery-details"/>
-                      <h3 className="titleLink">
-                        <Link to="/gallery-details">{item.gallaryCategoryTitle}</Link>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+  arrayOfGallery.map((item, index) => (
+    <div key={index} className="col-lg-3 col-md-6 col-sm-12 team-block">
+      <Link to={`/gallery-details/${item._id}`}>
+        <div className="galleryCard">
+          <div className="inner-box">
+            <Link to={`/gallery-details/${item._id}`}>
+              <div className="image-box">
+                <figure className="image">
+                  <img src={`${url}/gallery-images/${item.imagePath}`}
+                  onError={(e) => {
+                    e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; 
+                  }}
+
+                  alt='' />
+                </figure>
+              </div>
+            </Link>
+            <div className="lower-content">
+              <h3 className="titleLink">
+                <Link to={`/gallery-details/${item._id}`}>{item.gallaryCategoryTitle}</Link>
+              </h3>
             </div>
-            })
-          }
+          </div>
+        </div>
+      </Link>
+    </div>
+  ))
+}
+
          
            
             

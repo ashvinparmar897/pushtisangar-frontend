@@ -56,7 +56,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/terms-condition" element={<Terms_Condition />} />
           <Route path="/all-category" element={<AllCategory />} />
-          <Route path="/gallery-details" element={<GalleryDetails />} />
+          <Route path="/gallery-details/:id" element={<GalleryDetails />} />
           <Route path="/my-wishlist/:id" element={<Wishlist />} />
         </Routes>
       </BrowserRouter>
