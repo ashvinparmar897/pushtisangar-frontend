@@ -1049,3 +1049,14 @@ input:focus-visible {
 .login-btn{
     color: #fff !important;
 }
+
+.eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .modal-backdrop-opacity {
+    background-color: rgba(0, 0, 0, 0.5);
+  }

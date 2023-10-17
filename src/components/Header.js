@@ -38,6 +38,8 @@ const Header = () => {
   const authToken = localStorage.getItem("authToken");
   // console.log(authToken);
   const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [ConfirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isAccountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedOption, setSelectedOption] = useState(null);
@@ -192,23 +194,7 @@ const Header = () => {
     setSelectedCategory(event.target.value);
   };
 
-  // Initial values for the forms
-  // const initialValuesLogin = {
-  //   email: "",
-  //   password: "",
-  // };
-
-  // const initialValuesForgotPassword = {
-  //   email: "",
-  // };
-
-  // const initialValuesSignup = {
-  //   username: "",
-  //   email: "",
-  //   password: "",
-  //   confirmPassword: "",
-  //   phone: "",
-  // };
+  
 
   // Validation schemas
   const loginSchema = Yup.object().shape({
@@ -247,7 +233,7 @@ const Header = () => {
 
   const handleForgotPasswordSubmit = async (Values) => {
     const res = await forgotCustomerPassword(Values);
-    console.log(res)
+    console.log(res);
     if (res.success) {
       setSuccess(res.msg);
     } else {
@@ -256,7 +242,6 @@ const Header = () => {
         setError("");
       }, 1000);
     }
-    
   };
 
   const handleSignupSubmit = async (Values) => {
@@ -337,7 +322,7 @@ const Header = () => {
 
             {showLoginModal && (
               <div
-                className="modal fade show"
+                className="modal fade show modal-backdrop-opacity"
                 id="LoginRegister"
                 style={{ display: "block" }}
                 aria-modal="true"
@@ -359,9 +344,11 @@ const Header = () => {
                           <div className="col-md-12 col-lg-8">
                             <div className="lr-details">
                               <h5>Sign in to PushtiShangar</h5>
-                              {errorBanner &&<div class="alert alert-danger" role="alert">
-                                {errorBanner}
-                              </div>}
+                              {errorBanner && (
+                                <div class="alert alert-danger" role="alert">
+                                  {errorBanner}
+                                </div>
+                              )}
                               <Formik
                                 initialValues={{
                                   email: "",
@@ -407,18 +394,41 @@ const Header = () => {
                                         </span>
                                       </div>
                                       <div className="form-group">
-                                        <Field
-                                          type="password"
-                                          name="password"
-                                          className="form-control login-input"
-                                          placeholder="Password *"
-                                          onChange={handleChange}
-                                          onBlur={handleBlur}
-                                          value={values.password}
-                                        />
-                                        <span>
-                                          <i className="bx bxs-lock bi bi-lock-fill" />
-                                        </span>
+                                        <div className="password-input-container">
+                                          <Field
+                                            type={
+                                              passwordVisible
+                                                ? "text"
+                                                : "password"
+                                            }
+                                            name="password"
+                                            id="password-input"
+                                            className="form-control login-input"
+                                            placeholder="Password *"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.password}
+                                          />
+                                          <span>
+                                            <i className="bx bxs-lock bi bi-lock-fill" />
+                                          </span>
+                                        </div>
+                                        <div
+                                          className={`eye-icon-container text-end`}
+                                        >
+                                          <p
+                                            className={`bi ${
+                                              passwordVisible
+                                                ? "bi-eye"
+                                                : "bi-eye-slash"
+                                            } eye-icon text-end`}
+                                            onClick={() =>
+                                              setPasswordVisible(
+                                                !passwordVisible
+                                              )
+                                            }
+                                          ></p>
+                                        </div>
                                         <p className="error text-danger">
                                           {errors.password &&
                                             touched.password &&
@@ -452,10 +462,9 @@ const Header = () => {
                           </div>
                           <div className="col-md-12 col-lg-4 flex-col img-part">
                             <div className="login-white-container">
-                              <h1>Hello, friend!</h1>
-                              <p>
-                                Enjoy your personal details and start your
-                                journey with us.
+                              <h1>Hello!</h1>
+                              <p className="text-center mt-2">
+                              Unlock a personalized shopping experience by joining us now.
                               </p>
                               <div className="register">
                                 <Link
@@ -478,7 +487,7 @@ const Header = () => {
             )}
             {showForgotPasswordModal && (
               <div
-                className="modal fade show"
+                className="modal fade show modal-backdrop-opacity"
                 id="LoginRegister"
                 style={{ display: "block", paddingRight: 17 }}
                 aria-modal="true"
@@ -566,10 +575,9 @@ const Header = () => {
                           </div>
                           <div className="col-md-12 col-lg-4 flex-col img-part">
                             <div className="login-white-container">
-                              <h1>Hello, friend!</h1>
-                              <p>
-                                Enjoy your personal details and start your
-                                journey with us.
+                              <h1>Hello!</h1>
+                              <p className="text-center mt-2">
+                              Unlock a personalized shopping experience by joining us now.
                               </p>
                               <div className="register">
                                 <Link
@@ -592,7 +600,7 @@ const Header = () => {
             )}
             {showSignupModal && (
               <div
-                className="modal fade show"
+                className="modal fade show modal-backdrop-opacity"
                 id="LoginRegister"
                 style={{ display: "block", paddingRight: 17 }}
                 aria-modal="true"
@@ -698,7 +706,11 @@ const Header = () => {
                                         </div>
                                         <div className="form-group col-md-6">
                                           <Field
-                                            type="password"
+                                            type={
+                                              passwordVisible
+                                                ? "text"
+                                                : "password"
+                                            }
                                             name="password"
                                             className="form-control"
                                             placeholder="Password *"
@@ -706,6 +718,22 @@ const Header = () => {
                                             onBlur={handleBlur}
                                             value={values.password}
                                           />
+                                          <div
+                                          className={`eye-icon-container text-end`}
+                                        >
+                                          <p
+                                            className={`bi ${
+                                              passwordVisible
+                                                ? "bi-eye"
+                                                : "bi-eye-slash"
+                                            } eye-icon text-end me-2`}
+                                            onClick={() =>
+                                              setPasswordVisible(
+                                                !passwordVisible
+                                              )
+                                            }
+                                          ></p>
+                                        </div>
                                           <p className="error text-danger">
                                             {errors.password &&
                                               touched.password &&
@@ -714,7 +742,11 @@ const Header = () => {
                                         </div>
                                         <div className="form-group col-md-6">
                                           <Field
-                                            type="password"
+                                            type={
+                                              ConfirmpasswordVisible
+                                                ? "text"
+                                                : "password"
+                                            }
                                             name="confirmPassword"
                                             className="form-control"
                                             placeholder="Confirm Password *"
@@ -722,6 +754,22 @@ const Header = () => {
                                             onBlur={handleBlur}
                                             value={values.confirmPassword}
                                           />
+                                          <div
+                                          className={`eye-icon-container text-end`}
+                                        >
+                                          <p
+                                            className={`bi ${
+                                              ConfirmpasswordVisible
+                                                ? "bi-eye"
+                                                : "bi-eye-slash"
+                                            } eye-icon text-end me-2`}
+                                            onClick={() =>
+                                              setConfirmPasswordVisible(
+                                                !ConfirmpasswordVisible
+                                              )
+                                            }
+                                          ></p>
+                                        </div>
                                           <p className="error text-danger">
                                             {errors.confirmPassword &&
                                               touched.confirmPassword &&
@@ -803,7 +851,7 @@ const Header = () => {
                       <Link className="mini-cart-icon" to="#">
                         <BsCart />
                         <span className="pro-count blue">
-                          {CartData.length}
+                          {CartData ? CartData.length : null}
                         </span>
                       </Link>
                       <Link to="#">
@@ -812,40 +860,42 @@ const Header = () => {
                       {isCartDropdownOpen && (
                         <div className="cart-dropdown-wrap cart-dropdown-hm2">
                           <ul>
-                            {CartData.map((item) => (
-                              <li>
-                                <div className="shopping-cart-img">
-                                  <Link to="#">
-                                    <img
-                                      alt="cart"
-                                      src={`${url}/products/${item.product.imageGallery[0]}`}
-                                    />
-                                  </Link>
-                                </div>
-                                <div className="shopping-cart-title">
-                                  <h4>
-                                    <Link to="#">{item.product.name}</Link>
-                                  </h4>
-                                  <h3>
-                                    <span>{item.quantity}× </span>
-                                    {item.product.prices.discounted
-                                      ? item.product.prices.discounted
-                                      : item.product.prices.calculatedPrice}
-                                  </h3>
-                                </div>
-                                <div className="shopping-cart-delete">
-                                  <Link
-                                    onClick={() => {
-                                      handleRemoveItemFromCart(
-                                        item.product._id
-                                      );
-                                    }}
-                                  >
-                                    <i className="fi-rs-cross-small bi bi-x" />
-                                  </Link>
-                                </div>
-                              </li>
-                            ))}
+                            {CartData
+                              ? CartData.map((item) => (
+                                  <li>
+                                    <div className="shopping-cart-img">
+                                      <Link to="#">
+                                        <img
+                                          alt="cart"
+                                          src={`${url}/products/${item.product.imageGallery[0]}`}
+                                        />
+                                      </Link>
+                                    </div>
+                                    <div className="shopping-cart-title">
+                                      <h4>
+                                        <Link to="#">{item.product.name}</Link>
+                                      </h4>
+                                      <h3>
+                                        <span>{item.quantity}× </span>
+                                        {item.product.prices.discounted
+                                          ? item.product.prices.discounted
+                                          : item.product.prices.calculatedPrice}
+                                      </h3>
+                                    </div>
+                                    <div className="shopping-cart-delete">
+                                      <Link
+                                        onClick={() => {
+                                          handleRemoveItemFromCart(
+                                            item.product._id
+                                          );
+                                        }}
+                                      >
+                                        <i className="fi-rs-cross-small bi bi-x" />
+                                      </Link>
+                                    </div>
+                                  </li>
+                                ))
+                              : null}
                           </ul>
                           <div className="shopping-cart-footer">
                             {/* <div className="shopping-cart-total">
@@ -857,7 +907,9 @@ const Header = () => {
                               <Link to={`/cart/${CustomerInfo._id}`}>
                                 View cart
                               </Link>
-                              <Link to={`/checkout/${CustomerInfo._id}`}>Checkout</Link>
+                              <Link to={`/checkout/${CustomerInfo._id}`}>
+                                Checkout
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -1297,10 +1349,10 @@ const Header = () => {
             <div className="hotline d-none d-lg-flex">
               <div className="me-3 mt-1">
                 {authToken ? (
-                <p>Welcome , {CustomerInfo.username}</p>
-                 ) : (
+                  <p>Welcome , {CustomerInfo.username}</p>
+                ) : (
                   <p>Welcome</p>
-                 )} 
+                )}
               </div>
             </div>
             <div className="header-action-icon-2 d-block d-lg-none">

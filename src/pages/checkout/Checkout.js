@@ -70,8 +70,9 @@ const Checkout = () => {
   const [coupons, setCoupons] = useState([]);
   // const [appliedCoupon, setAppliedCoupon] = useState("");
   const [selectedCoupon, setSelectedCoupon] = useState(null);
-  const [couponApplied, setCouponApplied] = useState(false);
+
   const [totalAmount, setTotalAmount] = useState(0);
+  const [discountedTotal, setDiscountedTotal] = useState(0);
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
@@ -102,27 +103,35 @@ const Checkout = () => {
     setCoupons(transformedData);
   };
 
-  const handleApplyCoupon = async (couponId) => {
+  const handleApplyCoupon = (couponId) => {
     const selectedCoupon = coupons.find((coupon) => coupon._id === couponId);
+    console.log(selectedCoupon)
     setSelectedCoupon(selectedCoupon);
+  
+    const newDiscountedTotal = calculateDiscountedTotal(
+      tPwithGST ? tPwithGST : totalAmount,
+      selectedCoupon
+    );
+  
+    setDiscountedTotal(newDiscountedTotal);
+  
+    // Update the totalAmount by subtracting the discount amount
+    const newTotalAmount =
+      tPwithGST && selectedCoupon
+        ? tPwithGST - calculateDiscountAmount(tPwithGST, selectedCoupon)
+        : totalAmount;
+  
+    setTotalAmount(newTotalAmount);
+  };
 
-    // Apply the coupon discount to the total order amount
-    let discount = 0;
-    let discountedTotal = 0;
-
-    if (selectedCoupon.type === "₹") {
-      discount = selectedCoupon ? selectedCoupon.discount : 0;
-      discountedTotal = tPwithGST - discount;
+  const calculateDiscountAmount = (total, coupon) => {
+    if (coupon.type === "%") {
+      // If the discount is in percentage, calculate the discount amount
+      return (total * coupon.discount) / 100;
     } else {
-      discount = selectedCoupon ? selectedCoupon.discount : 0;
-      discountedTotal = tPwithGST - (tPwithGST * discount) / 100;
+      // If the discount is in a fixed amount, return the fixed amount
+      return coupon.discount;
     }
-
-    // Update the total amount with the discount
-    setTotalAmount(discountedTotal);
-
-    // Set the state to show the coupon applied popup
-    setCouponApplied(true);
   };
 
   const handleRemoveAll = async () => {
@@ -132,6 +141,19 @@ const Checkout = () => {
       setCartData(res.cartItems);
     }
   };
+
+
+  function calculateDiscountedTotal(total, coupon) {
+    if (coupon.type === "%") {
+    
+      const discountAmount = (total * coupon.discount) / 100;
+     
+      return total - discountAmount;
+    } else {
+      
+      return total - coupon.discount;
+    }
+  }
 
   const totalPrice = CartData
     ? CartData.reduce((acc, item) => {
@@ -145,7 +167,7 @@ const Checkout = () => {
 
         // Check for NaN or invalid values
         if (isNaN(quantity) || isNaN(discountedPrice)) {
-          return acc; 
+          return acc;
         }
 
         return acc + quantity * discountedPrice;
@@ -243,6 +265,7 @@ const Checkout = () => {
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }) => {
               try {
+
                 const response = await CreateOrder({
                   customer: CustomerInfo._id,
                   FirstName: values.firstName,
@@ -251,17 +274,19 @@ const Checkout = () => {
                     product: item.product._id,
                     quantity: item.quantity,
                   })),
-                  totalAmount: tPwithGST ? tPwithGST.toFixed(2) : totalAmount,
+                  totalAmount: discountedTotal ? discountedTotal.toFixed(2) : tPwithGST.toFixed(2),
                   // status: "pending",
                   country: values.selectedCountry.value,
                   state: values.selectedState.value,
                   city: values.city,
                   postCode: values.postcode,
                   shippingAddress: values.address,
-                  couponCode: selectedCoupon ? selectedCoupon.name : null,
+                  couponCode: selectedCoupon._id,
                   // paymentMethod: "Net Banking", // You might want to get this from the form
                   // ... (other fields)
+          
                 });
+                // console.log(selectedCoupon._id)
                 if (response.success) {
                   // Order created successfully
                   console.log("Order", response);
@@ -471,110 +496,81 @@ const Checkout = () => {
                   <div className="col-lg-5 col-md-12">
                     <div className="order-details">
                       <h3 className="title">Order Summary</h3>
-                      <h5 className="mt-3 mb-3 fs-13">Use Coupon Code</h5>
 
                       {totalPrice > 10000 && (
-                        <div id="cuponcode">
-                          <div className="form-coupon checkout-login">
-                            <div className="cart-buttons m-0">
-                              <div className="shopping-coupon-code">
-                                <select
-                                  value={
-                                    selectedCoupon ? selectedCoupon._id : ""
-                                  }
-                                  onChange={(e) =>
-                                    handleApplyCoupon(e.target.value)
-                                  }
-                                >
-                                  <option value="">Select a coupon</option>
-                                  {coupons.map((coupon) => (
-                                    <option
-                                      key={coupon._id}
-                                      value={coupon._id}
-                                      disabled={
-                                        new Date(coupon.expiry).getTime() <=
+                        <div>
+                          <h5 className="mt-3 mb-3 fs-13">Use Coupon Code</h5>
+                          <div id="cuponcode">
+                            <div className="form-coupon checkout-login">
+                              <div className="cart-buttons m-0">
+                                <div className="shopping-coupon-code">
+                                  <select
+                                    value={
+                                      selectedCoupon ? selectedCoupon._id : ""
+                                    }
+                                    onChange={(e) =>
+                                      handleApplyCoupon(e.target.value)
+                                    }
+                                  >
+                                    <option value="">Select a coupon</option>
+                                    {coupons.map((coupon) => (
+                                      <option
+                                        key={coupon._id}
+                                        value={coupon._id}
+                                        disabled={
+                                          new Date(coupon.expiry).getTime() <=
+                                          Date.now()
+                                        }
+                                      >
+                                        {coupon.name} -{" "}
+                                        {new Date(
+                                          coupon.expiry
+                                        ).toLocaleDateString("en-US", {
+                                          year: "numeric",
+                                          month: "short",
+                                          day: "numeric",
+                                        })}
+                                        {new Date(coupon.expiry).getTime() <=
                                         Date.now()
-                                      }
-                                    >
-                                      {coupon.name} -{" "}
-                                      {new Date(
-                                        coupon.expiry
-                                      ).toLocaleDateString("en-US", {
-                                        year: "numeric",
-                                        month: "short",
-                                        day: "numeric",
-                                      })}
-                                      {new Date(coupon.expiry).getTime() <=
-                                      Date.now()
-                                        ? "  expired"
-                                        : ""}
-                                    </option>
-                                  ))}
-                                </select>
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    handleApplyCoupon(selectedCoupon._id)
-                                  }
-                                >
-                                  Apply Coupon
-                                </button>
-                              </div>
-                              <div>
-                                {selectedCoupon && (
-                                  <div className="row mt-4">
-                                    <div className="col-lg-12">
-                                      <h5>Coupon Details</h5>
-                                      <div className="row coupn_det">
-                                        <div className="col-lg-6">
-                                          <p>Name: {selectedCoupon.name}</p>
+                                          ? "  expired"
+                                          : ""}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  
+                                  <button type="button">Apply Coupon</button>
+                                </div>
+                                <div>
+                                  {selectedCoupon && (
+                                    <div className="row mt-4">
+                                      <div className="col-lg-12">
+                                        <h5>Coupon Details</h5>
+                                        <div className="row coupn_det">
+                                          <div className="col-lg-6">
+                                            <p>Name: {selectedCoupon?selectedCoupon.name : null}</p>
+                                          </div>
+                                          <div className="col-lg-6">
+                                            <p>
+                                              Discount:{" "}
+                                              {selectedCoupon?selectedCoupon.discount : null}{selectedCoupon?selectedCoupon.type : null}
+                                            </p>
+                                          </div>
                                         </div>
-                                        <div className="col-lg-6">
-                                          <p>
-                                            Discount: {selectedCoupon.discount}
-                                          </p>
-                                        </div>
+                                        {/* Add more details as needed */}
                                       </div>
                                     </div>
-
-                                    {/* <h5>Coupon Details</h5>
-                                    <p>Name: {selectedCoupon.name}</p>
-                                    <p>Discount: {selectedCoupon.discount}</p> */}
-                                    <p>Type: {selectedCoupon.type}</p>
-                                    {/* <p>
-                                      Start:{" "}
-                                      {new Date(
-                                        selectedCoupon.start
-                                      ).toLocaleDateString("en-US", {
-                                        year: "numeric",
-                                        month: "short",
-                                        day: "numeric",
-                                      })}
-                                    </p> */}
-                                    {/* <p>Type: {selectedCoupon.start}</p> */}
-                                    {/* <p>
-                                      expiry:{" "}
-                                      {new Date(
-                                        selectedCoupon.expiry
-                                      ).toLocaleDateString("en-US", {
-                                        year: "numeric",
-                                        month: "short",
-                                        day: "numeric",
-                                      })}
-                                    </p> */}
-
-                                    {/* Add more details as needed */}
-                                  </div>
-                                )}
+                                  )}
+                                </div>
+                                {/* <small>
+                                  Coupon code can also be applied at checkout
+                                  before payment.
+                                </small> */}
                               </div>
-                              <small>
-                                Coupon code can also be applied at checkout
-                                before payment.
-                              </small>
                             </div>
                           </div>
                         </div>
                       )}
+
                       <hr />
                       {CartData && (
                         <h5 className="mt-3 mb-3 fs-13">
@@ -604,7 +600,7 @@ const Checkout = () => {
                                 </span>
                               </td>
                             </tr> */}
-                            <tr>
+                            {/* <tr>
                               <td className="order-subtotal" colSpan={2}>
                                 <span>Cart Subtotal</span>
                               </td>
@@ -613,33 +609,48 @@ const Checkout = () => {
                                   ₹ {totalPrice}
                                 </span>
                               </td>
-                            </tr>
+                            </tr> */}
                             {/* Coupon Code */}
 
-                            {selectedCoupon && (
-                              <tr>
-                                <td className="order-shipping" colSpan={2}>
-                                  <span>Discount </span>
-                                </td>
-                                <td className="shipping-price">
-                                  <span>
-                                    {selectedCoupon?selectedCoupon.discount : null}
-                                    
-                                    {selectedCoupon.type?selectedCoupon.type : null}{" "}
-                                  </span>
-                                </td>
-                              </tr>
-                            )}
                             <tr>
                               <td className="total-price" colSpan={2}>
                                 <span>Order Total</span>
                               </td>
                               <td className="product-subtotal">
                                 <span className="subtotal-amount">
-                                  ₹ {tPwithGST ? tPwithGST.toFixed(2)  : totalAmount}
+                                  ₹{" "}
+                                  {tPwithGST
+                                    ? tPwithGST.toFixed(2)
+                                    : totalAmount}
                                 </span>
                               </td>
                             </tr>
+                            {selectedCoupon && (
+                              <>
+                                <tr>
+                                  <td className="order-shipping" colSpan={2}>
+                                    <span>Discount</span>
+                                  </td>
+                                  <td className="shipping-price">
+                                    <span>
+                                      {selectedCoupon.discount}{" "}
+                                      {selectedCoupon.type === "%" ? "%" : "₹"}
+                                    </span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td className="total-price" colSpan={2}>
+                                    <span>Grand Total</span>
+                                  </td>
+                                  <td className="product-subtotal">
+                                    <span className="subtotal-amount">
+                                      ₹{" "}
+                                      {discountedTotal.toFixed(2)}
+                                    </span>
+                                  </td>
+                                </tr>
+                              </>
+                            )}
                           </tbody>
                         </table>
                       </div>

@@ -323,7 +323,7 @@ const Cart = () => {
                     </span>
                   </li>
                 </ul>
-                <div className="cart-buttons mb-4">
+                {/* <div className="cart-buttons mb-4">
                   <div className="shopping-coupon-code">
                     <input
                       type="text"
@@ -337,7 +337,7 @@ const Cart = () => {
                   <small>
                     Coupon code can also be applied at checkout before payment.
                   </small>
-                </div>
+                </div> */}
                 <Link to={`/checkout/${id}`} className="default-btn">
                   Proceed to Checkout
                   <span />
