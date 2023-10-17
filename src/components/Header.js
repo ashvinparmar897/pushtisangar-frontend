@@ -623,9 +623,8 @@ const Header = () => {
                           <div className="col-md-12 col-lg-4 flex-col img-part">
                             <div className="login-white-container">
                               <h1>Welcome Back !</h1>
-                              <p>
-                                To be connected with us please login with your
-                                personal info.
+                              <p className="text-center mt-2">
+                              Log in to continue shopping and managing your account.
                               </p>
                               <div className="register">
                                 <Link
