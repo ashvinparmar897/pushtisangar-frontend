@@ -24,8 +24,16 @@ import Preloader from "../../components/Loader";
 import MobileSidebar from "../../components/MobileSidebar";
 import SignContext from "../../contextAPI/Context/SignContext";
 
+const WishlistMessage = ({ onClose }) => (
+  <div className="wishlist-message">
+    <p className="text-white">🎉 Product added to wishlist!</p>
+    <button onClick={onClose}>&times;</button>
+  </div>
+);
+
 const ProductDetails = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
+  const [wishlistMessageVisible, setWishlistMessageVisible] = useState(false);
   const { id } = useParams();
   const {
     getSpecificProduct,
@@ -34,7 +42,7 @@ const ProductDetails = () => {
     getLoggedInCustomer,
     addToCart,
     addToWishlist,
-    GetProductsbyCategoryId
+    GetProductsbyCategoryId,
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [DailyPrice, setDailyPrice] = useState([]);
@@ -73,18 +81,18 @@ const ProductDetails = () => {
     }
   };
 
-  const etproductsbyCategotId = async (id) => {
+  const getproductsbyCategotId = async (id) => {
     const res = await GetProductsbyCategoryId(id);
     console.log(res);
 
     const categoryRes = await getCategories();
-    console.log(categoryRes)
+    console.log(categoryRes);
     if (categoryRes) {
       const mapping = {};
       categoryRes.forEach((category) => {
         mapping[category._id] = category.name;
       });
-      console.log(mapping)
+      console.log(mapping);
       setCategoryNameMapping(mapping);
     }
 
@@ -137,6 +145,7 @@ const ProductDetails = () => {
       if (res.success) {
         // Cart updated successfully
         console.log("Added in Wishlist successfully");
+        setWishlistMessageVisible(true);
         // navigate(`/cart/${customerId}`);
       } else {
         // Handle the error
@@ -361,6 +370,10 @@ const ProductDetails = () => {
     return <Preloader />; // Show the preloader while loading
   }
 
+  const closeWishlistMessage = () => {
+    setWishlistMessageVisible(false);
+  };
+
   return (
     <div>
       <Header />
@@ -382,9 +395,9 @@ const ProductDetails = () => {
               <div className="row mb-3 mt-30">
                 <div className="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
                   <div className="detail-gallery">
-                    <span class="zoom-icon">
+                    {/* <span class="zoom-icon">
                       <i class="fi-rs-search bi bi-search"></i>
-                    </span>
+                    </span> */}
                     <div className="wrapper_preview_img" id="preview_img">
                       <img
                         src={`${url}/products/${
@@ -392,7 +405,8 @@ const ProductDetails = () => {
                         }`}
                         alt="Preview"
                         onError={(e) => {
-                          e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+                          e.target.src =
+                            "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"; // Replace with the path to your alternate image
                         }}
                       />
                     </div>
@@ -409,7 +423,8 @@ const ProductDetails = () => {
                             src={`${url}/products/${image}`}
                             alt={`Thumbnail ${index + 1}`}
                             onError={(e) => {
-                              e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+                              e.target.src =
+                                "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"; // Replace with the path to your alternate image
                             }}
                           />
                         </div>
@@ -553,6 +568,9 @@ const ProductDetails = () => {
                         >
                           <i className="fi-rs-heart bi bi-heart" />
                         </Link>
+                        {wishlistMessageVisible && (
+                          <WishlistMessage onClose={closeWishlistMessage} />
+                        )}
                       </div>
                     </div>
                     <div className="font-xs d-none">

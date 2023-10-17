@@ -21,6 +21,8 @@ const options = [
   { value: "Seasonal Products", label: "Seasonal Products" },
 ];
 
+
+
 const Header = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const [CartData, setCartData] = useState([]);

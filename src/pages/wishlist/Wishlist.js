@@ -37,7 +37,7 @@ const Wishlist = () => {
     try {
       const customerId = id; // Replace with the actual customer ID
       const cartInfo = {
-        ProductId : ProductId,
+        ProductId: ProductId,
         quantity: 1,
       };
       const res = await addToCart(customerId, cartInfo);
@@ -135,7 +135,8 @@ const Wishlist = () => {
             src={`${url}/products/${item.product.imageGallery[0]}`}
             alt="#"
             onError={(e) => {
-              e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'; // Replace with the path to your alternate image
+              e.target.src =
+                "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"; // Replace with the path to your alternate image
             }}
           />
         </td>
@@ -147,7 +148,11 @@ const Wishlist = () => {
           </h6>
         </td>
         <td className="price" data-title="Price">
-          <h3 className="text-grand fs-4">{item.product.prices.discounted?item.product.prices.discounted:item.product.prices.calculatedPrice}</h3>
+          <h3 className="text-grand fs-4">
+            {item.product.prices.discounted
+              ? item.product.prices.discounted
+              : item.product.prices.calculatedPrice}
+          </h3>
         </td>
         {/* <td className="text-center detail-info" data-title="Stock">
           <span className="stock-status in-stock mb-0">
@@ -155,9 +160,12 @@ const Wishlist = () => {
           </span>
         </td> */}
         <td className="text-right" data-title="Cart">
-          <button className="btn btn-sm" onClick={() => {
+          <button
+            className="btn btn-sm"
+            onClick={() => {
               handleCartClick(item.product._id);
-            }}>
+            }}
+          >
             Add to cart
           </button>
         </td>
@@ -185,11 +193,12 @@ const Wishlist = () => {
             <div className="mb-50 text-start">
               <h1 className="heading-2 mb-10 fs-1">Your Wishlist</h1>
               <h6 className="text-body">
-                There are{" "}
-                <span className="">
+                {/* <span className="">
                   {WishlistData ? WishlistData.length : null}
-                </span>{" "}
-                products in this list
+                </span>{" "} */}
+                {WishlistData.length > 1
+                  ? `${WishlistData.length} items in Wishlist`
+                  : `${WishlistData.length} item in Wishlist`}
               </h6>
             </div>
             <div className="table-responsive shopping-summery">

@@ -7,8 +7,11 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import SignContext from "../contextAPI/Context/SignContext";
 
+
+
 const NewArrival = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
+  // const [showPopup, setShowPopup] = useState(false);
   const { getProducts, getCategories , getLoggedInCustomer , addToCart } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
@@ -16,32 +19,23 @@ const NewArrival = () => {
   const authToken = localStorage.getItem("authToken");
 
 
-// console.log(ProductData);
+
   const Getproduct = async () => {
     const res = await getProducts();
-    // console.log(res);
-
+    
     const categoryRes = await getCategories();
-    // console.log(categoryRes)
     if (categoryRes) {
       const mapping = {};
       categoryRes.forEach((category) => {
         mapping[category._id] = category.name;
       });
-      // console.log(mapping)
       setCategoryNameMapping(mapping);
     }
-
-    // const transformedData = res.products.map((product, index) => ({
-    //   ...product,
-    //   id: index + 1,
-    // }));
     setProductData(res.products);
   };
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
-    // console.log(res);
     if (res.success) {
       setCustomerInfo(res.customer);
     } else {
@@ -124,7 +118,8 @@ const NewArrival = () => {
       if (res.success) {
         // Cart updated successfully
         console.log("Cart updated successfully");
-        // navigate(`/cart/${customerId}`);
+        
+        
       } else {
         // Handle the error
         console.error(res.msg);
@@ -135,10 +130,15 @@ const NewArrival = () => {
     }
   };
 
+  
+
+
   useEffect(() => {
     Getproduct();
     GetLoggedInCustomer(authToken);
   }, []);
+
+  
 
   return (
     <div style={{ background: "rgba(251, 248, 240, 0.74)" }}>
@@ -202,6 +202,7 @@ const NewArrival = () => {
           </Slider>
         </div>
       </div>
+      
     </div>
   );
 };
