@@ -286,7 +286,7 @@ const Checkout = () => {
                   // ... (other fields)
           
                 });
-                // console.log(selectedCoupon._id)
+                console.log(selectedCoupon._id)
                 if (response.success) {
                   // Order created successfully
                   console.log("Order", response);
