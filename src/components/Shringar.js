@@ -80,41 +80,18 @@ const Shringar = () => {
     </div>
   );
 
+  const numProducts = ProductData.length;
+  const productsToShow = numProducts >= 4 ? 4 : 3;
+
   // Slider Configuration
   var settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4, // Display four products in one row
-    slidesToScroll: 1,
+    slidesToShow: productsToShow, 
+    slidesToScroll: productsToShow,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1025,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2, // Adjust the number of products per row for smaller screens if needed
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1, // Adjust for very small screens
-          slidesToScroll: 1,
-        },
-      },
-    ],
   };
 
   const handleCartClick = async (id) => {
@@ -156,7 +133,7 @@ const Shringar = () => {
         </div>
         <div className="row ">
           <div class="col-lg-3 d-none d-lg-flex mb-4">
-            <div class="banner-img style-2 vastra">
+            <div class="banner-img style-2 shringar">
               <div class="banner-text d-none">
                 <h2 class="mb-100">Bring Top Vastra into Your Home</h2>
                 <Link to="#" class="btn btn-xs">
