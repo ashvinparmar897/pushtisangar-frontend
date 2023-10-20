@@ -17,7 +17,7 @@ const options = [
   { value: "Silver Vassels", label: "Silver Vassels" },
   { value: "Sugandhi(Attar)", label: "Sugandhi(Attar)" },
   { value: "Pichwai And Wall Art", label: "Pichwai And Wall Art" },
-  { value: "Fibre Items", label: "Baking material" },
+  { value: "Fibre Items", label: "Fibre Items" },
   { value: "Seasonal Products", label: "Seasonal Products" },
 ];
 
@@ -31,6 +31,7 @@ const Header = () => {
     GetLoggedInCartItems,
     removeItemFromCart,
     forgotCustomerPassword,
+    getCategories,
     // GetSpecificCustomer,
     // UpdateCustomer,
     // deleteCustomer,
@@ -39,6 +40,8 @@ const Header = () => {
   // console.log(authToken);
   const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [CategoryData, setCategoryData] = useState([]);
+
   const [ConfirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isAccountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
@@ -253,6 +256,26 @@ const Header = () => {
     }
   };
 
+  const Getcategories = async () => {
+    // Fetch CategoryData here
+    const res = await getCategories();
+
+    if (res !== undefined) {
+      const transformedData = res.map((category, index) => ({
+        ...category,
+        id: index + 1,
+      }));
+      setCategoryData(transformedData);
+
+      // Find the option in the options array that matches the CategoryData.name
+      const selected = options.find((option) => option.label === transformedData.name);
+
+      if (selected) {
+        setSelectedOption(selected);
+      }
+    }
+  };
+
   // const totalPrice = CartData.reduce((acc, item) => {
   //   // Ensure that item.quantity and item.discountedPrice are valid numbers
   //   const quantity = parseFloat(item.quantity);
@@ -271,6 +294,7 @@ const Header = () => {
   useEffect(() => {
     GetLoggedInCustomer(authToken);
     getLoggedinCustomerCart(CustomerInfo._id);
+    Getcategories();
   }, [CustomerInfo._id]);
 
   return (
@@ -1000,127 +1024,42 @@ const Header = () => {
                   <i className="fi-rs-angle-down bi bi-chevron-down " />
                 </Link>
                 {isOpen && (
-                  <div className="categories-dropdown-wrap categories-dropdown-active-large font-heading">
-                    <div className="d-flex categori-dropdown-inner">
-                      <ul>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Vastra
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Shangar
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Shringar
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            ShriMastak
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            ShriKarna
-                          </Link>
-                        </li>
-                      </ul>
-                      <ul className="end">
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Makhravind
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Karnaful
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Netra
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Chibuk
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Shri Ang
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="more_slide_open">
-                      {isVisible && (
-                        <div className="d-flex categori-dropdown-inner">
-                          <ul>
-                            <li>
-                              <Link to="#">
-                                {" "}
-                                <img src={logo} alt />
-                                ShriHast
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="#">
-                                {" "}
-                                <img src={logo} alt />
-                                Nakveshvar
-                              </Link>
-                            </li>
-                          </ul>
-                          <ul className="end">
-                            <li>
-                              <Link to="#">
-                                {" "}
-                                <img src={logo} alt />
-                                Shishful
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="#">
-                                {" "}
-                                <img src={logo} alt />
-                                Tipara
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                    <div className="more_categories" onClick={toggleVisibility}>
-                      <span></span>{" "}
-                      <span className="heading-sm-1">{buttonText}</span>
-                    </div>
-                  </div>
-                )}
+  <div className="categories-dropdown-wrap categories-dropdown-active-large font-heading">
+    <div className="d-flex categori-dropdown-inner">
+      <ul>
+        {CategoryData.map((category, index) => (
+          <li key={index}>
+            <Link to={`/product-list/${category._id}`}>
+              {" "}
+              <img src={logo} alt />
+              {category.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <ul className="end">
+        {/* Add more categories here */}
+      </ul>
+    </div>
+    <div className="more_slide_open">
+      {isVisible && (
+        <div className="d-flex categori-dropdown-inner">
+          <ul>
+            {/* More categories */}
+          </ul>
+          <ul className="end">
+            {/* More categories */}
+          </ul>
+        </div>
+      )}
+    </div>
+    <div className="more_categories" onClick={toggleVisibility}>
+      <span></span>{" "}
+      <span className="heading-sm-1">{buttonText}</span>
+    </div>
+  </div>
+)}
+
               </div>
               <div className="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                 <nav>

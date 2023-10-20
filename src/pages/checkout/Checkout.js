@@ -661,8 +661,8 @@ const Checkout = () => {
                                   </td>
                                   <td className="shipping-price">
                                     <span>
-                                      {selectedCoupon.discount}{" "}
                                       {selectedCoupon.type === "%" ? "%" : "₹"}
+                                      {selectedCoupon.discount}{" "}
                                     </span>
                                   </td>
                                 </tr>
@@ -672,7 +672,7 @@ const Checkout = () => {
                                   </td>
                                   <td className="product-subtotal">
                                     <span className="subtotal-amount">
-                                      ₹ {(discountedTotal + shpChrg).toFixed(2)}
+                                      ₹ {(!isNaN(discountedTotal) ? discountedTotal : 0) + (!isNaN(shpChrg) ? shpChrg : 0)}
                                     </span>
                                   </td>
                                 </tr>
