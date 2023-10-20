@@ -527,7 +527,7 @@ const ProductDetails = () => {
                       <div className="detail-qty border radius">
                         <Link
                           to="#"
-                          onClick={handleIncrement}
+                          onClick={handleDecrement}
                           className="qty-down"
                         >
                           <i className="fi-rs-angle-small-down bi bi-chevron-down" />
@@ -542,7 +542,7 @@ const ProductDetails = () => {
                         />
                         <Link
                           to="#"
-                          onClick={handleDecrement}
+                          onClick={handleIncrement}
                           className="qty-up"
                         >
                           <i className="fi-rs-angle-small-up bi bi-chevron-up" />

@@ -105,22 +105,22 @@ const Checkout = () => {
 
   const handleApplyCoupon = (couponId) => {
     const selectedCoupon = coupons.find((coupon) => coupon._id === couponId);
-    console.log(selectedCoupon)
+    console.log(selectedCoupon);
     setSelectedCoupon(selectedCoupon);
-  
+
     const newDiscountedTotal = calculateDiscountedTotal(
       tPwithGST ? tPwithGST : totalAmount,
       selectedCoupon
     );
-  
+
     setDiscountedTotal(newDiscountedTotal);
-  
+
     // Update the totalAmount by subtracting the discount amount
     const newTotalAmount =
       tPwithGST && selectedCoupon
         ? tPwithGST - calculateDiscountAmount(tPwithGST, selectedCoupon)
         : totalAmount;
-  
+
     setTotalAmount(newTotalAmount);
   };
 
@@ -142,15 +142,12 @@ const Checkout = () => {
     }
   };
 
-
   function calculateDiscountedTotal(total, coupon) {
     if (coupon.type === "%") {
-    
       const discountAmount = (total * coupon.discount) / 100;
-     
+
       return total - discountAmount;
     } else {
-      
       return total - coupon.discount;
     }
   }
@@ -197,6 +194,16 @@ const Checkout = () => {
       }, 0)
     : null;
 
+  const shpChrg = CartData
+    ? CartData.reduce((acc, item) => {
+        // Ensure that item.quantity and item.discountedPrice are valid numbers
+        let quantity = 0;
+        quantity = quantity + parseFloat(item.product.shippingCharge);
+
+        return quantity;
+      }, 0)
+    : null;
+
   const validationSchema = Yup.object().shape({
     // email: Yup.string()
     //   .required("Email is required")
@@ -223,6 +230,8 @@ const Checkout = () => {
     getLoggedinCustomerCart(CustomerInfo._id);
     Getcoupons();
   }, [CustomerInfo._id]);
+
+  console.log(typeof tPwithGST);
 
   return (
     <div>
@@ -265,7 +274,6 @@ const Checkout = () => {
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }) => {
               try {
-
                 const response = await CreateOrder({
                   customer: CustomerInfo._id,
                   FirstName: values.firstName,
@@ -274,19 +282,20 @@ const Checkout = () => {
                     product: item.product._id,
                     quantity: item.quantity,
                   })),
-                  totalAmount: discountedTotal ? discountedTotal.toFixed(2) : tPwithGST.toFixed(2),
+                  totalAmount: discountedTotal
+                    ? (discountedTotal+shpChrg).toFixed(2)
+                    : (tPwithGST+shpChrg).toFixed(2),
                   // status: "pending",
                   country: values.selectedCountry.value,
                   state: values.selectedState.value,
                   city: values.city,
                   postCode: values.postcode,
                   shippingAddress: values.address,
-                  couponCode: selectedCoupon._id,
+                  couponCode: selectedCoupon?selectedCoupon._id : null,
                   // paymentMethod: "Net Banking", // You might want to get this from the form
                   // ... (other fields)
-          
                 });
-                console.log(selectedCoupon._id)
+                console.log(selectedCoupon._id);
                 if (response.success) {
                   // Order created successfully
                   console.log("Order", response);
@@ -537,7 +546,7 @@ const Checkout = () => {
                                       </option>
                                     ))}
                                   </select>
-                                  
+
                                   <button type="button">Apply Coupon</button>
                                 </div>
                                 <div>
@@ -547,12 +556,22 @@ const Checkout = () => {
                                         <h5>Coupon Details</h5>
                                         <div className="row coupn_det">
                                           <div className="col-lg-6">
-                                            <p>Name: {selectedCoupon?selectedCoupon.name : null}</p>
+                                            <p>
+                                              Name:{" "}
+                                              {selectedCoupon
+                                                ? selectedCoupon.name
+                                                : null}
+                                            </p>
                                           </div>
                                           <div className="col-lg-6">
                                             <p>
                                               Discount:{" "}
-                                              {selectedCoupon?selectedCoupon.discount : null}{selectedCoupon?selectedCoupon.type : null}
+                                              {selectedCoupon
+                                                ? selectedCoupon.discount
+                                                : null}
+                                              {selectedCoupon
+                                                ? selectedCoupon.type
+                                                : null}
                                             </p>
                                           </div>
                                         </div>
@@ -614,14 +633,25 @@ const Checkout = () => {
 
                             <tr>
                               <td className="total-price" colSpan={2}>
+                                <span>Shipping Charge</span>
+                              </td>
+                              <td className="product-subtotal">
+                                <span className="subtotal-amount">
+                                  ₹ {shpChrg}
+                                </span>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td className="total-price" colSpan={2}>
                                 <span>Order Total</span>
                               </td>
                               <td className="product-subtotal">
                                 <span className="subtotal-amount">
                                   ₹{" "}
                                   {tPwithGST
-                                    ? tPwithGST.toFixed(2)
-                                    : totalAmount}
+                                    ? (tPwithGST+shpChrg).toFixed(2)
+                                    : totalAmount+shpChrg}
                                 </span>
                               </td>
                             </tr>
@@ -644,8 +674,7 @@ const Checkout = () => {
                                   </td>
                                   <td className="product-subtotal">
                                     <span className="subtotal-amount">
-                                      ₹{" "}
-                                      {discountedTotal.toFixed(2)}
+                                      ₹ {(discountedTotal+shpChrg).toFixed(2)}
                                     </span>
                                   </td>
                                 </tr>

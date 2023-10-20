@@ -21,8 +21,6 @@ const options = [
   { value: "Seasonal Products", label: "Seasonal Products" },
 ];
 
-
-
 const Header = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const [CartData, setCartData] = useState([]);
@@ -196,8 +194,6 @@ const Header = () => {
     setSelectedCategory(event.target.value);
   };
 
-  
-
   // Validation schemas
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
@@ -238,6 +234,9 @@ const Header = () => {
     console.log(res);
     if (res.success) {
       setSuccess(res.msg);
+      setTimeout(() => {
+        setSuccess("");
+      }, 1000);
     } else {
       setError(res.msg);
       setTimeout(() => {
@@ -466,7 +465,8 @@ const Header = () => {
                             <div className="login-white-container">
                               <h1>Hello!</h1>
                               <p className="text-center mt-2">
-                              Unlock a personalized shopping experience by joining us now.
+                                Unlock a personalized shopping experience by
+                                joining us now.
                               </p>
                               <div className="register">
                                 <Link
@@ -494,8 +494,14 @@ const Header = () => {
                 style={{ display: "block", paddingRight: 17 }}
                 aria-modal="true"
               >
+                
                 <div className="modal-dialog modal-lg">
                   <div className="modal-content">
+                  {Success && (
+                  <div class="alert alert-success" role="alert">
+                    {Success}
+                  </div>
+                )}
                     {/* Modal body */}
                     <div className="modal-body">
                       <div className="forgot-password-part" style={{}}>
@@ -579,7 +585,8 @@ const Header = () => {
                             <div className="login-white-container">
                               <h1>Hello!</h1>
                               <p className="text-center mt-2">
-                              Unlock a personalized shopping experience by joining us now.
+                                Unlock a personalized shopping experience by
+                                joining us now.
                               </p>
                               <div className="register">
                                 <Link
@@ -626,7 +633,8 @@ const Header = () => {
                             <div className="login-white-container">
                               <h1>Welcome Back !</h1>
                               <p className="text-center mt-2">
-                              Log in to continue shopping and managing your account.
+                                Log in to continue shopping and managing your
+                                account.
                               </p>
                               <div className="register">
                                 <Link
@@ -720,21 +728,21 @@ const Header = () => {
                                             value={values.password}
                                           />
                                           <div
-                                          className={`eye-icon-container text-end`}
-                                        >
-                                          <p
-                                            className={`bi ${
-                                              passwordVisible
-                                                ? "bi-eye"
-                                                : "bi-eye-slash"
-                                            } eye-icon text-end me-2`}
-                                            onClick={() =>
-                                              setPasswordVisible(
-                                                !passwordVisible
-                                              )
-                                            }
-                                          ></p>
-                                        </div>
+                                            className={`eye-icon-container text-end`}
+                                          >
+                                            <p
+                                              className={`bi ${
+                                                passwordVisible
+                                                  ? "bi-eye"
+                                                  : "bi-eye-slash"
+                                              } eye-icon text-end me-2`}
+                                              onClick={() =>
+                                                setPasswordVisible(
+                                                  !passwordVisible
+                                                )
+                                              }
+                                            ></p>
+                                          </div>
                                           <p className="error text-danger">
                                             {errors.password &&
                                               touched.password &&
@@ -756,21 +764,21 @@ const Header = () => {
                                             value={values.confirmPassword}
                                           />
                                           <div
-                                          className={`eye-icon-container text-end`}
-                                        >
-                                          <p
-                                            className={`bi ${
-                                              ConfirmpasswordVisible
-                                                ? "bi-eye"
-                                                : "bi-eye-slash"
-                                            } eye-icon text-end me-2`}
-                                            onClick={() =>
-                                              setConfirmPasswordVisible(
-                                                !ConfirmpasswordVisible
-                                              )
-                                            }
-                                          ></p>
-                                        </div>
+                                            className={`eye-icon-container text-end`}
+                                          >
+                                            <p
+                                              className={`bi ${
+                                                ConfirmpasswordVisible
+                                                  ? "bi-eye"
+                                                  : "bi-eye-slash"
+                                              } eye-icon text-end me-2`}
+                                              onClick={() =>
+                                                setConfirmPasswordVisible(
+                                                  !ConfirmpasswordVisible
+                                                )
+                                              }
+                                            ></p>
+                                          </div>
                                           <p className="error text-danger">
                                             {errors.confirmPassword &&
                                               touched.confirmPassword &&

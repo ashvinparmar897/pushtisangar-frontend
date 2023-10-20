@@ -52,7 +52,7 @@ export const SignState = (props) => {
   //Reset Password
   const resetCustomerPassword = async (resetToken, password) => {
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         `${url}/customer/resetpassword/${resetToken}`,
         { password: password }
       );

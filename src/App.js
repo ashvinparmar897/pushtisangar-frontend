@@ -26,6 +26,7 @@ import Terms_Condition from "./pages/terms_conditon/Terms_Condition";
 import AllCategory from "./pages/all_category/AllCategory";
 import GalleryDetails from "./pages/Gallery/GaleryDetails.jsx";
 import Wishlist from "./pages/wishlist/Wishlist";
+import ResetPassword from "./ResetPassword/ResetPassword";
 import { SignState } from "./contextAPI/State/SignState";
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/resetpassword/:resetToken" element={<ResetPassword />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog-details/:id" element={<BlogDetails />} />
           <Route path="/about-us" element={<AboutUs />} />

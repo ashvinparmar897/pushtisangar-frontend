@@ -85,7 +85,7 @@ const Shringar = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: ProductData?ProductData.length : null, // Display all products in one row
+    slidesToShow: 4, // Display four products in one row
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -93,7 +93,7 @@ const Shringar = () => {
       {
         breakpoint: 1025,
         settings: {
-          slidesToShow: ProductData? ProductData.length : null,
+          slidesToShow: 4,
           slidesToScroll: 1,
           infinite: true,
           dots: false,
@@ -102,20 +102,20 @@ const Shringar = () => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: ProductData?ProductData.length : null,
-          slidesToScroll:ProductData? ProductData.length : null,
+          slidesToShow: 2, // Adjust the number of products per row for smaller screens if needed
+          slidesToScroll: 1,
           initialSlide: 0,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: ProductData? ProductData.length : null,
-          slidesToScroll:ProductData? ProductData.length : null,
+          slidesToShow: 1, // Adjust for very small screens
+          slidesToScroll: 1,
         },
       },
     ],
-  }
+  };
 
   const handleCartClick = async (id) => {
     try {
@@ -168,7 +168,7 @@ const Shringar = () => {
 
           <div className="col-lg-9 col-md-12 mb-4">
             <Slider {...settings}>
-              {products.slice(0,5).map((product) => (
+              {products.slice(0,4).map((product) => (
                 <div key={product.id}>
                   <Link to={`/product-details/${product._id}`}>
                     <div
