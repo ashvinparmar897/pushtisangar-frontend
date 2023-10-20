@@ -283,19 +283,18 @@ const Checkout = () => {
                     quantity: item.quantity,
                   })),
                   totalAmount: discountedTotal
-                    ? (discountedTotal+shpChrg).toFixed(2)
-                    : (tPwithGST+shpChrg).toFixed(2),
-                  // status: "pending",
+                    ? (discountedTotal + (shpChrg || 0)).toFixed(2)
+                    : (tPwithGST + (shpChrg || 0)).toFixed(2),
+
                   country: values.selectedCountry.value,
                   state: values.selectedState.value,
                   city: values.city,
                   postCode: values.postcode,
                   shippingAddress: values.address,
-                  couponCode: selectedCoupon?selectedCoupon._id : null,
+                  couponCode: selectedCoupon ? selectedCoupon._id : null
                   // paymentMethod: "Net Banking", // You might want to get this from the form
-                  // ... (other fields)
+                  
                 });
-                console.log(selectedCoupon._id);
                 if (response.success) {
                   // Order created successfully
                   console.log("Order", response);
@@ -305,10 +304,9 @@ const Checkout = () => {
                   handleRemoveAll();
 
                   resetForm();
-                  // Redirect or show a success message
-                  // Redirect to the order confirmation page
+                 
                 } else {
-                  // Handle the case where order creation failed
+                  
                   console.error("Error creating order:", response.msg);
                 }
               } catch (error) {
@@ -637,7 +635,7 @@ const Checkout = () => {
                               </td>
                               <td className="product-subtotal">
                                 <span className="subtotal-amount">
-                                  ₹ {shpChrg}
+                                  ₹ {shpChrg || 0}
                                 </span>
                               </td>
                             </tr>
@@ -650,8 +648,8 @@ const Checkout = () => {
                                 <span className="subtotal-amount">
                                   ₹{" "}
                                   {tPwithGST
-                                    ? (tPwithGST+shpChrg).toFixed(2)
-                                    : totalAmount+shpChrg}
+                                    ? (tPwithGST + (shpChrg || 0)).toFixed(2)
+                                    : (totalAmount + (shpChrg || 0)).toFixed(2)}
                                 </span>
                               </td>
                             </tr>
@@ -674,7 +672,7 @@ const Checkout = () => {
                                   </td>
                                   <td className="product-subtotal">
                                     <span className="subtotal-amount">
-                                      ₹ {(discountedTotal+shpChrg).toFixed(2)}
+                                      ₹ {(discountedTotal + shpChrg).toFixed(2)}
                                     </span>
                                   </td>
                                 </tr>
