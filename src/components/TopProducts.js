@@ -60,7 +60,7 @@ var settings = {
 dots: false,
 infinite: true,
 speed: 500,
-slidesToShow: 10,
+slidesToShow: 4,
 slidesToScroll: 1,
 nextArrow: <NextArrow />,
 prevArrow: <PrevArrow />,

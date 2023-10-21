@@ -69,7 +69,7 @@ const NewArrival = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 10,
+    slidesToShow: 4,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -147,10 +147,11 @@ const NewArrival = () => {
           <h1 className="text-start fs-1 mt-4 mb-4">New Arrivals</h1>
         </div>
         <div className="row">
+          
           <Slider {...settings}>
           {ProductData.filter(product => product.isProductNew).slice(0, 10).map((product) => (
               <div
-                className=" col-lg-3 col-md-4 col-sm-6 mb-4 popular-card"
+                className="col-xxl-2 col-lg-3 col-md-4 col-sm-6 mb-4 popular-card"
                 key={product.id}
               >
                 <Link to={`/product-details/${product._id}`}>
