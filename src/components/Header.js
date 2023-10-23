@@ -1290,6 +1290,9 @@ const Header = () => {
                     <li>
                       <Link to="/contact-us">Contact</Link>
                     </li>
+                    <li>
+                      <Link to="/shop">Shop</Link>
+                    </li>
                   </ul>
                 </nav>
               </div>

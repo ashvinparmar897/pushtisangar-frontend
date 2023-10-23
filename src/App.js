@@ -28,6 +28,7 @@ import GalleryDetails from "./pages/Gallery/GaleryDetails.jsx";
 import Wishlist from "./pages/wishlist/Wishlist";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import { SignState } from "./contextAPI/State/SignState";
+import Shop from "./pages/Shop/Shop";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           <Route path="/blog-details/:id" element={<BlogDetails />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/shop" element={<Shop />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/terms-condition" element={<Terms_Condition />} />
           <Route path="/all-category" element={<AllCategory />} />

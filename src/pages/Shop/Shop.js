@@ -2,42 +2,38 @@
 import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import MidFooter from "../../components/MidFooter";
-import "./ProductList.css";
+import "../productList/ProductList.css";
 
 import Subscribe from "../../components/Subscribe";
 
 import "../../components/SeasonalProducts.css";
 import "../../components/TopProducts.css";
-import S1 from "../../images/s1.jpg";
-import S2 from "../../images/s2.jpg";
-import S3 from "../../images/s3.jpg";
+// import S1 from "../../images/s1.jpg";
+// import S2 from "../../images/s2.jpg";
+// import S3 from "../../images/s3.jpg";
 // import S4 from "../../images/s4.jpg";
 // import S5 from "../../images/s5.jpg";
 // import S6 from "../../images/s6.jpg";
 // import S7 from "../../images/s7.jpg";
 // import S8 from "../../images/s8.jpg";
 // import S9 from "../../images/s9.jpg";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MobileSidebar from "../../components/MobileSidebar";
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import SignContext from "../../contextAPI/Context/SignContext";
-const ProductList = () => {
+
+const Shop = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
-  const { id } = useParams();
   const navigate = useNavigate();
-  const {
-    GetProductsbyCategoryId,
-    getCategories,
-    getLoggedInCustomer,
-    addToCart,
-  } = useContext(SignContext);
+  const { getProducts, getCategories, getLoggedInCustomer, addToCart } =
+    useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
   const authToken = localStorage.getItem("authToken");
 
-  const Getproduct = async (id) => {
-    const res = await GetProductsbyCategoryId(id);
+  const Getproduct = async () => {
+    const res = await getProducts();
     console.log(res);
 
     const categoryRes = await getCategories();
@@ -50,11 +46,6 @@ const ProductList = () => {
       console.log(mapping);
       setCategoryNameMapping(mapping);
     }
-
-    // const transformedData = res.products.map((product, index) => ({
-    //   ...product,
-    //   id: index + 1,
-    // }));
     setProductData(res.products);
   };
 
@@ -126,6 +117,165 @@ const ProductList = () => {
 
   // Filter products based on selected filters (dummy data)
 
+  //   const products = [
+  //     {
+  //       id: 1,
+  //       imageUrl: S1,
+  //       hoverImageUrl:
+  //         "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //       category: "Shangar",
+  //       name: "God Shanagar By Pushtimarg ",
+  //       price: 238.85,
+  //       oldPrice: 245.8,
+  //       color: "#67bcee",
+  //     },
+  //     {
+  //       id: 2,
+  //       imageUrl: S2,
+  //       hoverImageUrl:
+  //         "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //       category: "Sughandhi",
+  //       name: "Sughandhi Attar Different fragrances",
+  //       price: 238.85,
+  //       oldPrice: 245.8,
+  //       color: "#3BB77Es",
+  //     },
+  //     {
+  //       id: 3,
+  //       imageUrl: S3,
+  //       hoverImageUrl:
+  //         "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //       category: "Shringar",
+  //       name: "Moti product with category of Shringar",
+  //       price: 238.85,
+  //       oldPrice: 245.8,
+  //       color: "#f74b81",
+  //     },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S4,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Shringar",
+  //     //   name: "Popular Product on Shringar Products",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S5,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Best Zari in Vastra Category",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S6,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Second Most Popular Zari in Vastra",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S7,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Zari with different types of vastra",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     //   color: "#f74b81",
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S8,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Different color zari products",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S9,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Colourful Zari in vastra category",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S1,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Shangar",
+  //     //   name: "God Shanagar with best modification",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S5,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Vastra Zari By Pushtimarg Web Aplication",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S6,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Vastra Zari By Pushtimarg Web Aplication",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S4,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Shringar",
+  //     //   name: "Popular Product on Shringar Products",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S5,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Best Zari in Vastra Category",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+  //     // {
+  //     //   id: 1,
+  //     //   imageUrl: S6,
+  //     //   hoverImageUrl:
+  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     //   category: "Vastra",
+  //     //   name: "Second Most Popular Zari in Vastra",
+  //     //   price: 238.85,
+  //     //   oldPrice: 245.8,
+  //     // },
+
+  //     // Add more product objects here
+  //   ];
+
   const handleSortByChange = (value) => {
     setSelectedSortBy(value);
 
@@ -180,9 +330,9 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    Getproduct(id);
+    Getproduct();
     GetLoggedInCustomer(authToken);
-  }, [id]);
+  }, []);
 
   return (
     <div>
@@ -450,7 +600,7 @@ const ProductList = () => {
                   <option value="newIn">New In</option>
                   <option value="priceLowestFirst">Price(lowest first)</option>
                   <option value="priceHighestFirst">
-                    Price(highest first)
+                    Price(heighest first)
                   </option>
                 </select>
               </div>
@@ -531,7 +681,7 @@ const ProductList = () => {
             : null}
         </div>
         <div>
-        {productsToShow < ProductData.length && (
+          {productsToShow < ProductData.length && (
             <div className="btn" onClick={handleShowMore}>
               Show More
             </div>
@@ -544,4 +694,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default Shop;
