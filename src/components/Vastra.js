@@ -148,9 +148,13 @@ const Vastra = () => {
   return (
     <div style={{ background: "rgb(251 248 240 / 74%)" }}>
       <div className="container mb-4">
-        <div className=" row text-start">
-          {" "}
-          <h1 className="fs-1 mt-4 mb-4">Vastra Products</h1>
+      <div className="row text-start">
+          <div className="col">
+            <h1 className="fs-1 mt-4 mb-4">Vastra</h1>
+          </div>
+          <div className="col text-end d-flex align-items-center justify-content-end">
+            <Link to={`/product-list/${id}`} className="mb-2">view all</Link>
+          </div>
         </div>
         <div className="row ">
           <div class="col-lg-3 d-none d-lg-flex mb-4">

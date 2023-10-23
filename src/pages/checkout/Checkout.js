@@ -661,8 +661,8 @@ const Checkout = () => {
                                   </td>
                                   <td className="shipping-price">
                                     <span>
-                                      {selectedCoupon.type === "%" ? "%" : "₹"}
                                       {selectedCoupon.discount}{" "}
+                                      {selectedCoupon.type === "%" ? "%" : "₹"}
                                     </span>
                                   </td>
                                 </tr>
