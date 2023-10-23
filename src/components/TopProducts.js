@@ -132,7 +132,14 @@ useEffect(() => {
     <div style={{background:'rgba(251, 248, 240, 0.74)'}}>
       <div className="container" style={{marginTop:'55px'}}>
         <div className="row popular-row">
+        <div className="row text-start">
+          <div className="col">
           <h1 className="text-start fs-1 mt-4 mb-4">Popular Products</h1>
+          </div>
+          <div className="col text-end d-flex align-items-center justify-content-end">
+            <Link to="/shop" className="mb-2">view all Products</Link>
+          </div>
+          </div>
         </div>
         <div className="row">
           <Slider {...settings}>

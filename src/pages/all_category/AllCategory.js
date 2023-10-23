@@ -16,82 +16,82 @@ import SignContext from "../../contextAPI/Context/SignContext";
 
 const AllCategory = ({ background }) => {
 
-const categories = [
-  {
-    name: "Shri Mastak",
-    image: VastraCat,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shri Karna",
-    image: VastraCat4,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shishful",
-    image: VastraCat3,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Vastra",
-    image: VastraCat2,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shringar",
-    image: VastraCat4,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shangar",
-    image: VastraCat3,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Mukhravind",
-    image: VastraCat,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shringar",
-    image: VastraCat4,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shangar",
-    image: VastraCat3,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shangar",
-    image: VastraCat3,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shangar",
-    image: VastraCat3,
-    itemCount: 29,
-    color: "#fff ",
-  },
-  {
-    name: "Shangar",
-    image: VastraCat3,
-    itemCount: 29,
-    color: "#fff ",
-  },
+// const categories = [
+//   {
+//     name: "Shri Mastak",
+//     image: VastraCat,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shri Karna",
+//     image: VastraCat4,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shishful",
+//     image: VastraCat3,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Vastra",
+//     image: VastraCat2,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shringar",
+//     image: VastraCat4,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shangar",
+//     image: VastraCat3,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Mukhravind",
+//     image: VastraCat,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shringar",
+//     image: VastraCat4,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shangar",
+//     image: VastraCat3,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shangar",
+//     image: VastraCat3,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shangar",
+//     image: VastraCat3,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
+//   {
+//     name: "Shangar",
+//     image: VastraCat3,
+//     itemCount: 29,
+//     color: "#fff ",
+//   },
 
-  // Add more categories here...
-];
+//   // Add more categories here...
+// ];
 
 const CategoryCard = ({ name, image, itemCount, color , id }) => (
   <div className="col-12  col-md-6 col-lg-3  category col-lg-1-5">
@@ -151,7 +151,14 @@ const CategoryCard = ({ name, image, itemCount, color , id }) => (
 
       <div style={inlineStyle}>
         <div className="container">
+        <div className="row text-start">
+          <div className="col">
           <h1 className="fs-1 mt-4 mb-4 fw-bold text-start">Our Category</h1>
+          </div>
+          <div className="col text-end d-flex align-items-center justify-content-end">
+            <Link to="/shop" className="mb-2">view all Products</Link>
+          </div>
+          </div>
           <div className="row">
             {CategoryData.map((category, index) => (
             <CategoryCard
