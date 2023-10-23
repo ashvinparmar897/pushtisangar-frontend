@@ -268,7 +268,9 @@ const Header = () => {
       setCategoryData(transformedData);
 
       // Find the option in the options array that matches the CategoryData.name
-      const selected = options.find((option) => option.label === transformedData.name);
+      const selected = options.find(
+        (option) => option.label === transformedData.name
+      );
 
       if (selected) {
         setSelectedOption(selected);
@@ -518,14 +520,13 @@ const Header = () => {
                 style={{ display: "block", paddingRight: 17 }}
                 aria-modal="true"
               >
-                
                 <div className="modal-dialog modal-lg">
                   <div className="modal-content">
-                  {Success && (
-                  <div class="alert alert-success" role="alert">
-                    {Success}
-                  </div>
-                )}
+                    {Success && (
+                      <div class="alert alert-success" role="alert">
+                        {Success}
+                      </div>
+                    )}
                     {/* Modal body */}
                     <div className="modal-body">
                       <div className="forgot-password-part" style={{}}>
@@ -1024,42 +1025,35 @@ const Header = () => {
                   <i className="fi-rs-angle-down bi bi-chevron-down " />
                 </Link>
                 {isOpen && (
-  <div className="categories-dropdown-wrap categories-dropdown-active-large font-heading">
-    <div className="d-flex categori-dropdown-inner">
-      <ul>
-        {CategoryData.map((category, index) => (
-          <li key={index}>
-            <Link to={`/product-list/${category._id}`}>
-              {" "}
-              <img src={logo} alt />
-              {category.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <ul className="end">
-        {/* Add more categories here */}
-      </ul>
-    </div>
-    <div className="more_slide_open">
-      {isVisible && (
-        <div className="d-flex categori-dropdown-inner">
-          <ul>
-            {/* More categories */}
-          </ul>
-          <ul className="end">
-            {/* More categories */}
-          </ul>
-        </div>
-      )}
-    </div>
-    <div className="more_categories" onClick={toggleVisibility}>
-      <span></span>{" "}
-      <span className="heading-sm-1">{buttonText}</span>
-    </div>
-  </div>
-)}
-
+                  <div className="categories-dropdown-wrap categories-dropdown-active-large font-heading">
+                    <div className="d-flex categori-dropdown-inner">
+                      <ul>
+                        {CategoryData.map((category, index) => (
+                          <li key={index}>
+                            <Link to={`/product-list/${category._id}`}>
+                              {" "}
+                              <img src={logo} alt />
+                              {category.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                      <ul className="end">{/* Add more categories here */}</ul>
+                    </div>
+                    <div className="more_slide_open">
+                      {isVisible && (
+                        <div className="d-flex categori-dropdown-inner">
+                          <ul>{/* More categories */}</ul>
+                          <ul className="end">{/* More categories */}</ul>
+                        </div>
+                      )}
+                    </div>
+                    {/* <div className="more_categories" onClick={toggleVisibility}>
+                      <span></span>{" "}
+                      <span className="heading-sm-1">{buttonText}</span>
+                    </div> */}
+                  </div>
+                )}
               </div>
               <div className="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                 <nav>

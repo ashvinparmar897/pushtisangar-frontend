@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import offer1 from "../images/small-image-1.jpg"
 import offer2 from "../images/small-image-2.jpg"
 import offer3 from "../images/small-image-3.jpg"
@@ -16,9 +18,9 @@ const OfferPart = () => {
                   <h4>Get an Amazing<br />
                    Product
                   </h4>
-                  <a href="#" className="shop-now-hover btn btn-xs mt-5">
+                  <Link to="/shop" className="shop-now-hover btn btn-xs mt-5">
                     <span>Shop Now</span> <i className="fi-rs-arrow-small-right bi bi-arrow-right ms-2" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -31,9 +33,9 @@ const OfferPart = () => {
                     <br />
                     Of God Shringar
                   </h4>
-                  <a href="#" className="shop-now-hover shop-now-hover-2 btn btn-xs mt-5">
+                  <Link to="/shop" className="shop-now-hover shop-now-hover-2 btn btn-xs mt-5">
                   Shop Now <i className="fi-rs-arrow-small-right bi bi-arrow-right ms-2 " />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -45,9 +47,9 @@ const OfferPart = () => {
                     The best Organic <br />
                     Products Online
                   </h4>
-                  <a href="#" className="shop-now-hover btn btn-xs mt-5">
+                  <Link to="/blog" className="shop-now-hover btn btn-xs mt-5">
                     Read More <i className="fi-rs-arrow-small-right bi bi-arrow-right ms-2" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
