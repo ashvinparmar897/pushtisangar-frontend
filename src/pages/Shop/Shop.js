@@ -600,7 +600,7 @@ const Shop = () => {
                   <option value="newIn">New In</option>
                   <option value="priceLowestFirst">Price(lowest first)</option>
                   <option value="priceHighestFirst">
-                    Price(heighest first)
+                    Price(highest first)
                   </option>
                 </select>
               </div>
