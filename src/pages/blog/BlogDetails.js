@@ -1,5 +1,5 @@
-import React, { useEffect, useState,useContext } from 'react';
-import {useDispatch,useSelector} from "react-redux"
+import React, { useEffect, useState, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./BlogDetails.css";
 import Header from "../../components/Header";
 import Subscribe from "../../components/Subscribe";
@@ -15,24 +15,37 @@ import bimage from "../../images/s1.jpg";
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import MobileSidebar from "../../components/MobileSidebar";
 import axios from "axios";
-import { storeBlog } from '../../state/action';
-
+import { storeBlog } from "../../state/action";
+import SignContext from "../../contextAPI/Context/SignContext";
 
 const BlogDetails = () => {
-
-  const id = useParams("id")
-
+  const id = useParams("id");
+  const { getCategories } = useContext(SignContext);
   const dispatch = useDispatch();
   const url = `${process.env.REACT_APP_BASE_URL}`;
 
-  const [selectedBlogPost,setSelectedBlogPost] = useState('');
- 
+  const [selectedBlogPost, setSelectedBlogPost] = useState("");
+  const [CategoryData, setCategoryData] = useState([]);
+
   const arrayOfBlog = useSelector((state) => state.blog);
+
+  const Getcategories = async () => {
+    const res = await getCategories();
+    // console.log(res);
+    if (res !== undefined) {
+      const transformedData = res.map((category, index) => ({
+        ...category,
+        id: index + 1,
+      }));
+      setCategoryData(transformedData);
+    }
+  };
 
   const getAllBlogs = () => {
     const url = `${process.env.REACT_APP_BASE_URL}`;
     if (arrayOfBlog) {
-      axios.post(`${url}/blog/get-blog`)
+      axios
+        .post(`${url}/blog/get-blog`)
         .then((res) => {
           const responseData = res.data.data;
           if (Array.isArray(responseData) && responseData.length === 0) {
@@ -43,25 +56,25 @@ const BlogDetails = () => {
         })
         .catch((err) => {
           console.log(err);
-        })   
+        });
     }
   };
 
-;
-
   useEffect(() => {
-    console.log(id)
+    console.log(id);
     if (arrayOfBlog.length === 0) {
-    getAllBlogs();}
-    const selectedBlog = arrayOfBlog.filter(obj => obj._id === id.id);
-    setSelectedBlogPost(selectedBlog[0])
-    console.log(selectedBlog[0])
+      getAllBlogs();
+    }
+    const selectedBlog = arrayOfBlog.filter((obj) => obj._id === id.id);
+    setSelectedBlogPost(selectedBlog[0]);
+    console.log(selectedBlog[0]);
+    Getcategories();
   }, [id]);
 
   return (
     <div>
       <Header />
-      <MobileSidebar/>
+      <MobileSidebar />
       <div class="page-header breadcrumb-wrap">
         <div className="container">
           <div className="breadcrumb">
@@ -72,7 +85,8 @@ const BlogDetails = () => {
               Home
             </Link>
             <AiOutlineRight className="rightIcon" /> <span /> Blogs <span />{" "}
-            <AiOutlineRight className="rightIcon" /><span>Blog Details</span>
+            <AiOutlineRight className="rightIcon" />
+            <span>Blog Details</span>
           </div>
         </div>
       </div>
@@ -102,14 +116,16 @@ const BlogDetails = () => {
                             <span className="post-by">
                               By <Link to="#">{selectedBlogPost.blogFeed}</Link>
                             </span>
-                            <span className="post-on has-dot"> {new Date(selectedBlogPost.date).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                  }
-                                )}</span>
+                            <span className="post-on has-dot">
+                              {" "}
+                              {new Date(
+                                selectedBlogPost.date
+                              ).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </span>
                             {/* <span className="time-reading has-dot">
                               8 mins read
                             </span> */}
@@ -133,17 +149,18 @@ const BlogDetails = () => {
                     </div>
                   </div>
                   <figure className="single-thumbnail">
-                    <img 
-                     src={`${url}/blog-images/${selectedBlogPost.imagePath}`} 
-                    alt="" />
+                    <img
+                      src={`${url}/blog-images/${selectedBlogPost.imagePath}`}
+                      alt=""
+                    />
                   </figure>
                   <div className="single-content">
                     <div className="row">
-                    <div dangerouslySetInnerHTML={{ __html: selectedBlogPost.blog }} />
-                   
-                       
-
-                      
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: selectedBlogPost.blog,
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -154,52 +171,20 @@ const BlogDetails = () => {
                     <div className="sidebar-widget widget-category-2 mb-50">
                       <h5 className="section-title style-1 mb-30">Category</h5>
                       <ul>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Vastra
-                          </Link>
-                          
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Shringar
-                          </Link>
-                          
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Karnaful{" "}
-                          </Link>
-                          
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Mukhravind
-                          </Link>
-                          
-                        </li>
-                        <li>
-                          <Link to="#">
-                            {" "}
-                            <img src={logo} alt />
-                            Netra
-                          </Link>
-                          
-                        </li>
+                        {CategoryData.map((category, index) => (
+                          <li key={index}>
+                            <Link to={`/product-list/${category._id}`}>
+                              <img src={logo} alt />
+                              {category.name}
+                            </Link>
+                          </li>
+                        ))}
                       </ul>
                     </div>
 
                     <div
                       className="banner-img wow fadeIn mb-0 animated d-lg-block d-none animated"
-                      style={{ visibility: "visible", minHeight:'300px' }}
+                      style={{ visibility: "visible", minHeight: "300px" }}
                     >
                       <img src={sideimage} alt />
                       <div className="baner-text">
