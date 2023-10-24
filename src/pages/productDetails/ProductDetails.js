@@ -45,6 +45,7 @@ const ProductDetails = () => {
     GetProductsbyCategoryId,
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
+  const [CategorybyProductsData, setCategorybyProductsData] = useState([]);
   const [DailyPrice, setDailyPrice] = useState([]);
   const [Quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(""); // Default selected image
@@ -54,6 +55,8 @@ const ProductDetails = () => {
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
   const navigate = useNavigate();
+  const CategoryId = ProductData.category;
+  console.log(CategoryId);
 
   // const Image1 = ProductData.imageGallery?ProductData.imageGallery[0]:null;
   // console.log(Image1);
@@ -81,7 +84,7 @@ const ProductDetails = () => {
     }
   };
 
-  const getproductsbyCategotId = async (id) => {
+  const getproductsbyCategoryId = async (id) => {
     const res = await GetProductsbyCategoryId(id);
     console.log(res);
 
@@ -96,11 +99,7 @@ const ProductDetails = () => {
       setCategoryNameMapping(mapping);
     }
 
-    // const transformedData = res.products.map((product, index) => ({
-    //   ...product,
-    //   id: index + 1,
-    // }));
-    setProductData(res.products);
+    setCategorybyProductsData(res.products);
   };
 
   const getspecificSubcategories = async (categoryId) => {
@@ -189,9 +188,9 @@ const ProductDetails = () => {
         setIsLoading(false);
       }, 1000);
       window.scrollTo(0, 0);
+      getproductsbyCategoryId(CategoryId);
     },
-    [id],
-    [Quantity]
+    [id, Quantity, CategoryId]
   );
 
   const handleThumbClick = (imageURL) => {
@@ -207,164 +206,61 @@ const ProductDetails = () => {
     }
   };
 
-  const products = [
-    {
-      id: 1,
-      imageUrl: S1,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-      category: "Shangar",
-      name: "God Shanagar By Pushtimarg ",
-      price: 238.85,
-      oldPrice: 245.8,
-      color: "#67bcee",
-    },
-    {
-      id: 1,
-      imageUrl: S2,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-      category: "Sughandhi",
-      name: "Sughandhi Attar Different fragrances",
-      price: 238.85,
-      oldPrice: 245.8,
-      color: "#3BB77Es",
-    },
-    {
-      id: 1,
-      imageUrl: S3,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-      category: "Shringar",
-      name: "Moti product with category of Shringar",
-      price: 238.85,
-      oldPrice: 245.8,
-      color: "#f74b81",
-    },
-    {
-      id: 1,
-      imageUrl: S4,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-      category: "Shringar",
-      name: "Popular Product on Shringar Products",
-      price: 238.85,
-      oldPrice: 245.8,
-    },
-    {
-      id: 1,
-      imageUrl: S5,
-      hoverImageUrl:
-        "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-      category: "Vastra",
-      name: "Best Zari in Vastra Category",
-      price: 238.85,
-      oldPrice: 245.8,
-    },
-    // {
-    //   id: 1,
-    //   imageUrl: S6,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Second Most Popular Zari in Vastra",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S7,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Zari with different types of vastra",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    //   color: "#f74b81",
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S8,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Different color zari products",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S9,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Colourful Zari in vastra category",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S1,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Shangar",
-    //   name: "God Shanagar with best modification",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S5,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Vastra Zari By Pushtimarg Web Aplication",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S6,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Vastra Zari By Pushtimarg Web Aplication",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S4,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Shringar",
-    //   name: "Popular Product on Shringar Products",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S5,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Best Zari in Vastra Category",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-    // {
-    //   id: 1,
-    //   imageUrl: S6,
-    //   hoverImageUrl:
-    //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-    //   category: "Vastra",
-    //   name: "Second Most Popular Zari in Vastra",
-    //   price: 238.85,
-    //   oldPrice: 245.8,
-    // },
-
-    // Add more product objects here
-  ];
+  // const products = [
+  //   {
+  //     id: 1,
+  //     imageUrl: S1,
+  //     hoverImageUrl:
+  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     category: "Shangar",
+  //     name: "God Shanagar By Pushtimarg ",
+  //     price: 238.85,
+  //     oldPrice: 245.8,
+  //     color: "#67bcee",
+  //   },
+  //   {
+  //     id: 1,
+  //     imageUrl: S2,
+  //     hoverImageUrl:
+  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     category: "Sughandhi",
+  //     name: "Sughandhi Attar Different fragrances",
+  //     price: 238.85,
+  //     oldPrice: 245.8,
+  //     color: "#3BB77Es",
+  //   },
+  //   {
+  //     id: 1,
+  //     imageUrl: S3,
+  //     hoverImageUrl:
+  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     category: "Shringar",
+  //     name: "Moti product with category of Shringar",
+  //     price: 238.85,
+  //     oldPrice: 245.8,
+  //     color: "#f74b81",
+  //   },
+  //   {
+  //     id: 1,
+  //     imageUrl: S4,
+  //     hoverImageUrl:
+  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     category: "Shringar",
+  //     name: "Popular Product on Shringar Products",
+  //     price: 238.85,
+  //     oldPrice: 245.8,
+  //   },
+  //   {
+  //     id: 1,
+  //     imageUrl: S5,
+  //     hoverImageUrl:
+  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
+  //     category: "Vastra",
+  //     name: "Best Zari in Vastra Category",
+  //     price: 238.85,
+  //     oldPrice: 245.8,
+  //   },
+  // ];
 
   if (isLoading) {
     return <Preloader />; // Show the preloader while loading
@@ -1152,10 +1048,17 @@ const ProductDetails = () => {
       </div>
       <div className="container mb-4">
         <div className="row popular-row">
+        <div className="row text-start">
+          <div className="col">
           <h1 className="text-start fs-1 mt-4 mb-4">Related Products</h1>
+          </div>
+          <div className="col text-end d-flex align-items-center justify-content-end">
+            <Link to={`/product-list/${CategoryId}`} className="mb-2">view all Products</Link>
+          </div>
+          </div>
         </div>
         <div className="row">
-          {products.map((product) => (
+          {CategorybyProductsData?CategorybyProductsData.slice(0,5).map((product) => (
             <div className=" col-lg-3 col-md-4 col-sm-6 mb-4" key={product.id}>
               <div className="product-cart-wrap popular-card" tabIndex={0}>
                 <div className="product-img-action-wrap">
@@ -1163,7 +1066,11 @@ const ProductDetails = () => {
                     <Link to="#" tabIndex={0}>
                       <img
                         className="default-img"
-                        src={product.imageUrl}
+                        src={`${url}/products/${product.imageGallery[0]}`}
+                        onError={(e) => {
+                          e.target.src =
+                            "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"; // Replace with the path to your alternate image
+                        }}
                         alt=""
                       />
                       <img
@@ -1176,7 +1083,7 @@ const ProductDetails = () => {
                 </div>
                 <div class="product-content-wrap">
                   <div class="product-category">
-                    <Link to="#">{product.category}</Link>
+                    <Link to="#">{categoryNameMapping[ProductData.category]}</Link>
                   </div>
                   <h2>
                     <Link to="#">{product.name}</Link>
@@ -1184,10 +1091,18 @@ const ProductDetails = () => {
 
                   <div class="product-card-bottom">
                     <div class="product-price popular-card-price">
-                      <span>₹{product.price.toFixed(2)}</span>
-                      <span class="old-price">
-                        ₹{product.oldPrice.toFixed(2)}
+                      <span>
+                        ₹{" "}
+                        {product.prices.discounted
+                              ? product.prices.discounted
+                              : product.prices.calculatedPrice}
                       </span>
+                      {!product.calculationOnWeight && (
+                        <span className="old-price ">
+                          ₹
+                          {product.prices ? product.prices.original : null}
+                        </span>
+                      )}
                     </div>
                     <div class="add-cart popular-card-cart">
                       <Link class="add add-cart-btn" to="#">
@@ -1199,7 +1114,7 @@ const ProductDetails = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )) : null}
         </div>
       </div>
       <Category background="#fff" />
