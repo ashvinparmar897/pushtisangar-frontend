@@ -502,3 +502,41 @@ p {
 .wishlist-message button:focus {
   outline: none;
 }
+.product-details-dropdowns {
+  display: flex;
+  flex-direction: row;
+}
+
+.product-details-dropdown {
+  margin-right: 20px;
+}
+
+.product-details-dropdown select {
+  width: 150px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.product-details-dropdown h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.color-option-link, .size-option-link {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  background-color: #dfaaaa;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.color-option-link:hover, .size-option-link:hover {
+  background-color: #dfaaaa;
+  color: #333;
+}

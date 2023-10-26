@@ -78,11 +78,13 @@ const HomeSlider = () => {
                               currentSlide === index ? "active" : ""
                             }`}
                           >
+                            <Link to="/shop">
                             <img
                               src={`${url}/banner/${banner.image}`} // Assuming you have an 'image' property in BannerData
                               className="d-block w-100"
                               alt={`Slide ${index + 1}`}
                             />
+                            </Link>
                             <div className="carousel-caption d-none d-md-block">
                               {/* <h5>{banner.title}</h5> */}
                               {/* <p>{banner.description}</p> */}

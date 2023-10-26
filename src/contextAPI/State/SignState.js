@@ -327,6 +327,29 @@ export const SignState = (props) => {
     }
   };
 
+  const GetAllVarProducts=async (otherVaraitions) => {
+    try {
+      console.log(otherVaraitions)
+      const response = await axios.post(`${url}/product/getvarproduct`,{productIds:otherVaraitions});
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
+  const GetAboutUsContent = async (contentId) => {
+    try {
+      const response = await axios.post(`${url}/content/getspecificcontent/6512993637dd0d0cd33483f9`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+  
+
   return (
     <SignContext.Provider
       value={{
@@ -356,7 +379,9 @@ export const SignState = (props) => {
         GetallCoupons,
         GetCouponbyId,
         getAllBanner,
-        getBlogs
+        getBlogs,
+        GetAllVarProducts,
+        GetAboutUsContent,
       }}
     >
       {props.children}

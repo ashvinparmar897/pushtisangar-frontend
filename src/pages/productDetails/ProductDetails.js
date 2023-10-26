@@ -43,8 +43,10 @@ const ProductDetails = () => {
     addToCart,
     addToWishlist,
     GetProductsbyCategoryId,
+    GetAllVarProducts,
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
+  const [OtherProductData, setOtherProductData] = useState([]);
   const [CategorybyProductsData, setCategorybyProductsData] = useState([]);
   const [DailyPrice, setDailyPrice] = useState([]);
   const [Quantity, setQuantity] = useState(1);
@@ -56,46 +58,45 @@ const ProductDetails = () => {
   const [CustomerInfo, setCustomerInfo] = useState({});
   const navigate = useNavigate();
   const CategoryId = ProductData.category;
-  console.log(CategoryId);
 
   // const Image1 = ProductData.imageGallery?ProductData.imageGallery[0]:null;
-  // console.log(Image1);
   // const Image2 = ProductData.imageGallery[1];
   // const Image3 = ProductData.imageGallery[2];
 
   const getspecificProduct = async (ProductId) => {
     const res = await getSpecificProduct(ProductId);
-    console.log(res);
 
     if (res.success) {
       setProductData(res.product);
     }
 
     const categoryRes = await getCategories();
-    console.log(categoryRes);
 
     if (categoryRes) {
       const mapping = {};
       categoryRes.forEach((category) => {
         mapping[category._id] = category.name;
       });
-      console.log(mapping);
       setCategoryNameMapping(mapping);
     }
   };
 
+  const GetALLvarProducts = async () => {
+    console.log(ProductData.OtherVariations);
+    const res = await GetAllVarProducts(ProductData.OtherVariations);
+    setOtherProductData(res.products);
+    console.log(res);
+  };
+
   const getproductsbyCategoryId = async (id) => {
     const res = await GetProductsbyCategoryId(id);
-    console.log(res);
 
     const categoryRes = await getCategories();
-    console.log(categoryRes);
     if (categoryRes) {
       const mapping = {};
       categoryRes.forEach((category) => {
         mapping[category._id] = category.name;
       });
-      console.log(mapping);
       setCategoryNameMapping(mapping);
     }
 
@@ -104,7 +105,6 @@ const ProductDetails = () => {
 
   const getspecificSubcategories = async (categoryId) => {
     const res = await getSpecificSubcategories(categoryId);
-    console.log(res);
     if (res.success) {
       setSpecificSubcategories(res.subCategories);
     }
@@ -140,7 +140,6 @@ const ProductDetails = () => {
         productId: ProductData._id,
       };
       const res = await addToWishlist(customerId, cartInfo);
-      console.log(res);
       if (res.success) {
         // Cart updated successfully
         console.log("Added in Wishlist successfully");
@@ -167,7 +166,6 @@ const ProductDetails = () => {
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
-    console.log(res);
     if (res.success) {
       setCustomerInfo(res.customer);
     } else {
@@ -175,23 +173,21 @@ const ProductDetails = () => {
     }
   };
 
-  useEffect(
-    () => {
-      getspecificProduct(id);
-      getCategories();
-      if (ProductData.category) {
-        getspecificSubcategories(ProductData.category);
-      }
-      const authToken = window.localStorage.getItem("authToken");
-      GetLoggedInCustomer(authToken);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-      window.scrollTo(0, 0);
-      getproductsbyCategoryId(CategoryId);
-    },
-    [id, Quantity, CategoryId]
-  );
+  useEffect(() => {
+    getspecificProduct(id);
+    GetALLvarProducts(ProductData.otherVaraitions);
+    getCategories();
+    if (ProductData.category) {
+      getspecificSubcategories(ProductData.category);
+    }
+    const authToken = window.localStorage.getItem("authToken");
+    GetLoggedInCustomer(authToken);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    window.scrollTo(0, 0);
+    getproductsbyCategoryId(CategoryId);
+  }, [id, Quantity, CategoryId]);
 
   const handleThumbClick = (imageURL) => {
     setSelectedImage(imageURL);
@@ -269,6 +265,8 @@ const ProductDetails = () => {
   const closeWishlistMessage = () => {
     setWishlistMessageVisible(false);
   };
+
+  console.log(OtherProductData);
 
   return (
     <div>
@@ -469,6 +467,50 @@ const ProductDetails = () => {
                         )}
                       </div>
                     </div>
+
+                    {!ProductData.isVariant && (
+  <div className="product-details-options">
+    <div className="product-details-options-section">
+      <h3>Available Colors:</h3>
+      <div className="color-options">
+        {OtherProductData ? (
+          OtherProductData.map((OtherProduct) => (
+            <Link
+              key={OtherProduct._id}
+              to={`/product-details/${OtherProduct._id}`}
+              className="color-option-link"
+            >
+              {OtherProduct.productColor}
+            </Link>
+          ))
+        ) : (
+          <p>No colors available</p>
+        )}
+      </div>
+    </div>
+
+    <div className="product-details-options-section">
+      <h3>Available Sizes:</h3>
+      <div className="size-options">
+        {OtherProductData ? (
+          OtherProductData.map((OtherProduct) => (
+            <Link
+              key={OtherProduct._id}
+              to={`/product-details/${OtherProduct._id}`}
+              className="size-option-link"
+            >
+              {OtherProduct.productSize}
+            </Link>
+          ))
+        ) : (
+          <p>No sizes available</p>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+
                     <div className="font-xs d-none">
                       <ul className="mr-50 float-start">
                         <li className="mb-5">
@@ -1048,73 +1090,81 @@ const ProductDetails = () => {
       </div>
       <div className="container mb-4">
         <div className="row popular-row">
-        <div className="row text-start">
-          <div className="col">
-          <h1 className="text-start fs-1 mt-4 mb-4">Related Products</h1>
-          </div>
-          <div className="col text-end d-flex align-items-center justify-content-end">
-            <Link to={`/product-list/${CategoryId}`} className="mb-2">view all Products</Link>
-          </div>
+          <div className="row text-start">
+            <div className="col">
+              <h1 className="text-start fs-1 mt-4 mb-4">Related Products</h1>
+            </div>
+            <div className="col text-end d-flex align-items-center justify-content-end">
+              <Link to={`/product-list/${CategoryId}`} className="mb-2">
+                view all Products
+              </Link>
+            </div>
           </div>
         </div>
         <div className="row">
-          {CategorybyProductsData?CategorybyProductsData.slice(0,5).map((product) => (
-            <div className=" col-lg-3 col-md-4 col-sm-6 mb-4" key={product.id}>
-              <div className="product-cart-wrap popular-card" tabIndex={0}>
-                <div className="product-img-action-wrap">
-                  <div className="product-img product-img-zoom">
-                    <Link to="#" tabIndex={0}>
-                      <img
-                        className="default-img"
-                        src={`${url}/products/${product.imageGallery[0]}`}
-                        onError={(e) => {
-                          e.target.src =
-                            "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"; // Replace with the path to your alternate image
-                        }}
-                        alt=""
-                      />
-                      <img
-                        className="hover-img"
-                        src={product.hoverImageUrl}
-                        alt=""
-                      />
-                    </Link>
-                  </div>
-                </div>
-                <div class="product-content-wrap">
-                  <div class="product-category">
-                    <Link to="#">{categoryNameMapping[ProductData.category]}</Link>
-                  </div>
-                  <h2>
-                    <Link to="#">{product.name}</Link>
-                  </h2>
+          {CategorybyProductsData
+            ? CategorybyProductsData.slice(0, 5).map((product) => (
+                <div
+                  className=" col-lg-3 col-md-4 col-sm-6 mb-4"
+                  key={product.id}
+                >
+                  <div className="product-cart-wrap popular-card" tabIndex={0}>
+                    <div className="product-img-action-wrap">
+                      <div className="product-img product-img-zoom">
+                        <Link to="#" tabIndex={0}>
+                          <img
+                            className="default-img"
+                            src={`${url}/products/${product.imageGallery[0]}`}
+                            onError={(e) => {
+                              e.target.src =
+                                "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"; // Replace with the path to your alternate image
+                            }}
+                            alt=""
+                          />
+                          <img
+                            className="hover-img"
+                            src={product.hoverImageUrl}
+                            alt=""
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                    <div class="product-content-wrap">
+                      <div class="product-category">
+                        <Link to="#">
+                          {categoryNameMapping[ProductData.category]}
+                        </Link>
+                      </div>
+                      <h2>
+                        <Link to="#">{product.name}</Link>
+                      </h2>
 
-                  <div class="product-card-bottom">
-                    <div class="product-price popular-card-price">
-                      <span>
-                        ₹{" "}
-                        {product.prices.discounted
+                      <div class="product-card-bottom">
+                        <div class="product-price popular-card-price">
+                          <span>
+                            ₹{" "}
+                            {product.prices.discounted
                               ? product.prices.discounted
                               : product.prices.calculatedPrice}
-                      </span>
-                      {!product.calculationOnWeight && (
-                        <span className="old-price ">
-                          ₹
-                          {product.prices ? product.prices.original : null}
-                        </span>
-                      )}
-                    </div>
-                    <div class="add-cart popular-card-cart">
-                      <Link class="add add-cart-btn" to="#">
-                        <i class="fi-rs-shopping-cart mr-5 bi bi-cart me-2"></i>
-                        Add{" "}
-                      </Link>
+                          </span>
+                          {!product.calculationOnWeight && (
+                            <span className="old-price ">
+                              ₹{product.prices ? product.prices.original : null}
+                            </span>
+                          )}
+                        </div>
+                        <div class="add-cart popular-card-cart">
+                          <Link class="add add-cart-btn" to="#">
+                            <i class="fi-rs-shopping-cart mr-5 bi bi-cart me-2"></i>
+                            Add{" "}
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          )) : null}
+              ))
+            : null}
         </div>
       </div>
       <Category background="#fff" />
