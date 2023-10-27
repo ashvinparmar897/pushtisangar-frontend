@@ -111,7 +111,7 @@ const MyProfile = () => {
                     <li>
                       <Link to="/my-order">My Orders</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="/my-address">My Addresses</Link>
                     </li>
                     <li>
@@ -122,7 +122,7 @@ const MyProfile = () => {
                     </li>
                     <li>
                       <Link to="/ticket-support">Support Ticket</Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link to="/">Logout</Link>
                     </li>
