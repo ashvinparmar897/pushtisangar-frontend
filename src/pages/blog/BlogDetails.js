@@ -235,7 +235,7 @@ const BlogDetails = () => {
                           revered Lord Lalji. </p>
                 </div>
               </div> */}
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-md-6">
                   <div className="author-bio p-30 mt-80 border-radius-15 bg-white">
                     <div className="author-image mb-4">
@@ -360,7 +360,7 @@ const BlogDetails = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
