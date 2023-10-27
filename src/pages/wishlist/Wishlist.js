@@ -151,7 +151,7 @@ const Wishlist = () => {
           <h3 className="text-grand fs-4">
             {item.product.prices.discounted
               ? item.product.prices.discounted
-              : item.product.prices.calculatedPrice}
+              : item.product.prices.calculatedPrice} ₹
           </h3>
         </td>
         {/* <td className="text-center detail-info" data-title="Stock">
