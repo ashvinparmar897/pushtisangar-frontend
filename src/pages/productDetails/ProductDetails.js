@@ -1111,7 +1111,7 @@ const ProductDetails = () => {
                   <div className="product-cart-wrap popular-card" tabIndex={0}>
                     <div className="product-img-action-wrap">
                       <div className="product-img product-img-zoom">
-                        <Link to="#" tabIndex={0}>
+                        <Link to={`/product-details/${product._id}`} tabIndex={0}>
                           <img
                             className="default-img"
                             src={`${url}/products/${product.imageGallery[0]}`}
@@ -1131,12 +1131,12 @@ const ProductDetails = () => {
                     </div>
                     <div class="product-content-wrap">
                       <div class="product-category">
-                        <Link to="#">
+                        <Link to={`/product-details/${product._id}`}>
                           {categoryNameMapping[ProductData.category]}
                         </Link>
                       </div>
                       <h2>
-                        <Link to="#">{product.name}</Link>
+                        <Link to={`/product-details/${product._id}`}>{product.name}</Link>
                       </h2>
 
                       <div class="product-card-bottom">
@@ -1154,7 +1154,7 @@ const ProductDetails = () => {
                           )}
                         </div>
                         <div class="add-cart popular-card-cart">
-                          <Link class="add add-cart-btn" to="#">
+                          <Link class="add add-cart-btn" onClick={()=>{handleCartClick(product._id)}}>
                             <i class="fi-rs-shopping-cart mr-5 bi bi-cart me-2"></i>
                             Add{" "}
                           </Link>
