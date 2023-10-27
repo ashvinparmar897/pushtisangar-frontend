@@ -212,9 +212,9 @@ const Checkout = () => {
     lastName: Yup.string().required("Last Name is required"),
     address: Yup.string().required("Address is required"),
     selectedCountry: Yup.object()
-      .nullable(false)
+      .nullable()
       .required("Country is required"),
-    selectedState: Yup.object().nullable(false).required("State is required"),
+    selectedState: Yup.object().nullable().required("State is required"),
     city: Yup.string().required("Town / City is required"),
     postcode: Yup.string().required("Postcode / Zip is required"),
     phone: Yup.string().required("Phone is required"),
@@ -406,7 +406,7 @@ const Checkout = () => {
                                   "selectedCountry",
                                   selectedOption
                                 ); // Set the selected value
-                                setFieldTouched("selectedCountry", true); // Mark field as touched
+                               
                               }}
                               options={countryOptions}
                               placeholder="Select Country"
@@ -427,8 +427,8 @@ const Checkout = () => {
                             <Select
                               value={values.selectedState}
                               onChange={(selectedOption) => {
-                                setFieldValue("selectedState", selectedOption); // Set the selected value using Formik
-                                setFieldTouched("selectedState", true); // Mark field as touched to trigger validation
+                                setFieldValue("selectedState", selectedOption); 
+                                
                               }}
                               options={stateOptions}
                               placeholder="Select State"
