@@ -42,7 +42,7 @@ function App() {
           <Route path="/checkout/:id" element={<Checkout />} />
           <Route path="/order-statement" element={<OrderStatement />} />
           <Route path="/print-statement" element={<PrintStatement />} />
-          <Route path="/my-order" element={<MyOrder />} />
+          <Route path="/my-order/:id" element={<MyOrder />} />
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/my-account" element={<MyAccount />} />
           <Route path="/my-address" element={<MyAddress />} />

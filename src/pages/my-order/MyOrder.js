@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import MidFooter from '../../components/MidFooter'
 import './MyOrder.css'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import MobileSidebar from '../../components/MobileSidebar'
+import SignContext from '../../contextAPI/Context/SignContext'
+
 
 
 const MyOrder = () => {
+  const { id } = useParams();
+  const { GetorderHistorybyId } = useContext(SignContext);
+  const [OrderData, setOrderData] = useState([]);
+
+
+  const getOrderHistorybyId = async (id) => {
+    const res = await GetorderHistorybyId(id);
+    console.log(res)
+    if (res.success) {
+      setOrderData(res.orderHistory);
+    }
+  };
+
+  useEffect(() => {
+    getOrderHistorybyId(id);
+  }, [id]);
+
+
+
+
   return (
     <div>
       <Header/>
@@ -95,63 +117,23 @@ const MyOrder = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="product-name">
-                          PSO34210651
-                        </td>
-                        <td className="product-name">
-                          10/9/2020 12:21:37 PM
-                        </td>
-                        <td className="product-name">
-                          <span className="text-success">Processing</span>
-                        </td>
-                        <td className="product-name">
-                          ₹ 379.00
-                        </td>
-                        <td className="product-subtotal">
-                          <Link to="#" className="show">
-                            <i className="bx bx-bullseye bi bi-bullseye" />
-                          </Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="product-name">
-                          PSO34210651
-                        </td>
-                        <td className="product-name">
-                          10/9/2020 12:21:37 PM
-                        </td>
-                        <td className="product-name">
-                          <span className="text-color">Fail</span>
-                        </td>
-                        <td className="product-name">
-                          ₹ 379.00
-                        </td>
-                        <td className="product-subtotal">
-                          <Link to="#" className="show">
-                            <i className="bx bx-bullseye bi bi-bullseye" />
-                          </Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="product-name">
-                          PSO34210651
-                        </td>
-                        <td className="product-name">
-                          10/9/2020 12:21:37 PM
-                        </td>
-                        <td className="product-name">
-                          <span className="text-success">Processing</span>
-                        </td>
-                        <td className="product-name">
-                          ₹ 379.00
-                        </td>
-                        <td className="product-subtotal">
-                          <Link to="#" className="show">
-                            <i className="bx bx-bullseye bi bi-bullseye" />
-                          </Link>
-                        </td>
-                      </tr>
+                    {OrderData.map((order, index) => (
+                              <tr key={index}>
+                                <td className="product-name">{order._id}</td>
+                                <td className="product-name">{new Date(order.createdAt).toLocaleDateString()} {new Date(order.createdAt).toLocaleTimeString()}</td>
+                                <td className="product-name">
+                 
+                                    {order.status}
+                                 
+                                </td>
+                                <td className="product-name">₹ {order.totalAmount}</td>
+                                <td className="product-subtotal">
+                                  <Link to={`/order-details/${order.id}`} className="show">
+                                    <i className="bx bx-bullseye bi bi-bullseye" />
+                                  </Link>
+                                </td>
+                              </tr>
+                            ))}
                     </tbody>
                   </table>
                 </div>

@@ -51,7 +51,7 @@ const MyAccount = () => {
                       <Link to="/my-account">My Account</Link>
                     </li>
                     <li>
-                      <Link to="/my-order">My Orders</Link>
+                      <Link to={`/my-order/${CustomerInfo._id}`}>My Orders</Link>
                     </li>
                     {/* <li>
                       <Link to="/my-address">My Addresses</Link>

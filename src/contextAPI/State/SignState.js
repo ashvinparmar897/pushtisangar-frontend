@@ -348,6 +348,16 @@ export const SignState = (props) => {
     }
   };
 
+  const GetorderHistorybyId = async (customerId) => {
+    try {
+      const response = await axios.post(`${url}/customer/getorderhistory/${customerId}`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
   
 
   return (
@@ -382,6 +392,7 @@ export const SignState = (props) => {
         getBlogs,
         GetAllVarProducts,
         GetAboutUsContent,
+        GetorderHistorybyId,
       }}
     >
       {props.children}
