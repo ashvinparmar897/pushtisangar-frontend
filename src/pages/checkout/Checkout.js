@@ -125,12 +125,20 @@ const Checkout = () => {
   };
 
   const calculateDiscountAmount = (total, coupon) => {
-    if (coupon.type === "%") {
-      // If the discount is in percentage, calculate the discount amount
-      return (total * coupon.discount) / 100;
+    if (coupon && coupon.type === "%") {
+      
+      if (coupon.discount !== null) {
+        return (total * coupon.discount) / 100;
+      } else {
+        return 0; 
+      }
     } else {
-      // If the discount is in a fixed amount, return the fixed amount
-      return coupon.discount;
+      if (coupon && coupon.discount !== null) {
+        
+        return coupon.discount;
+      } else {
+        return 0;
+      }
     }
   };
 
@@ -143,12 +151,13 @@ const Checkout = () => {
   };
 
   function calculateDiscountedTotal(total, coupon) {
-    if (coupon.type === "%") {
+    if (coupon && coupon.type === "%") {
       const discountAmount = (total * coupon.discount) / 100;
-
       return total - discountAmount;
-    } else {
+    } else if (coupon && coupon.discount !== null) {
       return total - coupon.discount;
+    } else {
+      return total; 
     }
   }
 
@@ -664,8 +673,8 @@ const Checkout = () => {
                                   </td>
                                   <td className="shipping-price">
                                     <span>
-                                      {selectedCoupon.discount}{" "}
-                                      {selectedCoupon.type === "%" ? "%" : "₹"}
+                                      {selectedCoupon?selectedCoupon.discount:null}{" "}
+                                      {selectedCoupon?selectedCoupon.type === "%" ? "%" : "₹":null}
                                     </span>
                                   </td>
                                 </tr>
