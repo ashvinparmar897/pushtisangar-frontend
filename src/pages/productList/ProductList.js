@@ -106,6 +106,26 @@ const ProductList = () => {
     }
   };
 
+  function getProductPriceRange(product) {
+    const prices = product.prices;
+  
+    if (prices && prices.discounted) {
+
+      return prices.discounted;
+    } else if (prices && prices.original) {
+     
+      return prices.original;
+    } else {
+      
+      return "Price not available";
+    }
+  }
+
+  const filteredProducts = ProductData.filter(product => {
+    const productPriceRange = getProductPriceRange(product); 
+    return selectedPriceRanges.includes(productPriceRange);
+  });
+
   const handleCategoryChange = (category) => {
     // Toggle the selected category
     if (selectedCategories.includes(category)) {
@@ -268,26 +288,25 @@ const ProductList = () => {
                           className="price-filter-inner"
                           style={{ paddingLeft: "15px" }}
                         >
-                          <input
+                          {/* <input
                             type="range"
                             className="price-range-input"
                             onInput={handleInput}
-                          />
+                          /> */}
 
                           {/* <h1>Price: { price }</h1> */}
-                          <div className="d-flex  justify-content-between">
+                          {/* <div className="d-flex  justify-content-between">
                             <div>From: ₹0</div>
                             <div>To: ₹{price}</div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       <div className="custome-checkbox text-start">
                         {[
-                          "₹0.00 - ₹20.00",
-                          "₹20.00 - ₹40.00",
-                          "₹40.00 - ₹60.00",
-                          "₹60.00 - ₹80.00",
-                          "Over ₹100.00",
+                          "₹0.00 - ₹1000.00",
+                          "₹1000.00 - ₹5000.00",
+                          "₹5000.00 - ₹10000.00",
+                          "Above ₹10000.00",
                         ].map((range) => (
                           <div
                             key={range}
@@ -317,7 +336,7 @@ const ProductList = () => {
                   </div>
 
                   {/* Category Filter */}
-                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
+                  {/* <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
                       <h5 className="mb-30 fw-bold fs-5 text-start">
                         By Categories
@@ -327,12 +346,13 @@ const ProductList = () => {
                         style={{ paddingLeft: "12px" }}
                       >
                         {[
-                          "Vastra",
                           "Shringar",
-                          "Sangar",
-                          "Shri Mastak",
-                          "Shri Karna",
-                          "Mukhravind",
+                          "Silver Vessels",
+                          "Sugandhi(Attar)",
+                          "Pichwai and Wall Art",
+                          "Vastra",
+                          "Fibre Items",
+                          "Seasonal Products",
                         ].map((category) => (
                           <div
                             key={category}
@@ -359,7 +379,7 @@ const ProductList = () => {
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Shop By Filter */}
                   <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5">

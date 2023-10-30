@@ -17,7 +17,8 @@ const GalleryDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const arrayOfGallery = useSelector((state) => state.galleryCategoryList);
-  const filteredArray = arrayOfGallery.filter(item => item._id === id); 
+  console.log(arrayOfGallery)
+  const filteredArray = arrayOfGallery.filter(item => item.galleryCategory === id); 
   const url = `${process.env.REACT_APP_BASE_URL}`;
 
   const [filterdPosts,setGalleryFilterdPosts] = useState([]);
@@ -81,7 +82,7 @@ const GalleryDetails = () => {
           </div>
           <div className="row clearfix">
           {
-  arrayOfGallery.map((item, index) => (
+  filterdPosts.map((item, index) => (
     <div key={index} className="col-lg-3 col-md-6 col-sm-12 team-block">
       <Link to="/gallery-details">
         <div className="galleryCard">
@@ -96,6 +97,7 @@ const GalleryDetails = () => {
 
                   alt='' />
                 </figure>
+                <h5 className="imageTitle">{item.imageTitle}</h5>
               </div>
             </Link>
             <div className="lower-content">

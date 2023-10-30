@@ -237,7 +237,7 @@ select {
     font-size: 13px;
 }
 .form-coupon.checkout-login {
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     border: 1px dashed #93C572;
     border-radius: 8px;
@@ -348,4 +348,18 @@ select.form-control:not([size]):not([multiple]) {
 .coupn_det p{
     place-content: center;
     padding: 10px 0;
+}
+
+.checkout_btn {
+    background-color: #dfaaaa;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 10px 30px;
+    transition: all .3s linear 0s;
 }

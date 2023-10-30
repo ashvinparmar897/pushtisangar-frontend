@@ -499,7 +499,7 @@ const ProductDetails = () => {
               to={`/product-details/${OtherProduct._id}`}
               className="size-option-link"
             >
-              {OtherProduct.productSize}
+              {OtherProduct.productSize} cm
             </Link>
           ))
         ) : (

@@ -505,9 +505,9 @@ const Checkout = () => {
                       <h3 className="title">Order Summary</h3>
 
                       {totalPrice > 10000 && (
-                        <div>
+                        <div className="row">
                           <h5 className="mt-3 mb-3 fs-13">Use Coupon Code</h5>
-                          <div id="cuponcode">
+                          <div id="cuponcode" className="col-lg-8">
                             <div className="form-coupon checkout-login">
                               <div className="cart-buttons m-0">
                                 <div className="shopping-coupon-code">
@@ -545,7 +545,7 @@ const Checkout = () => {
                                     ))}
                                   </select>
 
-                                  <button type="button">Apply Coupon</button>
+                                  
                                 </div>
                                 <div>
                                   {selectedCoupon && (
@@ -584,6 +584,9 @@ const Checkout = () => {
                                 </small> */}
                               </div>
                             </div>
+                          </div>
+                          <div className="col-lg-4 align-self-center">
+                          <button type="button" className="checkout_btn">Apply Coupon</button>
                           </div>
                         </div>
                       )}
