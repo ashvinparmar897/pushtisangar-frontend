@@ -529,7 +529,7 @@ const Checkout = () => {
                                     }
                                   >
                                     <option value="">Select a coupon</option>
-                                    {coupons.map((coupon) => (
+                                    {coupons.filter(coupon => coupon.active).map((coupon) => (
                                       <option
                                         key={coupon._id}
                                         value={coupon._id}
