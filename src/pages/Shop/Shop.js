@@ -21,16 +21,25 @@ import { Link, useNavigate } from "react-router-dom";
 import MobileSidebar from "../../components/MobileSidebar";
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import SignContext from "../../contextAPI/Context/SignContext";
+import axios from "axios";
 
 const Shop = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const navigate = useNavigate();
-  const { getProducts, getCategories, getLoggedInCustomer, addToCart } =
-    useContext(SignContext);
+  const {
+    getProducts,
+    getCategories,
+    getLoggedInCustomer,
+    addToCart,
+    getColors,
+  } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
+  const [CategoryData, setCategoryData] = useState([]);
+  const [ColorData, setColorData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
   const authToken = localStorage.getItem("authToken");
+  const [QueryParams, setQueryParams] = useState({});
 
   const Getproduct = async () => {
     const res = await getProducts();
@@ -47,7 +56,45 @@ const Shop = () => {
       setCategoryNameMapping(mapping);
     }
     setProductData(res.products);
+    setCategoryData(categoryRes);
   };
+
+  const changeQueryparams = (parameter, value) => {
+    const updatedQueryParams = { ...QueryParams };
+    updatedQueryParams[parameter] = value;
+
+    setQueryParams(updatedQueryParams);
+  };
+
+  const getFilteredItems = async () => {
+    const url = `${process.env.REACT_APP_BASE_URL}/product/getallproducts`;
+
+    const queryString = Object.keys(QueryParams)
+      .map((key) => `${key}=${QueryParams[key]}`)
+      .join("&");
+
+    const fullUrl = queryString ? `${url}?${queryString}` : url;
+
+    console.log(fullUrl);
+
+    try {
+      const response = await axios.post(fullUrl);
+      console.log(response.data);
+      if (response.data.success) setProductData(response.data.products);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  // console.log(CategoryData)
+
+  const GetColors = async () => {
+    const res = await getColors();
+    console.log(res);
+    setColorData(res.colors);
+  };
+
+  // const onFilterChange =
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
@@ -62,12 +109,21 @@ const Shop = () => {
   // Define state variables for filters
   const [showFilters, setShowFilters] = useState(false);
   const [selectedColors, setSelectedColors] = useState([]);
-  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [selectedSortBy, setSelectedSortBy] = useState("New In");
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedShopBy, setSelectedShopBy] = useState([]);
   const [price, setPrice] = useState(40);
   const [productsToShow, setProductsToShow] = useState(5);
+
+  const resetFilters = () => {
+    setSelectedColors([]); 
+    setSelectedPriceRange(null); 
+    setSelectedCategory("All Categories"); 
+    setSelectedShopBy([]); 
+    setShowFilters(false);
+    Getproduct();
+  };
 
   const handleInput = (e) => {
     setPrice(e.target.value);
@@ -79,31 +135,32 @@ const Shop = () => {
   };
 
   // Define functions to handle filter changes
-  const handleColorChange = (color) => {
-    // Toggle the selected color
-    if (selectedColors.includes(color)) {
-      setSelectedColors(selectedColors.filter((c) => c !== color));
-    } else {
-      setSelectedColors([...selectedColors, color]);
-    }
+  const handleColorChange = (selectedColor) => {
+    const updatedColors = selectedColors.includes(selectedColor)
+      ? selectedColors.filter((color) => color !== selectedColor)
+      : [...selectedColors, selectedColor];
+
+    // Update the selected colors state
+    setSelectedColors(updatedColors);
+
+    // Update the query parameters with the selected colors
+    changeQueryparams("colors", updatedColors.join(",")); // Join selected colors with commas
   };
 
   const handlePriceChange = (range) => {
-    // Toggle the selected price range
-    if (selectedPriceRanges.includes(range)) {
-      setSelectedPriceRanges(selectedPriceRanges.filter((r) => r !== range));
-    } else {
-      setSelectedPriceRanges([...selectedPriceRanges, range]);
-    }
+    const [min, max] = range.match(/\d+/g);
+
+    // console.log(range , [min , max])
+    changeQueryparams("minPrice", min);
+    changeQueryparams("maxPrice", max);
+
+    setSelectedPriceRange(range);
   };
 
-  const handleCategoryChange = (category) => {
-    // Toggle the selected category
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter((c) => c !== category));
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
-    }
+  const handleCategoryChange = (selectedCategory) => {
+    // console.log(selectedCategory)
+    changeQueryparams("category", selectedCategory);
+    setSelectedCategory(selectedCategory);
   };
 
   const handleShopByChange = (shopItem) => {
@@ -114,167 +171,6 @@ const Shop = () => {
       setSelectedShopBy([...selectedShopBy, shopItem]);
     }
   };
-
-  // Filter products based on selected filters (dummy data)
-
-  //   const products = [
-  //     {
-  //       id: 1,
-  //       imageUrl: S1,
-  //       hoverImageUrl:
-  //         "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //       category: "Shangar",
-  //       name: "God Shanagar By Pushtimarg ",
-  //       price: 238.85,
-  //       oldPrice: 245.8,
-  //       color: "#67bcee",
-  //     },
-  //     {
-  //       id: 2,
-  //       imageUrl: S2,
-  //       hoverImageUrl:
-  //         "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //       category: "Sughandhi",
-  //       name: "Sughandhi Attar Different fragrances",
-  //       price: 238.85,
-  //       oldPrice: 245.8,
-  //       color: "#3BB77Es",
-  //     },
-  //     {
-  //       id: 3,
-  //       imageUrl: S3,
-  //       hoverImageUrl:
-  //         "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //       category: "Shringar",
-  //       name: "Moti product with category of Shringar",
-  //       price: 238.85,
-  //       oldPrice: 245.8,
-  //       color: "#f74b81",
-  //     },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S4,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Shringar",
-  //     //   name: "Popular Product on Shringar Products",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S5,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Best Zari in Vastra Category",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S6,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Second Most Popular Zari in Vastra",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S7,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Zari with different types of vastra",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     //   color: "#f74b81",
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S8,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Different color zari products",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S9,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Colourful Zari in vastra category",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S1,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Shangar",
-  //     //   name: "God Shanagar with best modification",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S5,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Vastra Zari By Pushtimarg Web Aplication",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S6,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Vastra Zari By Pushtimarg Web Aplication",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S4,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Shringar",
-  //     //   name: "Popular Product on Shringar Products",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S5,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Best Zari in Vastra Category",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-  //     // {
-  //     //   id: 1,
-  //     //   imageUrl: S6,
-  //     //   hoverImageUrl:
-  //     //     "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     //   category: "Vastra",
-  //     //   name: "Second Most Popular Zari in Vastra",
-  //     //   price: 238.85,
-  //     //   oldPrice: 245.8,
-  //     // },
-
-  //     // Add more product objects here
-  //   ];
 
   const handleSortByChange = (value) => {
     setSelectedSortBy(value);
@@ -331,8 +227,13 @@ const Shop = () => {
 
   useEffect(() => {
     Getproduct();
+    GetColors();
     GetLoggedInCustomer(authToken);
   }, []);
+
+  useEffect(() => {
+    getFilteredItems();
+  }, [selectedCategory, QueryParams, selectedColors]);
 
   return (
     <div>
@@ -354,7 +255,7 @@ const Shop = () => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-lg-12">
+          <div className="col-lg-9">
             <Link className="shop-filter-toogle" to="#" onClick={toggleFilters}>
               <span className="fi-rs-filter bi bi-funnel" />
               Filters
@@ -364,41 +265,39 @@ const Shop = () => {
                 <i className="fi-rs-angle-small-down angle-down bi bi-chevron-down" />
               )}
             </Link>
+            </div>
+            <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5 " style={{float:"right"}} >
+                  <div className="reset">
+                    <button className="btn btn-reset" onClick={resetFilters}>
+                      Reset Filters
+                    </button>
+                  </div>
+                </div>
+            <div className="col-lg-12">
             {showFilters && (
               <div className="shop-product-fillter-header">
                 <div className="row">
                   {/* Color Filter */}
                   <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
-                      <h5 className="mb-30 text-start fw-bold fs-5s">Colors</h5>
+                      <h5 className="mb-30 text-start fw-bold fs-5">Colors</h5>
                       <div className="d-flex text-start flex-wrap">
-                        {[
-                          "Red",
-                          "Blue",
-                          "Green",
-                          "Yellow",
-                          "Black",
-                          "White",
-                          "Brown",
-                          "Grey",
-                          "Pink",
-                          "Purple",
-                        ].map((color) => (
+                        {ColorData.map((color) => (
                           <div key={color} className="custome-checkbox mr-80">
                             <input
                               className="form-check-input mb-2 me-2"
                               type="checkbox"
                               name="checkbox"
                               id={`color-${color}`}
-                              value={color}
-                              checked={selectedColors.includes(color)}
-                              onChange={() => handleColorChange(color)}
+                              value={color.name}
+                              checked={selectedColors.includes(color.name)}
+                              onChange={() => handleColorChange(color.name)}
                             />
                             <label
                               className="form-check-label mb-1"
                               htmlFor={`color-${color}`}
                             >
-                              <span>{color}</span>
+                              <span>{color.name}</span>
                             </label>
                             <br />
                           </div>
@@ -413,31 +312,12 @@ const Shop = () => {
                       <h5 className="mb-30 price-btm fw-bold fs-5 text-start">
                         By Price
                       </h5>
-                      <div className="price-filter mb-20">
-                        <div
-                          className="price-filter-inner"
-                          style={{ paddingLeft: "15px" }}
-                        >
-                          <input
-                            type="range"
-                            className="price-range-input"
-                            onInput={handleInput}
-                          />
-
-                          {/* <h1>Price: { price }</h1> */}
-                          <div className="d-flex  justify-content-between">
-                            <div>From: ₹0</div>
-                            <div>To: ₹{price}</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="custome-checkbox text-start">
+                      <div className="custome-radio text-start">
                         {[
-                          "₹0.00 - ₹20.00",
-                          "₹20.00 - ₹40.00",
-                          "₹40.00 - ₹60.00",
-                          "₹60.00 - ₹80.00",
-                          "Over ₹100.00",
+                          "₹0 - ₹1000",
+                          "₹1000 - ₹5000",
+                          "₹5000 - ₹10000",
+                          "Over ₹10000",
                         ].map((range) => (
                           <div
                             key={range}
@@ -445,12 +325,11 @@ const Shop = () => {
                             style={{ paddingLeft: "12px" }}
                           >
                             <input
-                              className="form-check-input mb-2 me-2"
-                              type="checkbox"
-                              name="checkbox"
+                              type="radio"
+                              name="priceRange"
                               id={`price-${range}`}
                               value={range}
-                              checked={selectedPriceRanges.includes(range)}
+                              checked={selectedPriceRange === range}
                               onChange={() => handlePriceChange(range)}
                             />
                             <label
@@ -476,37 +355,18 @@ const Shop = () => {
                         className="categories-dropdown-wrap font-heading"
                         style={{ paddingLeft: "12px" }}
                       >
-                        {[
-                          "Vastra",
-                          "Shringar",
-                          "Sangar",
-                          "Shri Mastak",
-                          "Shri Karna",
-                          "Mukhravind",
-                        ].map((category) => (
-                          <div
-                            key={category}
-                            className="d-flex align-items-center"
-                            style={{ paddingLeft: "12px" }}
-                          >
-                            <input
-                              className="form-check-input mb-2 me-2"
-                              type="checkbox"
-                              name="checkbox"
-                              id={`category-${category}`}
-                              value={category}
-                              checked={selectedCategories.includes(category)}
-                              onChange={() => handleCategoryChange(category)}
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor={`category-${category}`}
-                            >
-                              <span>{category}</span>
-                            </label>
-                            <br />
-                          </div>
-                        ))}
+                        <select
+                          className="form-select"
+                          value={selectedCategory}
+                          onChange={(e) => handleCategoryChange(e.target.value)}
+                        >
+                          <option value="">All Categories</option>
+                          {CategoryData.map((category) => (
+                            <option key={category._id} value={category._id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -552,9 +412,11 @@ const Shop = () => {
                     </div>
                   </div>
                 </div>
+
+                
               </div>
             )}
-          </div>
+          </div>--
         </div>
         {/* Product List */}
         {/* <div className="row">

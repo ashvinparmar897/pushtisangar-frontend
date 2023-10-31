@@ -358,6 +358,65 @@ export const SignState = (props) => {
     }
   };
 
+  const getfilteredProducts = async (category, color, material, season, minPrice, maxPrice) => {
+    try {
+      const url = `${process.env.REACT_APP_BASE_URL}/product/getallproducts`;
+  
+      // Create an object to hold the query parameters
+      const queryParams = {};
+  
+      if (category) {
+        queryParams.category = category;
+      }
+  
+      if (color) {
+        queryParams.color = color;
+      }
+  
+      if (material) {
+        queryParams.material = material;
+      }
+  
+      if (season) {
+        queryParams.season = season;
+      }
+  
+      if (minPrice !== null && minPrice !== undefined) {
+        queryParams.minPrice = minPrice;
+      }
+  
+      if (maxPrice !== null && maxPrice !== undefined) {
+        queryParams.maxPrice = maxPrice;
+      }
+  
+      // Convert the queryParams object into a query string
+      const queryString = Object.keys(queryParams)
+        .map(key => `${key}=${queryParams[key]}`)
+        .join('&');
+  
+      // Add the query string to the URL if there are query parameters
+      const fullUrl = queryString ? `${url}?${queryString}` : url;
+  
+      const response = await axios.get(fullUrl);
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "Server Error" };
+    }
+  };
+
+
+  const getColors = async () => {
+    try {
+      const response = await axios.post(`${url}/color/getcolors`);
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+  
+
+
+
   
 
   return (
@@ -393,6 +452,8 @@ export const SignState = (props) => {
         GetAllVarProducts,
         GetAboutUsContent,
         GetorderHistorybyId,
+        getfilteredProducts,
+        getColors,
       }}
     >
       {props.children}
