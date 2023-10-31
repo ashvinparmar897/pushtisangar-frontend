@@ -144,7 +144,7 @@ const Shop = () => {
     setSelectedColors(updatedColors);
 
     // Update the query parameters with the selected colors
-    changeQueryparams("colors", updatedColors.join(",")); // Join selected colors with commas
+    changeQueryparams("color", updatedColors.join(",")); // Join selected colors with commas
   };
 
   const handlePriceChange = (range) => {
