@@ -372,7 +372,7 @@ const Shop = () => {
                   </div>
 
                   {/* Shop By Filter */}
-                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5">
+                  {/* <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5">
                     <div className="card">
                       <h5 className="mb-30 fw-bold fs-5 text-start">Shop by</h5>
                       <div
@@ -410,7 +410,7 @@ const Shop = () => {
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 
