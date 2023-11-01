@@ -90,9 +90,9 @@ const MidFooter = () => {
                 <li>
                   <Link to="terms-condition">Terms &amp; Conditions</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="#">Contact Us</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="footer-link-widget col">
@@ -116,7 +116,7 @@ const MidFooter = () => {
                   <Link to="#">Site Map</Link>
                 </li>
                 <li>
-                  <Link to="#">Contact Us</Link>
+                  <Link to="/contact-us">Contact Us</Link>
                 </li>
                 <li>
                   <Link to="#">Payments</Link>

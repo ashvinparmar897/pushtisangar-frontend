@@ -94,7 +94,7 @@ const MyAccount = () => {
                     </div>
                   </div>
                 </div>
-                <div className="part-2 mt-5">
+                {/* <div className="part-2 mt-5">
                   <h5 className="text-start">
                     Address Book{" "}
                     <Link to="/my-address" className="text-color fs-13 ml-2">
@@ -134,7 +134,7 @@ const MyAccount = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

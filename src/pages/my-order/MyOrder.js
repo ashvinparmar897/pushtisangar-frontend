@@ -88,7 +88,7 @@ const MyOrder = () => {
           <div className="part-1 mb-5">
             <h5>Your Order information below.</h5>
             <hr />
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-12">
                 <div className="no-order">
                   <h6 className="vible text-center mb-3">There are no items in your Order History</h6>
@@ -100,7 +100,7 @@ const MyOrder = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="part-2">
             <div className="row">
@@ -113,7 +113,7 @@ const MyOrder = () => {
                         <th scope="col">Ordered On</th>
                         <th scope="col">Order Status</th>
                         <th scope="col">Total</th>
-                        <th scope="col">Action</th>
+                        {/* <th scope="col">Action</th> */}
                       </tr>
                     </thead>
                     <tbody>
@@ -127,11 +127,11 @@ const MyOrder = () => {
                                  
                                 </td>
                                 <td className="product-name">₹ {order.totalAmount}</td>
-                                <td className="product-subtotal">
+                                {/* <td className="product-subtotal">
                                   <Link to={`/order-details/${order.id}`} className="show">
                                     <i className="bx bx-bullseye bi bi-bullseye" />
                                   </Link>
-                                </td>
+                                </td> */}
                               </tr>
                             ))}
                     </tbody>
