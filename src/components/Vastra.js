@@ -153,7 +153,7 @@ const Vastra = () => {
             <h1 className="fs-1 mt-4 mb-4">Vastra</h1>
           </div>
           <div className="col text-end d-flex align-items-center justify-content-end">
-            <Link to={`/product-list/${id}`} className="mb-2">view all</Link>
+            <Link to={`/product-list/${id}`} className="mb-2"><strong>view all</strong></Link>
           </div>
         </div>
         <div className="row ">

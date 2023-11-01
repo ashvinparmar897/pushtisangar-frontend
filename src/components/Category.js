@@ -125,7 +125,7 @@ const Category = ({ background }) => {
         <h1 className="fs-1 mt-4 mb-4 fw-bold text-start">Our Category</h1>
         </div>
         <div className="col text-end d-flex align-items-center justify-content-end">
-            <Link to="/shop" className="mb-2">view all Products</Link>
+            <Link to="/shop" className="mb-2"><strong>view all Products</strong></Link>
           </div>
         </div>
         <div className="row">

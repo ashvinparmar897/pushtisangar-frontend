@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './MidFooter.css'
 import logo1 from '../images/footer-logo.png'
 import { MdLocationPin , MdCall , MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaFacebook,FaInstagram,FaPinterest,FaTwitter, FaYoutube } from 'react-icons/fa';
+import SignContext from "../contextAPI/Context/SignContext";
 
 
 
 const MidFooter = () => {
+  const {
+    getCategories 
+  } = useContext(SignContext);
+  const [CategoryData, setCategoryData] = useState([]);
+
+  const Getcategories = async () => {
+    // Fetch CategoryData here
+    const res = await getCategories();
+
+    if (res !== undefined) {
+      const transformedData = res.map((category, index) => ({
+        ...category,
+        id: index + 1,
+      }));
+      setCategoryData(transformedData);
+  };
+}
+
+  useEffect(() => {
+    Getcategories();
+  }, []);
+
 
   return (
     <div >
@@ -17,9 +40,9 @@ const MidFooter = () => {
             <div className="col">
               <div className="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
                 <div className="logo mb-2">
-                  <a href="#" className="mb-15">
+                  <Link to="#" className="mb-15">
                     <img src={logo1} alt="logo" />
-                  </a>
+                  </Link>
                 </div>
                 <ul className="contact-infor list-unstyled text-start">
                   <li>
@@ -56,53 +79,47 @@ const MidFooter = () => {
               <h4 className="widget-title footer-title text-start">Company</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <a href="#">About Us</a>
+                  <Link to="#">About Us</Link>
                 </li>
                 <li>
-                  <a href="#">Delivery Information</a>
+                  <Link to="#">Delivery Information</Link>
                 </li>
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <Link to="#">Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="terms-condition">Terms &amp; Conditions</a>
+                  <Link to="terms-condition">Terms &amp; Conditions</Link>
                 </li>
                 <li>
-                  <a href="#">Contact Us</a>
+                  <Link to="#">Contact Us</Link>
                 </li>
               </ul>
             </div>
             <div className="footer-link-widget col">
-              <h4 className="widget-title footer-title text-start">Popular</h4>
+              <h4 className="widget-title footer-title text-start">Category</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
-                <li>
-                  <a href="#">Product - 01</a>
-                </li>
-                <li>
-                  <a href="#">Product -02</a>
-                </li>
-                <li>
-                  <a href="#">Product -03</a>
-                </li>
-                <li>
-                  <a href="#">Product -04</a>
-                </li>
-                <li>
-                  <a href="#">Product -05</a>
-                </li>
+              {CategoryData.map((category, index) => (
+                          <li key={index}>
+                            <Link to={`/product-list/${category._id}`}>
+                              {" "}
+                              {/* <img src={logo} alt /> */}
+                              {category.name}
+                            </Link>
+                          </li>
+                        ))}
               </ul>
             </div>
             <div className="footer-link-widget costomer-block col">
               <h4 className="widget-title footer-title text-start">Customer Service</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <a href="#">Site Map</a>
+                  <Link to="#">Site Map</Link>
                 </li>
                 <li>
-                  <a href="#">Contact Us</a>
+                  <Link to="#">Contact Us</Link>
                 </li>
                 <li>
-                  <a href="#">Payments</a>
+                  <Link to="#">Payments</Link>
                 </li>
               </ul>
             </div>
@@ -111,16 +128,16 @@ const MidFooter = () => {
               <h4 className="widget-title footer-title text-start">Account</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <a href="#">Sign In</a>
+                  <Link to="#">Sign In</Link>
                 </li>
                 <li>
-                  <a href="#">View Cart</a>
+                  <Link to="#">View Cart</Link>
                 </li>
                 <li>
-                  <a href="#">My Wishlist</a>
+                  <Link to="#">My Wishlist</Link>
                 </li>
                 <li>
-                  <a href="#">Shipping Details</a>
+                  <Link to="#">Shipping Details</Link>
                 </li>
               </ul>
             </div>

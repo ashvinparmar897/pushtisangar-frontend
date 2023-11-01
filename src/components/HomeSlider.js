@@ -19,7 +19,7 @@ const HomeSlider = () => {
     console.log(res);
     if(res.data){
 
-      const filteredData = res.data.filter((banner) => banner.bannerType === "carousel");
+      const filteredData = res.data.filter((banner) => banner.bannerType === "carousel" && banner.isActive === true);
       setBannerData(filteredData);
     }
 

@@ -100,7 +100,7 @@ const Blog = () => {
                       <div className="entry-content-2">
                         {/* <h6 className="mb-10 font-sm"><Link className="entry-meta text-muted" to='#'>{post.category}</Link></h6> */}
                         <h4 className="post-title mb-15 text-start">
-                          <Link to='/blog-details'>{post.blogTitle}</Link>
+                          <Link to={`/blog-details/${post._id}`}>{post.blogTitle}</Link>
                         </h4>
                         <div className="entry-meta font-xs color-grey mt-10 pb-10 ">
                           <div className='d-flex justify-content-between'>

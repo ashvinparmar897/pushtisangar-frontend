@@ -149,7 +149,7 @@ const NewArrival = () => {
           <h1 className="text-start fs-1 mt-4 mb-4">New Arrivals</h1>
           </div>
           <div className="col text-end d-flex align-items-center justify-content-end">
-            <Link to="/shop" className="mb-2">view all Products</Link>
+            <Link to="/shop" className="mb-2"><strong>view all Products</strong></Link>
           </div>
          
           </div>

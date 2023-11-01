@@ -130,7 +130,7 @@ const BlogDetails = () => {
                               8 mins read
                             </span> */}
                           </div>
-                          <div className="social-icons single-share">
+                          {/* <div className="social-icons single-share">
                             <ul className="text-grey-5 d-flex">
                               <li className="mx-2">
                                 <Link to="#">
@@ -143,7 +143,7 @@ const BlogDetails = () => {
                                 </Link>
                               </li>
                             </ul>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
