@@ -10,9 +10,12 @@ import SignContext from "../contextAPI/Context/SignContext";
 
 const MidFooter = () => {
   const {
-    getCategories 
+    getCategories,
+    getLoggedInCustomer
   } = useContext(SignContext);
   const [CategoryData, setCategoryData] = useState([]);
+  const authToken = localStorage.getItem("authToken");
+  const [CustomerInfo, setCustomerInfo] = useState({});
 
   const Getcategories = async () => {
     // Fetch CategoryData here
@@ -27,8 +30,25 @@ const MidFooter = () => {
   };
 }
 
+const GetLoggedInCustomer = async (token) => {
+  const res = await getLoggedInCustomer(token);
+  console.log(res);
+  if (res.success) {
+    setCustomerInfo(res.customer);
+  } else {
+    console.log(res.msg);
+  }
+};
+
+const handleSignout = async () => {
+  localStorage.removeItem("authToken");
+  console.log("authToken Removed");
+};
+
+
   useEffect(() => {
     Getcategories();
+    GetLoggedInCustomer(authToken);
   }, []);
 
 
@@ -124,23 +144,23 @@ const MidFooter = () => {
               </ul>
             </div>
            
-            <div className="footer-link-widget col">
+           { authToken &&<div className="footer-link-widget col">
               <h4 className="widget-title footer-title text-start">Account</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <Link to="#">Sign In</Link>
+                  <Link onClick={handleSignout}>Sign Out</Link>
                 </li>
                 <li>
-                  <Link to="#">View Cart</Link>
+                  <Link to={`/cart/${CustomerInfo._id}`}>View Cart</Link>
                 </li>
                 <li>
-                  <Link to="#">My Wishlist</Link>
+                  <Link to={`/my-wishlist/${CustomerInfo._id}`}>My Wishlist</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="#">Shipping Details</Link>
-                </li>
+                </li> */}
               </ul>
-            </div>
+            </div>}
             
 
           </div>
