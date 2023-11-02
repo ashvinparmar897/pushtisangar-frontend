@@ -30,6 +30,8 @@ import ResetPassword from "./ResetPassword/ResetPassword";
 import { SignState } from "./contextAPI/State/SignState";
 import Shop from "./pages/Shop/Shop";
 import Disclaimer from "./pages/Disclaimer/Disclaimer";
+import Privacy from "./pages/PrivacyPolicy/Privacy";
+import ReturnPolicy from "./pages/ReturnPolicy/ReturnPolicy";
 
 function App() {
   return (
@@ -64,6 +66,8 @@ function App() {
           <Route path="/gallery-details/:id" element={<GalleryDetails />} />
           <Route path="/my-wishlist/:id" element={<Wishlist />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
         </Routes>
       </BrowserRouter>
     </div>

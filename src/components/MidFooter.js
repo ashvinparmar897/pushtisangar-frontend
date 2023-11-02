@@ -105,10 +105,13 @@ const handleSignout = async () => {
                   <Link to="/disclaimer">Disclaimer</Link>
                 </li>
                 <li>
-                  <Link to="#">Privacy Policy</Link>
+                  <Link to="/privacy">Privacy Policy</Link>
                 </li>
                 <li>
-                  <Link to="terms-condition">Terms &amp; Conditions</Link>
+                  <Link to="/return-policy">Return Policy</Link>
+                </li>
+                <li>
+                  <Link to="/terms-condition">Terms &amp; Conditions</Link>
                 </li>
                 {/* <li>
                   <Link to="#">Contact Us</Link>
