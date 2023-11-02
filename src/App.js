@@ -29,6 +29,7 @@ import Wishlist from "./pages/wishlist/Wishlist";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import { SignState } from "./contextAPI/State/SignState";
 import Shop from "./pages/Shop/Shop";
+import Disclaimer from "./pages/Disclaimer/Disclaimer";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path="/all-category" element={<AllCategory />} />
           <Route path="/gallery-details/:id" element={<GalleryDetails />} />
           <Route path="/my-wishlist/:id" element={<Wishlist />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
         </Routes>
       </BrowserRouter>
     </div>

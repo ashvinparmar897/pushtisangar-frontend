@@ -99,10 +99,10 @@ const handleSignout = async () => {
               <h4 className="widget-title footer-title text-start">Company</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
                 <li>
-                  <Link to="#">About Us</Link>
+                  <Link to="/about-us">About Us</Link>
                 </li>
                 <li>
-                  <Link to="#">Delivery Information</Link>
+                  <Link to="/disclaimer">Disclaimer</Link>
                 </li>
                 <li>
                   <Link to="#">Privacy Policy</Link>
