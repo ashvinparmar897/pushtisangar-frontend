@@ -32,14 +32,19 @@ const Shop = () => {
     getLoggedInCustomer,
     addToCart,
     getColors,
+    getMaterials,
+    getSeasons
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [CategoryData, setCategoryData] = useState([]);
   const [ColorData, setColorData] = useState([]);
+  const [MaterialData, setMaterialData] = useState([]);
+  const [SeasonData, setSeasonData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
   const authToken = localStorage.getItem("authToken");
   const [QueryParams, setQueryParams] = useState({});
+
 
   const Getproduct = async () => {
     const res = await getProducts();
@@ -94,6 +99,18 @@ const Shop = () => {
     setColorData(res.colors);
   };
 
+  const GetMaterials = async () => {
+    const res = await getMaterials();
+    console.log(res);
+    setMaterialData(res.material);
+  };
+
+  const GetSeasons = async () => {
+    const res = await getSeasons();
+    console.log(res);
+    setSeasonData(res.season);
+  };
+
   // const onFilterChange =
 
   const GetLoggedInCustomer = async (token) => {
@@ -112,6 +129,8 @@ const Shop = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [selectedSortBy, setSelectedSortBy] = useState("New In");
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedMaterial, setSelectedMaterial] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState([]);
   const [selectedShopBy, setSelectedShopBy] = useState([]);
   const [price, setPrice] = useState(40);
   const [productsToShow, setProductsToShow] = useState(5);
@@ -147,6 +166,18 @@ const Shop = () => {
     changeQueryparams("color", updatedColors.join(",")); // Join selected colors with commas
   };
 
+  const handleSeasonChange = (selectedseason) => {
+    const updatedColors = selectedSeason.includes(selectedseason)
+      ? selectedSeason.filter((color) => color !== selectedseason)
+      : [...selectedSeason, selectedseason];
+
+    // Update the selected colors state
+    setSelectedSeason(updatedColors);
+
+    // Update the query parameters with the selected colors
+    changeQueryparams("season", updatedColors.join(",")); // Join selected colors with commas
+  };
+
   const handlePriceChange = (range) => {
     const [min, max] = range.match(/\d+/g);
 
@@ -161,6 +192,11 @@ const Shop = () => {
     // console.log(selectedCategory)
     changeQueryparams("category", selectedCategory);
     setSelectedCategory(selectedCategory);
+  };
+  const handleMaterialChange = (selectedmaterial) => {
+    // console.log(selectedCategory)
+    changeQueryparams("material", selectedmaterial);
+    setSelectedMaterial(selectedmaterial);
   };
 
   const handleShopByChange = (shopItem) => {
@@ -229,6 +265,8 @@ const Shop = () => {
     Getproduct();
     GetColors();
     GetLoggedInCustomer(authToken);
+    GetMaterials();
+    GetSeasons();
   }, []);
 
   useEffect(() => {
@@ -372,45 +410,59 @@ const Shop = () => {
                   </div>
 
                   {/* Shop By Filter */}
-                  {/* <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5">
+                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
-                      <h5 className="mb-30 fw-bold fs-5 text-start">Shop by</h5>
+                      <h5 className="mb-30 fw-bold fs-5 text-start">
+                        By Materials
+                      </h5>
                       <div
-                        className="sidebar-widget widget-tags"
+                        className="categories-dropdown-wrap font-heading"
                         style={{ paddingLeft: "12px" }}
                       >
-                        {[
-                          "New Arrival",
-                          "Online Exclusive",
-                          "Tranding",
-                          "New Offer",
-                        ].map((shopItem) => (
-                          <div
-                            key={shopItem}
-                            className="d-flex align-items-center"
-                            style={{ paddingLeft: "12px" }}
-                          >
+                        <select
+                          className="form-select"
+                          value={selectedMaterial}
+                          onChange={(e) => handleMaterialChange(e.target.value)}
+                        >
+                          <option value="">All Materials</option>
+                          {MaterialData.map((category) => (
+                            <option key={category._id} value={category._id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* By Season */}
+                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
+                    <div className="card">
+                      <h5 className="mb-30 text-start fw-bold fs-5">Seasons</h5>
+                      <div className="d-flex text-start flex-wrap">
+                        {SeasonData.map((color) => (
+                          <div key={color} className="custome-checkbox mr-80">
                             <input
                               className="form-check-input mb-2 me-2"
                               type="checkbox"
                               name="checkbox"
-                              id={`shop-item-${shopItem}`}
-                              value={shopItem}
-                              checked={selectedShopBy.includes(shopItem)}
-                              onChange={() => handleShopByChange(shopItem)}
+                              id={`color-${color}`}
+                              value={color._id}
+                              checked={selectedSeason.includes(color._id)}
+                              onChange={() => handleSeasonChange(color._id)}
                             />
                             <label
-                              className="form-check-label"
-                              htmlFor={`shop-item-${shopItem}`}
+                              className="form-check-label mb-1"
+                              htmlFor={`color-${color}`}
                             >
-                              <span>{shopItem}</span>
+                              <span>{color.name}</span>
                             </label>
                             <br />
                           </div>
                         ))}
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
 
                 

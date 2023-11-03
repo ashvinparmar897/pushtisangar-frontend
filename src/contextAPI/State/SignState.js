@@ -413,6 +413,102 @@ export const SignState = (props) => {
       return { success: false, msg: "server Error" };
     }
   };
+
+  const GetPrivacyPolicy = async (contentId) => {
+    try {
+      const response = await axios.post(`${url}/content/getspecificcontent/6543bb2698a219d89dd67b68`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+  const GeReturnPolicy = async (contentId) => {
+    try {
+      const response = await axios.post(`${url}/content/getspecificcontent/6543bb3b98a219d89dd67b6b`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+  const GetTermsCondition = async (contentId) => {
+    try {
+      const response = await axios.post(`${url}/content/getspecificcontent/6543bb7598a219d89dd67b73`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+  const GetFAQs = async (contentId) => {
+    try {
+      const response = await axios.post(`${url}/content/getspecificcontent/6543bb8498a219d89dd67b76`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+
+  const GetMidfooter = async (contentId) => {
+    try {
+      const response = await axios.post(`${url}/content/getspecificcontent/6543bbc598a219d89dd67b79`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+
+  const GetHotDeals = async (contentId) => {
+    try {
+      const response = await axios.post(`${url}/content/getspecificcontent/6543bbdf98a219d89dd67b7c`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+  const GetDisclaimer = async (contentId) => {
+    try {
+      const response = await axios.post(`${url}/content/getspecificcontent/652d0f1a441c0e7e4d9a4b29`, {
+      });
+      return response.data;
+    } catch (error) {
+      return ({ success: false, msg: "server Error" })
+    }
+  };
+
+
+  const getMaterials = async () => {
+    try {
+      const response = await axios.post(`${url}/material/getmaterial`);
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
+  const getSeasons = async () => {
+    try {
+      const response = await axios.post(`${url}/season/getseasons`);
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
+
+
+
+
   
 
 
@@ -454,6 +550,15 @@ export const SignState = (props) => {
         GetorderHistorybyId,
         getfilteredProducts,
         getColors,
+        GetPrivacyPolicy,
+        GeReturnPolicy,
+        GetTermsCondition,
+        GetFAQs,
+        GetMidfooter,
+        GetHotDeals,
+        GetDisclaimer,
+        getMaterials,
+        getSeasons,
       }}
     >
       {props.children}

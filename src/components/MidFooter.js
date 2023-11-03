@@ -11,11 +11,12 @@ import SignContext from "../contextAPI/Context/SignContext";
 const MidFooter = () => {
   const {
     getCategories,
-    getLoggedInCustomer
+    getLoggedInCustomer,
   } = useContext(SignContext);
   const [CategoryData, setCategoryData] = useState([]);
   const authToken = localStorage.getItem("authToken");
   const [CustomerInfo, setCustomerInfo] = useState({});
+
 
   const Getcategories = async () => {
     // Fetch CategoryData here
@@ -113,9 +114,9 @@ const handleSignout = async () => {
                 <li>
                   <Link to="/terms-condition">Terms &amp; Conditions</Link>
                 </li>
-                {/* <li>
-                  <Link to="#">Contact Us</Link>
-                </li> */}
+                <li>
+                  <Link to="/faq">FAQ's</Link>
+                </li>
               </ul>
             </div>
             <div className="footer-link-widget col">

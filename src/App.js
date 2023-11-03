@@ -32,6 +32,7 @@ import Shop from "./pages/Shop/Shop";
 import Disclaimer from "./pages/Disclaimer/Disclaimer";
 import Privacy from "./pages/PrivacyPolicy/Privacy";
 import ReturnPolicy from "./pages/ReturnPolicy/ReturnPolicy";
+import Faq from "./pages/FAQ's/Faq.jsx";
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/faq" element={<Faq />} />
         </Routes>
       </BrowserRouter>
     </div>

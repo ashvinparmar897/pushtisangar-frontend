@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
-import MobileSidebar from '../../components/MobileSidebar'
-import Header from '../../components/Header'
-import Subscribe from '../../components/Subscribe'
-import Featured from '../../components/Featured'
-import MidFooter from '../../components/MidFooter'
-import SignContext from '../../contextAPI/Context/SignContext'
-import { Link } from 'react-router-dom'
-import { AiOutlineHome, AiOutlineRight } from 'react-icons/ai'
+import SignContext from '../../contextAPI/Context/SignContext';
+import MidFooter from '../../components/MidFooter';
+import Featured from '../../components/Featured';
+import Subscribe from '../../components/Subscribe';
+import { AiOutlineHome, AiOutlineRight } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import MobileSidebar from '../../components/MobileSidebar';
+import Header from '../../components/Header';
 
-const Privacy = () => {
-  const { GetPrivacyPolicy } = useContext(SignContext);
+const Faq = () => {
+    const { GetFAQs } = useContext(SignContext);
   const [ContentData, setContentData] = useState([]);
 
   const getaboutUsContent = async () => {
-    const res = await GetPrivacyPolicy();
+    const res = await GetFAQs();
     console.log(res);
 
     if (res.success) {
@@ -27,7 +27,7 @@ const Privacy = () => {
 
   return (
     <>
-    <Header />
+     <Header />
       <MobileSidebar />
       <div class="page-header breadcrumb-wrap">
         <div className="container">
@@ -38,7 +38,7 @@ const Privacy = () => {
               </i>
               Home
             </Link>
-            <AiOutlineRight className="rightIcon" /> Privacy Policy
+            <AiOutlineRight className="rightIcon" /> FAQ's
           </div>
         </div>
       </div>
@@ -61,7 +61,8 @@ const Privacy = () => {
       <Featured/>
       <MidFooter />
     </>
+    
   )
 }
 
-export default Privacy
+export default Faq

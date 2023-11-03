@@ -20,12 +20,21 @@ import SignContext from "../../contextAPI/Context/SignContext";
 
 const BlogDetails = () => {
   const id = useParams("id");
-  const { getCategories } = useContext(SignContext);
+  const { getCategories, GetHotDeals } = useContext(SignContext);
   const dispatch = useDispatch();
   const url = `${process.env.REACT_APP_BASE_URL}`;
-
   const [selectedBlogPost, setSelectedBlogPost] = useState("");
   const [CategoryData, setCategoryData] = useState([]);
+  const [ContentData, setContentData] = useState([]);
+
+  const getaboutUsContent = async () => {
+    const res = await GetHotDeals();
+    console.log(res);
+
+    if (res.success) {
+      setContentData(res.content);
+    }
+  };
 
   const arrayOfBlog = useSelector((state) => state.blog);
 
@@ -69,6 +78,7 @@ const BlogDetails = () => {
     setSelectedBlogPost(selectedBlog[0]);
     console.log(selectedBlog[0]);
     Getcategories();
+    getaboutUsContent();
   }, [id]);
 
   return (
@@ -188,13 +198,11 @@ const BlogDetails = () => {
                     >
                       <img src={sideimage} alt />
                       <div className="baner-text">
-                        <span>HOT DEALS</span>
-                        <h4 className="fs-6 mt-4">
-                          Don't Miss <br />
-                          Trending
-                          <br />
-                          Save to 50%
-                        </h4>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: ContentData ? ContentData.content : null,
+                          }}
+                        ></div>
                       </div>
                     </div>
                   </div>
