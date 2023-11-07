@@ -21,6 +21,13 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import MobileSidebar from "../../components/MobileSidebar";
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import SignContext from "../../contextAPI/Context/SignContext";
+import Swal from 'sweetalert2';
+import axios from "axios";
+
+
+
+
+
 const ProductList = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const { id } = useParams();
@@ -29,12 +36,20 @@ const ProductList = () => {
     GetProductsbyCategoryId,
     getCategories,
     getLoggedInCustomer,
+    getColors,
+    getMaterials,
+    getSeasons,
     addToCart,
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
+  const [ColorData, setColorData] = useState([]);
+  const [MaterialData, setMaterialData] = useState([]);
+  const [SeasonData, setSeasonData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
   const authToken = localStorage.getItem("authToken");
+  const [QueryParams, setQueryParams] = useState({});
+
 
   const Getproduct = async (id) => {
     const res = await GetProductsbyCategoryId(id);
@@ -58,6 +73,51 @@ const ProductList = () => {
     setProductData(res.products);
   };
 
+  const changeQueryparams = (parameter, value) => {
+    const updatedQueryParams = { ...QueryParams };
+    updatedQueryParams[parameter] = value;
+
+    setQueryParams(updatedQueryParams);
+  };
+
+  const getFilteredItems = async () => {
+    const url = `${process.env.REACT_APP_BASE_URL}/product/getallproducts`;
+
+    const queryString = Object.keys(QueryParams)
+      .map((key) => `${key}=${QueryParams[key]}`)
+      .join("&");
+
+    const fullUrl = queryString ? `${url}?${queryString}` : url;
+
+    console.log(fullUrl);
+
+    try {
+      const response = await axios.post(fullUrl);
+      console.log(response.data);
+      if (response.data.success) setProductData(response.data.products);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const GetColors = async () => {
+    const res = await getColors();
+    console.log(res);
+    setColorData(res.colors);
+  };
+
+  const GetMaterials = async () => {
+    const res = await getMaterials();
+    console.log(res);
+    setMaterialData(res.material);
+  };
+
+  const GetSeasons = async () => {
+    const res = await getSeasons();
+    console.log(res);
+    setSeasonData(res.season);
+  };
+
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
     console.log(res);
@@ -71,12 +131,23 @@ const ProductList = () => {
   // Define state variables for filters
   const [showFilters, setShowFilters] = useState(false);
   const [selectedColors, setSelectedColors] = useState([]);
-  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [selectedSortBy, setSelectedSortBy] = useState("New In");
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedMaterial, setSelectedMaterial] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState([]);
   const [selectedShopBy, setSelectedShopBy] = useState([]);
   const [price, setPrice] = useState(40);
   const [productsToShow, setProductsToShow] = useState(5);
+
+  const resetFilters = () => {
+    setSelectedColors([]); 
+    setSelectedPriceRange(null); 
+    setSelectedCategory("All Categories"); 
+    setSelectedShopBy([]); 
+    setShowFilters(false);
+    Getproduct();
+  };
 
   const handleInput = (e) => {
     setPrice(e.target.value);
@@ -88,52 +159,55 @@ const ProductList = () => {
   };
 
   // Define functions to handle filter changes
-  const handleColorChange = (color) => {
-    // Toggle the selected color
-    if (selectedColors.includes(color)) {
-      setSelectedColors(selectedColors.filter((c) => c !== color));
-    } else {
-      setSelectedColors([...selectedColors, color]);
-    }
+  const handleColorChange = (selectedColor) => {
+    const updatedColors = selectedColors.includes(selectedColor)
+      ? selectedColors.filter((color) => color !== selectedColor)
+      : [...selectedColors, selectedColor];
+
+    // Update the selected colors state
+    setSelectedColors(updatedColors);
+
+    // Update the query parameters with the selected colors
+    changeQueryparams("color", updatedColors.join(",")); // Join selected colors with commas
+  };
+
+  const handleSeasonChange = (selectedseason) => {
+    const updatedColors = selectedSeason.includes(selectedseason)
+      ? selectedSeason.filter((color) => color !== selectedseason)
+      : [...selectedSeason, selectedseason];
+
+    // Update the selected colors state
+    setSelectedSeason(updatedColors);
+
+    
+    changeQueryparams("season", updatedColors.join(",")); 
   };
 
   const handlePriceChange = (range) => {
-    // Toggle the selected price range
-    if (selectedPriceRanges.includes(range)) {
-      setSelectedPriceRanges(selectedPriceRanges.filter((r) => r !== range));
-    } else {
-      setSelectedPriceRanges([...selectedPriceRanges, range]);
-    }
+    const [min, max] = range.match(/\d+/g);
+
+    // console.log(range , [min , max])
+    changeQueryparams("minPrice", min);
+    changeQueryparams("maxPrice", max);
+
+    setSelectedPriceRange(range);
   };
 
-  function getProductPriceRange(product) {
-    const prices = product.prices;
-  
-    if (prices && prices.discounted) {
-
-      return prices.discounted;
-    } else if (prices && prices.original) {
-     
-      return prices.original;
-    } else {
-      
-      return "Price not available";
-    }
-  }
-
-  const filteredProducts = ProductData.filter(product => {
-    const productPriceRange = getProductPriceRange(product); 
-    return selectedPriceRanges.includes(productPriceRange);
-  });
-
-  const handleCategoryChange = (category) => {
-    // Toggle the selected category
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter((c) => c !== category));
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
-    }
+  const handleCategoryChange = (selectedCategory) => {
+    // console.log(selectedCategory)
+    changeQueryparams("category", selectedCategory);
+    setSelectedCategory(selectedCategory);
   };
+  const handleMaterialChange = (selectedmaterial) => {
+    // console.log(selectedCategory)
+    changeQueryparams("material", selectedmaterial);
+    setSelectedMaterial(selectedmaterial);
+  };
+
+
+
+
+ 
 
   const handleShopByChange = (shopItem) => {
     // Toggle the selected shop item
@@ -178,23 +252,37 @@ const ProductList = () => {
 
   const handleCartClick = async (id) => {
     try {
-      const customerId = CustomerInfo._id; // Replace with the actual customer ID
-      const cartInfo = {
-        productId: id,
-        quantity: 1,
-      };
-      const res = await addToCart(customerId, cartInfo);
-
-      if (res.success) {
-        // Cart updated successfully
-        console.log("Cart updated successfully");
-        navigate(`/cart/${customerId}`);
+      if (authToken) { 
+        const customerId = CustomerInfo._id; 
+        const cartInfo = {
+          productId: id,
+          quantity: 1,
+        };
+        const res = await addToCart(customerId, cartInfo);
+  
+        if (res.success) {
+          // Cart updated successfully
+          console.log("Cart updated successfully");
+          Swal.fire({
+            icon: 'success',
+            title: 'Item Added to Cart',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          // Handle the error
+          console.error(res.msg);
+        }
       } else {
-        // Handle the error
-        console.error(res.msg);
+        Swal.fire({
+          icon: 'warning', 
+          title: 'Please Login First',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
-      // Handle unexpected errors
+  
       console.error("Unexpected error:", error);
     }
   };
@@ -202,7 +290,14 @@ const ProductList = () => {
   useEffect(() => {
     Getproduct(id);
     GetLoggedInCustomer(authToken);
-  }, [id]);
+    GetMaterials();
+    GetSeasons();
+    GetColors();
+  }, [id , authToken]);
+
+  useEffect(() => {
+    getFilteredItems();
+  }, [selectedCategory, QueryParams, selectedColors]);
 
   return (
     <div>
@@ -224,7 +319,7 @@ const ProductList = () => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-lg-12">
+        <div className="col-lg-9">
             <Link className="shop-filter-toogle" to="#" onClick={toggleFilters}>
               <span className="fi-rs-filter bi bi-funnel" />
               Filters
@@ -234,41 +329,42 @@ const ProductList = () => {
                 <i className="fi-rs-angle-small-down angle-down bi bi-chevron-down" />
               )}
             </Link>
+          </div>
+          <div
+            className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5 "
+            style={{ float: "right" }}
+          >
+            <div className="reset">
+              <button className="btn btn-reset" onClick={resetFilters}>
+                Reset Filters
+              </button>
+            </div>
+          </div>
+          <div className="col-lg-12">
             {showFilters && (
               <div className="shop-product-fillter-header">
                 <div className="row">
                   {/* Color Filter */}
                   <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
-                      <h5 className="mb-30 text-start fw-bold fs-5s">Colors</h5>
+                      <h5 className="mb-30 text-start fw-bold fs-5">Colors</h5>
                       <div className="d-flex text-start flex-wrap">
-                        {[
-                          "Red",
-                          "Blue",
-                          "Green",
-                          "Yellow",
-                          "Black",
-                          "White",
-                          "Brown",
-                          "Grey",
-                          "Pink",
-                          "Purple",
-                        ].map((color) => (
+                        {ColorData.map((color) => (
                           <div key={color} className="custome-checkbox mr-80">
                             <input
                               className="form-check-input mb-2 me-2"
                               type="checkbox"
                               name="checkbox"
                               id={`color-${color}`}
-                              value={color}
-                              checked={selectedColors.includes(color)}
-                              onChange={() => handleColorChange(color)}
+                              value={color.name}
+                              checked={selectedColors.includes(color.name)}
+                              onChange={() => handleColorChange(color.name)}
                             />
                             <label
                               className="form-check-label mb-1"
                               htmlFor={`color-${color}`}
                             >
-                              <span>{color}</span>
+                              <span>{color.name}</span>
                             </label>
                             <br />
                           </div>
@@ -283,30 +379,12 @@ const ProductList = () => {
                       <h5 className="mb-30 price-btm fw-bold fs-5 text-start">
                         By Price
                       </h5>
-                      <div className="price-filter mb-20">
-                        <div
-                          className="price-filter-inner"
-                          style={{ paddingLeft: "15px" }}
-                        >
-                          {/* <input
-                            type="range"
-                            className="price-range-input"
-                            onInput={handleInput}
-                          /> */}
-
-                          {/* <h1>Price: { price }</h1> */}
-                          {/* <div className="d-flex  justify-content-between">
-                            <div>From: ₹0</div>
-                            <div>To: ₹{price}</div>
-                          </div> */}
-                        </div>
-                      </div>
-                      <div className="custome-checkbox text-start">
+                      <div className="custome-radio text-start">
                         {[
-                          "₹0.00 - ₹1000.00",
-                          "₹1000.00 - ₹5000.00",
-                          "₹5000.00 - ₹10000.00",
-                          "Above ₹10000.00",
+                          "₹0 - ₹1000",
+                          "₹1000 - ₹5000",
+                          "₹5000 - ₹10000",
+                          "Over ₹10000",
                         ].map((range) => (
                           <div
                             key={range}
@@ -314,12 +392,11 @@ const ProductList = () => {
                             style={{ paddingLeft: "12px" }}
                           >
                             <input
-                              className="form-check-input mb-2 me-2"
-                              type="checkbox"
-                              name="checkbox"
+                              type="radio"
+                              name="priceRange"
                               id={`price-${range}`}
                               value={range}
-                              checked={selectedPriceRanges.includes(range)}
+                              checked={selectedPriceRange === range}
                               onChange={() => handlePriceChange(range)}
                             />
                             <label
@@ -335,85 +412,53 @@ const ProductList = () => {
                     </div>
                   </div>
 
-                  {/* Category Filter */}
-                  {/* <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
+                  {/* Shop By Filter */}
+                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
                       <h5 className="mb-30 fw-bold fs-5 text-start">
-                        By Categories
+                        By Materials
                       </h5>
                       <div
                         className="categories-dropdown-wrap font-heading"
                         style={{ paddingLeft: "12px" }}
                       >
-                        {[
-                          "Shringar",
-                          "Silver Vessels",
-                          "Sugandhi(Attar)",
-                          "Pichwai and Wall Art",
-                          "Vastra",
-                          "Fibre Items",
-                          "Seasonal Products",
-                        ].map((category) => (
-                          <div
-                            key={category}
-                            className="d-flex align-items-center"
-                            style={{ paddingLeft: "12px" }}
-                          >
-                            <input
-                              className="form-check-input mb-2 me-2"
-                              type="checkbox"
-                              name="checkbox"
-                              id={`category-${category}`}
-                              value={category}
-                              checked={selectedCategories.includes(category)}
-                              onChange={() => handleCategoryChange(category)}
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor={`category-${category}`}
-                            >
-                              <span>{category}</span>
-                            </label>
-                            <br />
-                          </div>
-                        ))}
+                        <select
+                          className="form-select"
+                          value={selectedMaterial}
+                          onChange={(e) => handleMaterialChange(e.target.value)}
+                        >
+                          <option value="">All Materials</option>
+                          {MaterialData.map((category) => (
+                            <option key={category._id} value={category._id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
 
-                  {/* Shop By Filter */}
-                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5">
+                  {/* By Season */}
+                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
-                      <h5 className="mb-30 fw-bold fs-5 text-start">Shop by</h5>
-                      <div
-                        className="sidebar-widget widget-tags"
-                        style={{ paddingLeft: "12px" }}
-                      >
-                        {[
-                          "New Arrival",
-                          "Online Exclusive",
-                          "Tranding",
-                          "New Offer",
-                        ].map((shopItem) => (
-                          <div
-                            key={shopItem}
-                            className="d-flex align-items-center"
-                            style={{ paddingLeft: "12px" }}
-                          >
+                      <h5 className="mb-30 text-start fw-bold fs-5">Seasons</h5>
+                      <div className="d-flex text-start flex-wrap">
+                        {SeasonData.map((color) => (
+                          <div key={color} className="custome-checkbox mr-80">
                             <input
                               className="form-check-input mb-2 me-2"
                               type="checkbox"
                               name="checkbox"
-                              id={`shop-item-${shopItem}`}
-                              value={shopItem}
-                              checked={selectedShopBy.includes(shopItem)}
-                              onChange={() => handleShopByChange(shopItem)}
+                              id={`color-${color}`}
+                              value={color._id}
+                              checked={selectedSeason.includes(color._id)}
+                              onChange={() => handleSeasonChange(color._id)}
                             />
                             <label
-                              className="form-check-label"
-                              htmlFor={`shop-item-${shopItem}`}
+                              className="form-check-label mb-1"
+                              htmlFor={`color-${color}`}
                             >
-                              <span>{shopItem}</span>
+                              <span>{color.name}</span>
                             </label>
                             <br />
                           </div>

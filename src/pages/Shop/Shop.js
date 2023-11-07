@@ -22,6 +22,7 @@ import MobileSidebar from "../../components/MobileSidebar";
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import SignContext from "../../contextAPI/Context/SignContext";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Shop = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
@@ -33,7 +34,7 @@ const Shop = () => {
     addToCart,
     getColors,
     getMaterials,
-    getSeasons
+    getSeasons,
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [CategoryData, setCategoryData] = useState([]);
@@ -44,7 +45,6 @@ const Shop = () => {
   const [CustomerInfo, setCustomerInfo] = useState({});
   const authToken = localStorage.getItem("authToken");
   const [QueryParams, setQueryParams] = useState({});
-
 
   const Getproduct = async () => {
     const res = await getProducts();
@@ -136,10 +136,10 @@ const Shop = () => {
   const [productsToShow, setProductsToShow] = useState(5);
 
   const resetFilters = () => {
-    setSelectedColors([]); 
-    setSelectedPriceRange(null); 
-    setSelectedCategory("All Categories"); 
-    setSelectedShopBy([]); 
+    setSelectedColors([]);
+    setSelectedPriceRange(null);
+    setSelectedCategory("All Categories");
+    setSelectedShopBy([]);
     setShowFilters(false);
     Getproduct();
   };
@@ -174,8 +174,7 @@ const Shop = () => {
     // Update the selected colors state
     setSelectedSeason(updatedColors);
 
-    // Update the query parameters with the selected colors
-    changeQueryparams("season", updatedColors.join(",")); // Join selected colors with commas
+    changeQueryparams("season", updatedColors.join(","));
   };
 
   const handlePriceChange = (range) => {
@@ -240,23 +239,36 @@ const Shop = () => {
 
   const handleCartClick = async (id) => {
     try {
-      const customerId = CustomerInfo._id; // Replace with the actual customer ID
-      const cartInfo = {
-        productId: id,
-        quantity: 1,
-      };
-      const res = await addToCart(customerId, cartInfo);
+      if (authToken) {
+        const customerId = CustomerInfo._id;
+        const cartInfo = {
+          productId: id,
+          quantity: 1,
+        };
+        const res = await addToCart(customerId, cartInfo);
 
-      if (res.success) {
-        // Cart updated successfully
-        console.log("Cart updated successfully");
-        navigate(`/cart/${customerId}`);
+        if (res.success) {
+          // Cart updated successfully
+          console.log("Cart updated successfully");
+          Swal.fire({
+            icon: "success",
+            title: "Item Added to Cart",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          // Handle the error
+          console.error(res.msg);
+        }
       } else {
-        // Handle the error
-        console.error(res.msg);
+        Swal.fire({
+          icon: "warning",
+          title: "Please Login First",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
-      // Handle unexpected errors
       console.error("Unexpected error:", error);
     }
   };
@@ -267,7 +279,7 @@ const Shop = () => {
     GetLoggedInCustomer(authToken);
     GetMaterials();
     GetSeasons();
-  }, []);
+  }, [authToken]);
 
   useEffect(() => {
     getFilteredItems();
@@ -303,15 +315,18 @@ const Shop = () => {
                 <i className="fi-rs-angle-small-down angle-down bi bi-chevron-down" />
               )}
             </Link>
+          </div>
+          <div
+            className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5 "
+            style={{ float: "right" }}
+          >
+            <div className="reset">
+              <button className="btn btn-reset" onClick={resetFilters}>
+                Reset Filters
+              </button>
             </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-5 mb-sm-5 " style={{float:"right"}} >
-                  <div className="reset">
-                    <button className="btn btn-reset" onClick={resetFilters}>
-                      Reset Filters
-                    </button>
-                  </div>
-                </div>
-            <div className="col-lg-12">
+          </div>
+          <div className="col-lg-12">
             {showFilters && (
               <div className="shop-product-fillter-header">
                 <div className="row">
@@ -464,11 +479,10 @@ const Shop = () => {
                     </div>
                   </div>
                 </div>
-
-                
               </div>
             )}
-          </div>--
+          </div>
+          --
         </div>
         {/* Product List */}
         {/* <div className="row">
@@ -539,7 +553,9 @@ const Shop = () => {
                             alt=""
                             onError={(e) => {
                               e.target.src =
-                                "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"; // Replace with the path to your alternate image
+                                "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
+                              e.target.style.width = "192.6px";
+                              e.target.style.height = "192.6px";
                             }}
                           />
                           <img

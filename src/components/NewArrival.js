@@ -6,6 +6,7 @@ import "./TopProducts.css";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import SignContext from "../contextAPI/Context/SignContext";
+import Swal from 'sweetalert2';
 
 
 
@@ -108,21 +109,34 @@ const NewArrival = () => {
   // console.log(CustomerInfo._id)
   const handleCartClick = async (id) => {
     try {
-      const customerId = CustomerInfo._id ; // Replace with the actual customer ID
-      const cartInfo = {
-        productId: id,
-        quantity: 1,
-      }
-      const res = await addToCart(customerId, cartInfo);
-
-      if (res.success) {
-        // Cart updated successfully
-        console.log("Cart updated successfully");
-        
-        
+      if (authToken) { // Check if the user is authenticated
+        const customerId = CustomerInfo._id; // Replace with the actual customer ID
+        const cartInfo = {
+          productId: id,
+          quantity: 1,
+        };
+        const res = await addToCart(customerId, cartInfo);
+  
+        if (res.success) {
+          // Cart updated successfully
+          console.log("Cart updated successfully");
+          Swal.fire({
+            icon: 'success',
+            title: 'Item Added to Cart',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          // Handle the error
+          console.error(res.msg);
+        }
       } else {
-        // Handle the error
-        console.error(res.msg);
+        Swal.fire({
+          icon: 'warning', 
+          title: 'Please Login First',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       // Handle unexpected errors
@@ -136,7 +150,7 @@ const NewArrival = () => {
   useEffect(() => {
     Getproduct();
     GetLoggedInCustomer(authToken);
-  }, []);
+  }, [authToken]);
 
   
 
@@ -174,6 +188,7 @@ const NewArrival = () => {
                             alt=""
                             onError={(e) => {
                               e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+                             
                             }}
                           />
                         </Link>

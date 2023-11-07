@@ -33,6 +33,7 @@ import Disclaimer from "./pages/Disclaimer/Disclaimer";
 import Privacy from "./pages/PrivacyPolicy/Privacy";
 import ReturnPolicy from "./pages/ReturnPolicy/ReturnPolicy";
 import Faq from "./pages/FAQ's/Faq.jsx";
+import BlogCategories from "./pages/blog/BlogCategories.js";
 
 function App() {
   return (
@@ -56,7 +57,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/resetpassword/:resetToken" element={<ResetPassword />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<Blog />} />
+          <Route path="/blogcategories" element={<BlogCategories />} />
           <Route path="/blog-details/:id" element={<BlogDetails />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />

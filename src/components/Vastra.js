@@ -6,6 +6,8 @@ import "./Vastra.css";
 
 import { Link } from "react-router-dom";
 import SignContext from "../contextAPI/Context/SignContext";
+import Swal from 'sweetalert2';
+
 
 const Vastra = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
@@ -117,23 +119,37 @@ const Vastra = () => {
 
   const handleCartClick = async (id) => {
     try {
-      const customerId = CustomerInfo._id; // Replace with the actual customer ID
-      const cartInfo = {
-        productId: id,
-        quantity: 1,
-      };
-      const res = await addToCart(customerId, cartInfo);
-
-      if (res.success) {
-        // Cart updated successfully
-        console.log("Cart updated successfully");
-        // navigate(`/cart/${customerId}`);
+      if (authToken) { 
+        const customerId = CustomerInfo._id; 
+        const cartInfo = {
+          productId: id,
+          quantity: 1,
+        };
+        const res = await addToCart(customerId, cartInfo);
+  
+        if (res.success) {
+          // Cart updated successfully
+          console.log("Cart updated successfully");
+          Swal.fire({
+            icon: 'success',
+            title: 'Item Added to Cart',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          // Handle the error
+          console.error(res.msg);
+        }
       } else {
-        // Handle the error
-        console.error(res.msg);
+        Swal.fire({
+          icon: 'warning', 
+          title: 'Please Login First',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
-      // Handle unexpected errors
+  
       console.error("Unexpected error:", error);
     }
   };
@@ -141,7 +157,7 @@ const Vastra = () => {
   useEffect(() => {
     Getproduct(id);
     GetLoggedInCustomer(authToken);
-  }, [id]);
+  }, [id , authToken]);
 
   const products = ProductData;
 

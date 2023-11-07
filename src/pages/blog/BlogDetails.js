@@ -11,17 +11,16 @@ import author from "../../images/author-1.png";
 import sideimage from "../../images/side-image.jpg";
 import logo from "../../images/favIcon.png";
 import { Link, useParams } from "react-router-dom";
-import bimage from "../../images/s1.jpg";
+
 import { AiOutlineHome, AiOutlineRight } from "react-icons/ai";
 import MobileSidebar from "../../components/MobileSidebar";
-import axios from "axios";
-import { storeBlog } from "../../state/action";
+
 import SignContext from "../../contextAPI/Context/SignContext";
 
 const BlogDetails = () => {
-  const id = useParams("id");
-  const { getCategories, GetHotDeals } = useContext(SignContext);
-  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { getBlogbyId ,getBlogCategories, GetHotDeals } = useContext(SignContext);
+  const [BlogData, setBlogData] = useState([]);
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const [selectedBlogPost, setSelectedBlogPost] = useState("");
   const [CategoryData, setCategoryData] = useState([]);
@@ -29,57 +28,37 @@ const BlogDetails = () => {
 
   const getaboutUsContent = async () => {
     const res = await GetHotDeals();
-    console.log(res);
-
     if (res.success) {
       setContentData(res.content);
     }
   };
 
-  const arrayOfBlog = useSelector((state) => state.blog);
+
 
   const Getcategories = async () => {
-    const res = await getCategories();
-    // console.log(res);
-    if (res !== undefined) {
-      const transformedData = res.map((category, index) => ({
-        ...category,
-        id: index + 1,
-      }));
-      setCategoryData(transformedData);
-    }
+    const res = await getBlogCategories();
+    console.log(res);
+    setCategoryData(res.blogCategories);
   };
 
-  const getAllBlogs = () => {
-    const url = `${process.env.REACT_APP_BASE_URL}`;
-    if (arrayOfBlog) {
-      axios
-        .post(`${url}/blog/get-blog`)
-        .then((res) => {
-          const responseData = res.data.data;
-          if (Array.isArray(responseData) && responseData.length === 0) {
-            console.log("Received an empty array from the server.");
-          } else {
-            dispatch(storeBlog(responseData));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  const getAllBlogs = async (id) => {
+    const res = await getBlogbyId(id);
+    console.log(res)
+    if (res && res.recordExists) {
+      setBlogData(res.recordExists);
+      setSelectedBlogPost(res.recordExists);
     }
   };
 
   useEffect(() => {
-    console.log(id);
-    if (arrayOfBlog.length === 0) {
-      getAllBlogs();
+    if (BlogData.length === 0) {
+      getAllBlogs(id);
     }
-    const selectedBlog = arrayOfBlog.filter((obj) => obj._id === id.id);
-    setSelectedBlogPost(selectedBlog[0]);
-    console.log(selectedBlog[0]);
     Getcategories();
     getaboutUsContent();
-  }, [id]);
+  }, [id, BlogData]);
+
+
 
   return (
     <div>
@@ -181,14 +160,14 @@ const BlogDetails = () => {
                     <div className="sidebar-widget widget-category-2 mb-50">
                       <h5 className="section-title style-1 mb-30">Category</h5>
                       <ul>
-                        {CategoryData.map((category, index) => (
+                        {CategoryData?CategoryData.map((category, index) => (
                           <li key={index}>
-                            <Link to={`/product-list/${category._id}`}>
+                            <Link to={`/blog/${category._id}`}>
                               <img src={logo} alt />
                               {category.name}
                             </Link>
                           </li>
-                        ))}
+                        )):null}
                       </ul>
                     </div>
 
@@ -208,167 +187,7 @@ const BlogDetails = () => {
                   </div>
                 </div>
               </div>
-              {/* <div className="row">
-                <div className="col-md-4">
-                  <img src={bimage} />
-                </div>
-                <div className="col-md-8">
-                  <p>
-                  In the mystical world of "The Chronicles of Lord
-                          Lalji," embark on a journey through time and wisdom as
-                          we delve into the enigmatic life and teachings of the
-                          revered Lord Lalji. Unveil the secrets of his ancient
-                          scrolls, whispered legends, and timeless philosophies
-                          that have shaped the destinies of generations.
-                  </p>
-                  <p>
-                  In the mystical world of "The Chronicles of Lord
-                          Lalji," embark on a journey through time and wisdom as
-                          we delve into the enigmatic life and teachings of the
-                          revered Lord Lalji. Unveil the secrets of his ancient
-                          scrolls, whispered legends, and timeless philosophies
-                          that have shaped the destinies of generations.
-                  </p>
-                  <p>
-                  In the mystical world of "The Chronicles of Lord
-                          Lalji," embark on a journey through time and wisdom as
-                          we delve into the enigmatic life and teachings of the
-                          revered Lord Lalji. Unveil the secrets of his ancient
-                          scrolls, whispered legends, and timeless philosophies
-                          that have shaped the destinies of generations.
-                  </p>
-                  <p>  In the mystical world of "The Chronicles of Lord
-                          Lalji," embark on a journey through time and wisdom as
-                          we delve into the enigmatic life and teachings of the
-                          revered Lord Lalji. </p>
-                </div>
-              </div> */}
-              {/* <div className="row">
-                <div className="col-md-6">
-                  <div className="author-bio p-30 mt-80 border-radius-15 bg-white">
-                    <div className="author-image mb-4">
-                      <Link to="#">
-                        <img src={author} alt className="avatar" />
-                      </Link>
-                      <div className="author-infor">
-                        <h5 className="mb-5">Manish Sharma</h5>
-                        <p className="mb-0 text-muted font-xs">
-                          <span className="mr-10">306 posts</span>
-                          <span className="has-dot">Since 2012</span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="author-des">
-                      <p>
-                        This blog series is a true gem! The Chronicles of Lord
-                        Lalji takes us on a captivating journey through history
-                        and spirituality, offering profound insights and wisdom
-                        that resonate with the soul. I eagerly await each new
-                        post to uncover the timeless teachings of Lord Lalji and
-                        their relevance in our modern lives. Thank you for
-                        sharing this enlightening experience!
-                      </p>
-                    </div>
-                  </div>
-                  <div className="author-bio p-30 mt-3 border-radius-15 bg-white">
-                    <div className="author-image mb-4">
-                      <Link to="#">
-                        <img src={author} alt className="avatar" />
-                      </Link>
-                      <div className="author-infor">
-                        <h5 className="mb-5">Manish Sharma</h5>
-                        <p className="mb-0 text-muted font-xs">
-                          <span className="mr-10">306 posts</span>
-                          <span className="has-dot">Since 2012</span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="author-des">
-                      <p>
-                        This blog series is a true gem! The Chronicles of Lord
-                        Lalji takes us on a captivating journey through history
-                        and spirituality, offering profound insights and wisdom
-                        that resonate with the soul. I eagerly await each new
-                        post to uncover the timeless teachings of Lord Lalji and
-                        their relevance in our modern lives. Thank you for
-                        sharing this enlightening experience!
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="comment-form ">
-                    <h3 className="mb-4 mt-4 fs-3">Leave Comment</h3>
-                    <div className="product-rate d-inline-block mb-30" />
-                    <div className="row">
-                      <div className="col-lg-11 col-md-12 m-auto">
-                        <form
-                          className="form-contact comment_form mb-50"
-                          action="#"
-                          id="commentForm"
-                        >
-                          <div className="row">
-                            <div className="col-12">
-                              <div className="form-group">
-                                <textarea
-                                  className="form-control w-100"
-                                  name="comment"
-                                  id="comment"
-                                  cols={30}
-                                  rows={9}
-                                  placeholder="Write Comment"
-                                  defaultValue={""}
-                                />
-                              </div>
-                            </div>
-                            <div className="col-sm-6 c-input">
-                              <div className="form-group">
-                                <input
-                                  className="form-control"
-                                  name="name"
-                                  id="name"
-                                  type="text"
-                                  placeholder="Name"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-sm-6 c-input ">
-                              <div className="form-group">
-                                <input
-                                  className="form-control"
-                                  name="email"
-                                  id="email"
-                                  type="email"
-                                  placeholder="Email"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-12">
-                              <div className="form-group">
-                                <input
-                                  className="form-control"
-                                  name="website"
-                                  id="website"
-                                  type="text"
-                                  placeholder="Website"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="form-group text-start">
-                            <button
-                              type="submit"
-                              className="button button-contactForm"
-                            >
-                              Post Comment
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+          
             </div>
           </div>
         </div>

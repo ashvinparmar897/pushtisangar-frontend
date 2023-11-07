@@ -291,6 +291,7 @@ const Cart = () => {
                     </Link>
                   </div>
                   <div className="col-lg-5 col-sm-5 col-md-5 text-right">
+               
                     <Link
                       onClick={handleUpdateSubmit}
                       className="default-btn update-cart-btn"

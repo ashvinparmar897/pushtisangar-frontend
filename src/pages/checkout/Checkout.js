@@ -8,6 +8,8 @@ import MobileSidebar from "../../components/MobileSidebar";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import SignContext from "../../contextAPI/Context/SignContext";
+import Swal from 'sweetalert2';
+
 
 const allStates = [
   "Andhra Pradesh",
@@ -74,6 +76,8 @@ const Checkout = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [discountedTotal, setDiscountedTotal] = useState(0);
 
+  const ShippingCharge = 150;
+
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
     console.log(res);
@@ -90,6 +94,15 @@ const Checkout = () => {
     if (res.success) {
       setCartData(res.cartItems);
     }
+  };
+
+  const showEmptyCartMessage = () => {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Your Cart is Empty',
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   const Getcoupons = async () => {
@@ -126,15 +139,13 @@ const Checkout = () => {
 
   const calculateDiscountAmount = (total, coupon) => {
     if (coupon && coupon.type === "%") {
-      
       if (coupon.discount !== null) {
         return (total * coupon.discount) / 100;
       } else {
-        return 0; 
+        return 0;
       }
     } else {
       if (coupon && coupon.discount !== null) {
-        
         return coupon.discount;
       } else {
         return 0;
@@ -157,7 +168,7 @@ const Checkout = () => {
     } else if (coupon && coupon.discount !== null) {
       return total - coupon.discount;
     } else {
-      return total; 
+      return total;
     }
   }
 
@@ -220,13 +231,13 @@ const Checkout = () => {
     firstName: Yup.string().required("First Name is required"),
     lastName: Yup.string().required("Last Name is required"),
     address: Yup.string().required("Address is required"),
-    selectedCountry: Yup.object()
-      .nullable()
-      .required("Country is required"),
+    selectedCountry: Yup.object().nullable().required("Country is required"),
     selectedState: Yup.object().nullable().required("State is required"),
     city: Yup.string().required("Town / City is required"),
     postcode: Yup.string().required("Postcode / Zip is required"),
-    phone: Yup.string().required("Phone is required"),
+    phone: Yup.string()
+      .required("Phone is required")
+      .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
   });
 
   useEffect(() => {
@@ -257,17 +268,19 @@ const Checkout = () => {
       </section>
       <section className="checkout-area pt-4 pb-5">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-12 col-md-12">
-              <div className="user-actions text-start">
-                <i className="flaticon-share bi bi-reply" />
-                <span>
-                  Returning customer?
-                  <Link to="/login">Click here to login</Link>
-                </span>
+          {!authToken && (
+            <div className="row">
+              <div className="col-lg-12 col-md-12">
+                <div className="user-actions text-start">
+                  <i className="flaticon-share bi bi-reply" />
+                  <span>
+                    Returning customer?
+                    <Link to="/login">Click here to login</Link>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
           <Formik
             initialValues={{
               // email: CustomerInfo.email || "",
@@ -283,45 +296,54 @@ const Checkout = () => {
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }) => {
               try {
-                const response = await CreateOrder({
-                  customer: CustomerInfo._id,
-                  FirstName: values.firstName,
-                  LastName: values.lastName,
-                  products: CartData.map((item) => ({
-                    product: item.product._id,
-                    quantity: item.quantity,
-                  })),
-                  totalAmount: discountedTotal
-                    ? (discountedTotal + (shpChrg || 0)).toFixed(2)
-                    : (tPwithGST + (shpChrg || 0)).toFixed(2),
-
-                  country: values.selectedCountry.value,
-                  state: values.selectedState.value,
-                  city: values.city,
-                  postCode: values.postcode,
-                  shippingAddress: values.address,
-                  couponCode: selectedCoupon ? selectedCoupon._id : null
-                  // paymentMethod: "Net Banking", // You might want to get this from the form
-                  
-                });
-                if (response.success) {
-                  // Order created successfully
-                  console.log("Order", response);
-                  alert(
-                    "Order placed successfully! Invoice will send to you later"
-                  );
-                  handleRemoveAll();
-
-                  resetForm();
-                 
+                if (CartData?.length > 0) { 
+                  const response = await CreateOrder({
+                    customer: CustomerInfo._id,
+                    FirstName: values.firstName,
+                    LastName: values.lastName,
+                    products: CartData?CartData.map((item) => ({
+                      product: item.product._id,
+                      quantity: item.quantity,
+                    })):null,
+                    totalAmount: discountedTotal
+                      ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
+                      : (tPwithGST + (ShippingCharge || 0)).toFixed(2),
+            
+                    country: values.selectedCountry.value,
+                    state: values.selectedState.value,
+                    city: values.city,
+                    postCode: values.postcode,
+                    shippingAddress: values.address,
+                    couponCode: selectedCoupon ? selectedCoupon._id : null,
+                    // paymentMethod: "Net Banking", // You might want to get this from the form
+                  });
+                  if (response.success) {
+                    console.log("Order", response);
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Order placed successfully! Invoice will send to you later',
+                      showConfirmButton: false,
+                      timer: 3000,
+                    });
+                    
+                    handleRemoveAll();
+                    resetForm();
+                  } else {
+                    console.error("Error creating order:", response.msg);
+                  }
                 } else {
-                  
-                  console.error("Error creating order:", response.msg);
+                  Swal.fire({
+                    icon: 'warning',
+                    title: 'Your Cart is Empty',
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
                 }
               } catch (error) {
                 console.error("Error creating order:", error);
               }
             }}
+            
           >
             {({
               values,
@@ -415,7 +437,6 @@ const Checkout = () => {
                                   "selectedCountry",
                                   selectedOption
                                 ); // Set the selected value
-                               
                               }}
                               options={countryOptions}
                               placeholder="Select Country"
@@ -436,8 +457,7 @@ const Checkout = () => {
                             <Select
                               value={values.selectedState}
                               onChange={(selectedOption) => {
-                                setFieldValue("selectedState", selectedOption); 
-                                
+                                setFieldValue("selectedState", selectedOption);
                               }}
                               options={stateOptions}
                               placeholder="Select State"
@@ -529,32 +549,32 @@ const Checkout = () => {
                                     }
                                   >
                                     <option value="">Select a coupon</option>
-                                    {coupons.filter(coupon => coupon.active).map((coupon) => (
-                                      <option
-                                        key={coupon._id}
-                                        value={coupon._id}
-                                        disabled={
-                                          new Date(coupon.expiry).getTime() <=
+                                    {coupons
+                                      .filter((coupon) => coupon.active)
+                                      .map((coupon) => (
+                                        <option
+                                          key={coupon._id}
+                                          value={coupon._id}
+                                          disabled={
+                                            new Date(coupon.expiry).getTime() <=
+                                            Date.now()
+                                          }
+                                        >
+                                          {coupon.name} -{" "}
+                                          {new Date(
+                                            coupon.expiry
+                                          ).toLocaleDateString("en-US", {
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "numeric",
+                                          })}
+                                          {new Date(coupon.expiry).getTime() <=
                                           Date.now()
-                                        }
-                                      >
-                                        {coupon.name} -{" "}
-                                        {new Date(
-                                          coupon.expiry
-                                        ).toLocaleDateString("en-US", {
-                                          year: "numeric",
-                                          month: "short",
-                                          day: "numeric",
-                                        })}
-                                        {new Date(coupon.expiry).getTime() <=
-                                        Date.now()
-                                          ? "  expired"
-                                          : ""}
-                                      </option>
-                                    ))}
+                                            ? "  expired"
+                                            : ""}
+                                        </option>
+                                      ))}
                                   </select>
-
-                                  
                                 </div>
                                 <div>
                                   {selectedCoupon && (
@@ -595,7 +615,9 @@ const Checkout = () => {
                             </div>
                           </div>
                           <div className="col-lg-4 align-self-center">
-                          <button type="button" className="checkout_btn">Apply Coupon</button>
+                            <button type="button" className="checkout_btn">
+                              Apply Coupon
+                            </button>
                           </div>
                         </div>
                       )}
@@ -610,44 +632,14 @@ const Checkout = () => {
                       )}
                       <div className="order-table table-responsive">
                         <table className="table table-bordered">
-                          {/* <thead>
-                            <tr>
-                              <th scope="col">Product Name</th>
-                              <th scope="col">QTY</th>
-                              <th scope="col">Total</th>
-                            </tr>
-                          </thead> */}
                           <tbody>
-                            {/* <tr>
-                              <td className="product-name">
-                                <Link to="#">Zari Product</Link>
-                              </td>
-                              <td className="product-name">2</td>
-                              <td className="product-total">
-                                <span className="subtotal-amount">
-                                  ₹ 380.00
-                                </span>
-                              </td>
-                            </tr> */}
-                            {/* <tr>
-                              <td className="order-subtotal" colSpan={2}>
-                                <span>Cart Subtotal</span>
-                              </td>
-                              <td className="order-subtotal-price">
-                                <span className="order-subtotal-amount">
-                                  ₹ {totalPrice}
-                                </span>
-                              </td>
-                            </tr> */}
-                            {/* Coupon Code */}
-
                             <tr>
                               <td className="total-price" colSpan={2}>
                                 <span>Shipping Charge</span>
                               </td>
                               <td className="product-subtotal">
                                 <span className="subtotal-amount">
-                                  ₹ {shpChrg || 0}
+                                  ₹ {ShippingCharge}
                                 </span>
                               </td>
                             </tr>
@@ -660,8 +652,12 @@ const Checkout = () => {
                                 <span className="subtotal-amount">
                                   ₹{" "}
                                   {tPwithGST
-                                    ? (tPwithGST + (shpChrg || 0)).toFixed(2)
-                                    : (totalAmount + (shpChrg || 0)).toFixed(2)}
+                                    ? (
+                                        tPwithGST + (ShippingCharge || 0)
+                                      ).toFixed(2)
+                                    : (
+                                        totalAmount + (ShippingCharge || 0)
+                                      ).toFixed(2)}
                                 </span>
                               </td>
                             </tr>
@@ -673,8 +669,14 @@ const Checkout = () => {
                                   </td>
                                   <td className="shipping-price">
                                     <span>
-                                      {selectedCoupon?selectedCoupon.discount:null}{" "}
-                                      {selectedCoupon?selectedCoupon.type === "%" ? "%" : "₹":null}
+                                      {selectedCoupon
+                                        ? selectedCoupon.discount
+                                        : null}{" "}
+                                      {selectedCoupon
+                                        ? selectedCoupon.type === "%"
+                                          ? "%"
+                                          : "₹"
+                                        : null}
                                     </span>
                                   </td>
                                 </tr>
@@ -684,7 +686,13 @@ const Checkout = () => {
                                   </td>
                                   <td className="product-subtotal">
                                     <span className="subtotal-amount">
-                                      ₹ {(!isNaN(discountedTotal) ? discountedTotal : 0) + (!isNaN(shpChrg) ? shpChrg : 0)}
+                                      ₹{" "}
+                                      {(!isNaN(discountedTotal)
+                                        ? discountedTotal
+                                        : 0) +
+                                        (!isNaN(ShippingCharge)
+                                          ? ShippingCharge
+                                          : 0)}
                                     </span>
                                   </td>
                                 </tr>
@@ -695,27 +703,6 @@ const Checkout = () => {
                       </div>
                       <div className="payment-box">
                         <div className="payment-method">
-                          {/* <p>
-                            <input
-                              type="radio"
-                              id="direct-bank-transfer"
-                              name="radio-group"
-                              defaultChecked
-                              className="me-2"
-                            />
-                            <label htmlFor="direct-bank-transfer">
-                              Net Banking
-                            </label>
-                          </p>
-                          <p>
-                            <input
-                              type="radio"
-                              id="paypal"
-                              name="radio-group"
-                              className="me-2"
-                            />
-                            <label htmlFor="paypal">PayPallabel>
-                          </p> */}
                           <p>
                             <input
                               type="radio"
@@ -729,14 +716,26 @@ const Checkout = () => {
                             </label>
                           </p>
                         </div>
-                        <button
-                          to="#"
-                          type="submit"
-                          className="default-btn order-btn"
-                        >
-                          Place Order
-                          <span />
-                        </button>
+                        {CartData?CartData.length > 0 ? (
+                          <button
+                            to="#"
+                            type="submit"
+                            className="default-btn order-btn"
+                          >
+                            Place Order
+                            <span />
+                          </button>
+                        ) : (
+                          <button
+                            to="#"
+                            type="submit"
+                            className="default-btn order-btn"
+                            onClick={showEmptyCartMessage}
+                          >
+                            Place Order
+                            <span />
+                          </button>
+                        ):null}
                       </div>
                     </div>
                   </div>

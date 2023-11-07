@@ -327,6 +327,18 @@ export const SignState = (props) => {
     }
   };
 
+
+  const getBlogbyId = async (id) => {
+    try {
+      const response = await axios.post(`${url}/blog/get-blog/${id}` ,
+      {}
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
   const GetAllVarProducts=async (otherVaraitions) => {
     try {
       console.log(otherVaraitions)
@@ -505,15 +517,28 @@ export const SignState = (props) => {
     }
   };
 
+  const getBlogCategories = async () => {
+    try {
+      const response = await axios.post(`${url}/blogcategory/getblogcategory`);
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
 
 
+  const GetBlogbyCategoryId =  async (id) =>{
+    try {
+      const response = await axios.post(`${url}/blog/getblogbycategory/${id}`, 
+        {}
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }
 
 
-  
-
-
-
-  
 
   return (
     <SignContext.Provider
@@ -559,6 +584,9 @@ export const SignState = (props) => {
         GetDisclaimer,
         getMaterials,
         getSeasons,
+        GetBlogbyCategoryId,
+        getBlogCategories,
+        getBlogbyId,
       }}
     >
       {props.children}

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Header.css";
 import Select from "react-select";
-
+import axios from "axios";
 import logo2 from "../images/logo1.png";
 import logo from "../images/favIcon.png";
 // import smallImage from "../images/small-image-2.jpg";
@@ -11,6 +11,7 @@ import { BsPerson, BsCart } from "react-icons/bs";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import SignContext from "../contextAPI/Context/SignContext";
+
 const options = [
   { value: "Shringar", label: "Shringar" },
   { value: "Vastra", label: "Vastra" },
@@ -41,7 +42,7 @@ const Header = () => {
   const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [CategoryData, setCategoryData] = useState([]);
-
+  const [showDropdown, setShowDropdown] = useState(false);
   const [ConfirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isAccountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
@@ -50,15 +51,13 @@ const Header = () => {
   const [CustomerInfo, setCustomerInfo] = useState({});
   const [Error, setError] = useState("");
   const [errorBanner, setErrorBanner] = useState("");
-  // const [Error, setError] = useState("");
+  const [tag, setTag] = useState("");
+  const [products, setProducts] = useState([]);
   const [Success, setSuccess] = useState("");
-
   const [isVenderDropdownOpen, setVenderDropdownOpen] = useState(false);
   const [isMegaMenuDropdownOpen, setMegaMenuDropdownOpen] = useState(false);
-
   const [isPagesDropDownOpen, setPagesDropDownOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
   const [isVisible, setIsVisible] = useState(true);
   const [buttonText, setButtonText] = useState("Show More...");
 
@@ -69,6 +68,27 @@ const Header = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+
+  const handleTagsSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${url}/product/getproductbytags?tag=${tag}`
+      );
+      const { success, products } = response.data;
+      console.log(response.data);
+      if (success) {
+        setProducts(products);
+      } else {
+        setProducts([]);
+      }
+      setShowDropdown(success && products.length > 0);
+    } catch (error) {
+      console.error(error);
+      setProducts([]);
+      setShowDropdown(false);
+    }
+  };
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
@@ -214,7 +234,7 @@ const Header = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
-    phone: Yup.string().required("Mobile Number is required"),
+    phone: Yup.string().required("Mobile Number is required").matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
   });
 
   const handleLogin = async (Values) => {
@@ -277,21 +297,6 @@ const Header = () => {
       }
     }
   };
-
-  // const totalPrice = CartData.reduce((acc, item) => {
-  //   // Ensure that item.quantity and item.discountedPrice are valid numbers
-  //   const quantity = parseFloat(item.quantity);
-  //   const discountedPrice = parseFloat(
-  //     item.product.prices.discounted ? item.product.prices.discounted : item.product.prices.calculatedPrice
-  //   );
-
-  //   // Check for NaN or invalid values
-  //   if (isNaN(quantity) || isNaN(discountedPrice)) {
-  //     return acc; // Skip this item if it has invalid data
-  //   }
-
-  //   return acc + quantity * discountedPrice;
-  // }, 0);
 
   useEffect(() => {
     GetLoggedInCustomer(authToken);
@@ -861,18 +866,42 @@ const Header = () => {
             </div>
             <div className="header-right">
               <div className="search-style-2">
-                <form action="#">
+                <form onSubmit={handleTagsSearch}>
                   <div style={{ width: "300px" }}>
                     <Select
                       defaultValue={selectedOption}
                       onChange={setSelectedOption}
                       options={options}
-                      placeholder="Search Category"
+                      placeholder="Search"
                     />
                   </div>
 
-                  <input type="text" placeholder="Search for items..." />
+                  <input
+                    type="text"
+                    value={tag}
+                    onChange={(e) => setTag(e.target.value)}
+                    placeholder="Search for items..."
+                  />
+                  <button className="btn" ty>
+                    Search...{" "}
+                  </button>
                 </form>
+                {showDropdown && (
+                  <ul className="search-list">
+                    {products ? (
+                      products.map((product) => (
+                        <Link
+                          to={`/product-details/${product._id}`}
+                          key={product._id}
+                        >
+                          <li>{product.name}</li>
+                        </Link>
+                      ))
+                    ) : (
+                      <></>
+                    )}
+                  </ul>
+                )}
               </div>
               {authToken ? (
                 <div className="header-action-right">
@@ -1067,214 +1096,10 @@ const Header = () => {
                       <Link to="/about-us">About</Link>
                     </li>
 
-                    {/* <li
-                      onMouseEnter={handleVenderHover}
-                      onMouseLeave={handleVenderLeave}
-                    >
-                      <Link to="#">
-                        Shringar{" "}
-                        <i className="fi-rs-angle-down bi bi-chevron-down" />
-                      </Link>
-                      {isVenderDropdownOpen && (
-                        <ul
-                          className="sub-menu"
-                          onMouseLeave={handleVenderLeave}
-                        >
-                          <li>
-                            <Link to="#">Shri Mastak</Link>
-                          </li>
-                          <li>
-                            <Link to="#">Shri Karna</Link>
-                          </li>
-                          <li>
-                            <Link to="#">Mukharvind</Link>
-                          </li>
-                          <li>
-                            <Link to="#">Shri Ang</Link>
-                          </li>
-                          <li>
-                            <Link to="#">Shri Hast</Link>
-                          </li>
-                          <li>
-                            <Link to="#">Shri Charan</Link>
-                          </li>
-                        </ul>
-                      )}
-                    </li>
-                    <li
-                      className="position-static"
-                      onMouseEnter={handleMegaMenuHover}
-                      onMouseLeave={handleMegaMenuLeave}
-                    >
-                      <Link to="#">
-                        Categories{" "}
-                        <i className="fi-rs-angle-down bi bi-chevron-down" />
-                      </Link>
-                      {isMegaMenuDropdownOpen && (
-                        <ul className="mega-menu">
-                          <li className="sub-mega-menu sub-mega-menu-width-22">
-                            <Link className="menu-title" to="#">
-                              Silver Vessels
-                            </Link>
-                            <ul>
-                              <li>
-                                <Link to="#">Jhariji</Link>
-                              </li>
-                              <li>
-                                <Link to="#">Katori (Bowl)</Link>
-                              </li>
-                              <li>
-                                <Link to="#">Dabra</Link>
-                              </li>
-                              <li>
-                                <Link to="#">Thali (Plate)</Link>
-                              </li>
-                              <li>
-                                <Link>Spoon</Link>
-                              </li>
-                              <li>
-                                <Link>Mohra Patti</Link>
-                              </li>
-                              <li>
-                                <Link>Khilona</Link>
-                              </li>
-                              <li>
-                                <Link>Palna</Link>
-                              </li>
-                              <li>
-                                <Link>Hindola</Link>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="sub-mega-menu sub-mega-menu-width-22">
-                            <Link className="menu-title" to="#">
-                              Sugandhi (Attar)
-                            </Link>
-                            <ul>
-                              <li>
-                                <Link>All Year Round</Link>
-                              </li>
-                              <li>
-                                <Link>Varshakal (Monsoon)</Link>
-                              </li>
-                              <li>
-                                <Link>Sheetkal (Winter)</Link>
-                              </li>
-                              <li>
-                                <Link>Ushnakal (Summer)</Link>
-                              </li>
-                              <li>
-                                <Link>Vasant (Spring)</Link>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="sub-mega-menu sub-mega-menu-width-22">
-                            <Link className="menu-title" to="#">
-                              Seasonal Products
-                            </Link>
-                            <ul>
-                              <li>
-                                <Link>Varshakal (Monsoon)</Link>
-                              </li>
-                              <li>
-                                <Link>Sheetkal (Winter)</Link>
-                              </li>
-                              <li>
-                                <Link>Vasant (Spring)</Link>
-                              </li>
-                              <li>
-                                <Link>Ushnakal (Summer) </Link>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="sub-mega-menu sub-mega-menu-width-22">
-                            <Link className="menu-title" to="#">
-                              Pichwai and Wall Art
-                            </Link>
-                            <ul>
-                              <li>
-                                <Link>Digital Printed Pichwai</Link>
-                              </li>
-                              <li>
-                                <Link>Hand Painted Pichwai</Link>
-                              </li>
-                              <li>
-                                <Link>Wall Plates</Link>
-                              </li>
-                              <li>
-                                <Link>Photo Frames</Link>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="sub-mega-menu sub-mega-menu-width-22">
-                            <Link className="menu-title" to="#">
-                              Fibre Items
-                            </Link>
-                            <ul>
-                              <li>
-                                <Link>Gop-Gopi</Link>
-                              </li>
-                              <li>
-                                <Link>Animal Swarups</Link>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="sub-mega-menu sub-mega-menu-width-34">
-                            <div className="menu-banner-wrap">
-                              <Link>
-                                <img src={smallImage} alt="" />
-                              </Link>
-                              <div className="menu-banner-content">
-                                <h4>Hot deals</h4>
-                                <h3>
-                                  Don't miss
-                                  <br />
-                                  Trending
-                                </h3>
-                                <div className="menu-banner-price">
-                                  <span className="new-price text-success">
-                                    Save to 50%
-                                  </span>
-                                </div>
-                                <div className="menu-banner-btn">
-                                  <Link>Shop now</Link>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      )}
-                    </li>
-
-                    <li
-                      onMouseEnter={handlePageHover}
-                      onMouseLeave={handlePageLeave}
-                    >
-                      <Link to="#">
-                        Vastra{" "}
-                        <i className="fi-rs-angle-down bi bi-chevron-down" />
-                      </Link>
-                      {isPagesDropDownOpen && (
-                        <ul
-                          className="sub-menu"
-                          onMouseLeave={handlePageLeave}
-                          style={{ minWidth: "120px " }}
-                        >
-                          <li>
-                            <Link to="#">Cotton</Link>
-                          </li>
-                          <li>
-                            <Link to="#">Satin</Link>
-                          </li>
-                          <li>
-                            <Link to="#">Zari</Link>
-                          </li>
-                        </ul>
-                      )}
-                    </li> */}
+                    
 
                     <li>
-                      <Link className="" to="/blog">
+                      <Link className="" to="/blogcategories">
                         Blog{" "}
                       </Link>
                     </li>
