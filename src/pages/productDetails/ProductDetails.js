@@ -22,6 +22,7 @@ import S5 from "../../images/s5.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Preloader from "../../components/Loader";
 import MobileSidebar from "../../components/MobileSidebar";
+import Swal from 'sweetalert2';
 import SignContext from "../../contextAPI/Context/SignContext";
 
 const WishlistMessage = ({ onClose }) => (
@@ -112,7 +113,7 @@ const ProductDetails = () => {
 
   const handleCartClick = async () => {
     try {
-      const customerId = CustomerInfo._id; // Replace with the actual customer ID
+      const customerId = CustomerInfo._id; 
       const cartInfo = {
         productId: ProductData._id,
         quantity: Quantity,
@@ -120,11 +121,12 @@ const ProductDetails = () => {
       const res = await addToCart(customerId, cartInfo);
 
       if (res.success) {
-        // Cart updated successfully
+        
         console.log("Cart updated successfully");
         navigate(`/cart/${customerId}`);
+        
       } else {
-        // Handle the error
+        
         console.error(res.msg);
       }
     } catch (error) {

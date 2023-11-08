@@ -1,11 +1,42 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Subscribe.css";
 import SignContext from "../contextAPI/Context/SignContext";
-// import footerBanner from "../images/footer-banner.jpg";
+import Swal from 'sweetalert2';
+
 
 const Subscribe = () => {
-  const { GetMidfooter } = useContext(SignContext);
+  const { GetMidfooter , AddSubscribe } = useContext(SignContext);
   const [ContentData, setContentData] = useState([]);
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await AddSubscribe({ email });
+    console.log(res);
+    if (res.success) {
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Subscription Successful',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      
+      setEmail('');
+    } else {
+     
+      Swal.fire({
+        icon: 'error',
+        title: 'Subscription Failed',
+        text: res.msg, 
+      });
+    }
+  };
+
+
+
+
 
   const getaboutUsContent = async () => {
     const res = await GetMidfooter();
@@ -36,8 +67,8 @@ const Subscribe = () => {
                       __html: ContentData ? ContentData.content : null,
                     }}
                   ></div>
-                  <form className="form-subcriber d-flex mt-5">
-                    <input type="email" placeholder="Your Email" />
+                  <form className="form-subcriber d-flex mt-5" onSubmit={handleSubmit}>
+                    <input type="email" placeholder="Your Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <button
                       className="shop-now-hover subscribe-btn btn mx-5"
                       type="submit"
