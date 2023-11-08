@@ -524,10 +524,10 @@ const ProductList = () => {
           {ProductData
             ? ProductData.slice(0, productsToShow).map((product) => (
                 <div
-                  className=" col-lg-3 col-md-4 col-sm-6 mb-4"
+                  className=" col-lg-3 col-md-4 col-sm-6 col-6 mb-4"
                   key={product.id}
                 >
-                  <div className="product-cart-wrap popular-card" tabIndex={0}>
+                  <div className="product-cart-wrap popular-card filter-card" tabIndex={0}>
                     <div className="product-img-action-wrap">
                       <div className="product-img product-img-zoom">
                         <Link
@@ -565,14 +565,14 @@ const ProductList = () => {
 
                       <div class="product-card-bottom">
                         <div class="product-price popular-card-price">
-                          <span>
+                          <span id="f-c-p">
                             ₹
                             {product.prices.discounted
                               ? product.prices.discounted
                               : product.prices.calculatedPrice}
                           </span>
                           {!product.calculationOnWeight && (
-                            <span class="old-price">
+                            <span class="old-price" id="f-c-o-p">
                               ₹{product.prices ? product.prices.original : null}
                             </span>
                           )}
@@ -580,6 +580,7 @@ const ProductList = () => {
                         <div class="add-cart popular-card-cart">
                           <Link
                             class="add add-cart-btn"
+                            id="shop-cart"
                             onClick={() => {
                               handleCartClick(product._id);
                             }}

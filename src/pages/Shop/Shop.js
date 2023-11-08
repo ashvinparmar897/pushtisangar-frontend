@@ -331,7 +331,7 @@ const Shop = () => {
               <div className="shop-product-fillter-header">
                 <div className="row">
                   {/* Color Filter */}
-                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
+                  <div className="col-xl-3 col-lg-6 col-md-6 filter-div mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
                       <h5 className="mb-30 text-start fw-bold fs-5">Colors</h5>
                       <div className="d-flex text-start flex-wrap">
@@ -360,7 +360,7 @@ const Shop = () => {
                   </div>
 
                   {/* Price Filter */}
-                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
+                  <div className="col-xl-3 col-lg-6 col-md-6 filter-div mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
                       <h5 className="mb-30 price-btm fw-bold fs-5 text-start">
                         By Price
@@ -399,7 +399,7 @@ const Shop = () => {
                   </div>
 
                   {/* Category Filter */}
-                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
+                  <div className="col-xl-3 col-lg-6 col-md-6 filter-div mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
                       <h5 className="mb-30 fw-bold fs-5 text-start">
                         By Categories
@@ -425,7 +425,7 @@ const Shop = () => {
                   </div>
 
                   {/* Shop By Filter */}
-                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
+                  <div className="col-xl-3 col-lg-6 col-md-6 filter-div mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
                       <h5 className="mb-30 fw-bold fs-5 text-start">
                         By Materials
@@ -451,7 +451,7 @@ const Shop = () => {
                   </div>
 
                   {/* By Season */}
-                  <div className="col-xl-3 col-lg-6 col-md-6 mb-lg-0 mb-md-2 mb-sm-2">
+                  <div className="col-xl-3 col-lg-6 col-md-6 filter-div mb-lg-0 mb-md-2 mb-sm-2">
                     <div className="card">
                       <h5 className="mb-30 text-start fw-bold fs-5">Seasons</h5>
                       <div className="d-flex text-start flex-wrap">
@@ -537,10 +537,10 @@ const Shop = () => {
           {ProductData
             ? ProductData.slice(0, productsToShow).map((product) => (
                 <div
-                  className=" col-lg-3 col-md-4 col-sm-6 mb-4"
+                  className=" col-lg-3 col-md-4 col-sm-6 col-6  mb-4"
                   key={product.id}
                 >
-                  <div className="product-cart-wrap popular-card" tabIndex={0}>
+                  <div className="product-cart-wrap popular-card filter-card" tabIndex={0}>
                     <div className="product-img-action-wrap">
                       <div className="product-img product-img-zoom">
                         <Link
@@ -580,21 +580,22 @@ const Shop = () => {
 
                       <div class="product-card-bottom">
                         <div class="product-price popular-card-price">
-                          <span>
+                          <span id="f-c-p">
                             ₹
                             {product.prices.discounted
                               ? product.prices.discounted
                               : product.prices.calculatedPrice}
                           </span>
                           {!product.calculationOnWeight && (
-                            <span class="old-price">
+                            <span class="old-price " id="f-c-o-p">
                               ₹{product.prices ? product.prices.original : null}
                             </span>
                           )}
                         </div>
-                        <div class="add-cart popular-card-cart">
+                        <div class="add-cart popular-card-cart"  >
                           <Link
                             class="add add-cart-btn"
+                            id="shop-cart"
                             onClick={() => {
                               handleCartClick(product._id);
                             }}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
@@ -15,6 +15,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import logo from "../images/logo1.png";
+import SignContext from "../contextAPI/Context/SignContext";
 
 const Nav = styled.div`
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.09);
@@ -119,11 +120,57 @@ const SearchInput = styled.input`
 `;
 
 const Sidebar = () => {
+  const url = `${process.env.REACT_APP_BASE_URL}`;
+  const [CartData, setCartData] = useState([]);
+  const { getLoggedInCustomer, GetLoggedInCartItems, removeItemFromCart } =
+    useContext(SignContext);
+
+  const authToken = localStorage.getItem("authToken");
+
   const [sidebar, setSidebar] = useState(false);
-  const [cartCount, setCartCount] = useState(2);
+  const [cartCount, setCartCount] = useState(CartData ? CartData.length : null);
   const [showCartTooltip, setShowCartTooltip] = useState(false);
+  const [CustomerInfo, setCustomerInfo] = useState({});
+
+  const GetLoggedInCustomer = async (token) => {
+    const res = await getLoggedInCustomer(token);
+    // console.log(res);
+    if (res.success) {
+      setCustomerInfo(res.customer);
+    } else {
+      console.log(res.msg);
+    }
+  };
+
+  const getLoggedinCustomerCart = async (CustomerId) => {
+    const res = await GetLoggedInCartItems(CustomerId);
+    // console.log("get cart", res);
+    if (res.success) {
+      setCartData(res.cartItems);
+    }
+  };
+
+  const handleRemoveItemFromCart = async (productId) => {
+    try {
+      const customerId = CustomerInfo._id; // Replace with the actual customer ID
+      const res = await removeItemFromCart(customerId, productId);
+
+      if (res.success) {
+        // Cart updated successfully
+        console.log("Cart updated successfully");
+        // navigate(`/cart/${customerId}`);
+      } else {
+        // Handle the error
+        console.error(res.msg);
+      }
+    } catch (error) {
+      // Handle unexpected errors
+      console.error("Unexpected error:", error);
+    }
+  };
 
   const showSidebar = () => setSidebar(!sidebar);
+
   const updateCartCount = (count) => {
     setCartCount(count);
   };
@@ -132,6 +179,11 @@ const Sidebar = () => {
     setShowCartTooltip(!showCartTooltip);
   };
 
+  useEffect(() => {
+    GetLoggedInCustomer(authToken);
+    getLoggedinCustomerCart(CustomerInfo._id);
+  }, [CustomerInfo._id]);
+
   return (
     <>
       <div className="mobile-header">
@@ -139,8 +191,8 @@ const Sidebar = () => {
           <NavIcon to="#" className="three-lines">
             <FaIcons.FaBars onClick={showSidebar} />
           </NavIcon>
-          <Link to='/'>
-          <Logo className="nav-logo" src={logo} alt="logo" />
+          <Link to="/">
+            <Logo className="nav-logo" src={logo} alt="logo" />
           </Link>
           <CartButton
             className="nav-cart"
@@ -164,7 +216,7 @@ const Sidebar = () => {
                   width: "26px",
                   border: "none",
                   borderRadius: "30px",
-                 
+
                   fontWeight: "400",
                 }}
               />
@@ -207,7 +259,7 @@ const Sidebar = () => {
                       color: "#fff",
                       background: "black",
                       borderRadius: "30px",
-                      marginTop:'6px'
+                      marginTop: "6px",
                     }}
                   />
                 </Link>
@@ -218,7 +270,7 @@ const Sidebar = () => {
                       color: "#fff",
                       background: "black",
                       borderRadius: "30px",
-                      marginTop:'6px'
+                      marginTop: "6px",
                     }}
                   />
                 </Link>
@@ -229,7 +281,7 @@ const Sidebar = () => {
                       color: "#fff",
                       background: "black",
                       borderRadius: "30px",
-                      marginTop:'6px'
+                      marginTop: "6px",
                     }}
                   />
                 </Link>
@@ -240,7 +292,7 @@ const Sidebar = () => {
                       color: "#fff",
                       background: "black",
                       borderRadius: "30px",
-                      marginTop:'6px'
+                      marginTop: "6px",
                     }}
                   />
                 </Link>
@@ -251,7 +303,7 @@ const Sidebar = () => {
                       color: "#fff",
                       background: "black",
                       borderRadius: "30px",
-                      marginTop:'6px'
+                      marginTop: "6px",
                     }}
                   />
                 </Link>
@@ -260,64 +312,64 @@ const Sidebar = () => {
           </SidebarWrap>
         </SidebarNav>
       </div>
-      {showCartTooltip && (   
+      {showCartTooltip && (
         <div className="cart-tooltip">
           {/* Add your cart tooltip content here */}
           <div className="cart-dropdown-wrap cart-dropdown-hm2">
-                        <ul>
-                          <li>
-                            <div className="shopping-cart-img">
-                              <Link to="#">
-                                <img alt="cart" src={smallsangar} />
-                              </Link>
-                            </div>
-                            <div className="shopping-cart-title">
-                              <h4>
-                                <Link to="#">Sangar Har</Link>
+                          <ul>
+                            {CartData
+                              ? CartData.map((item) => (
+                                  <li>
+                                    <div className="shopping-cart-img">
+                                      <Link to="#">
+                                        <img
+                                          alt="cart"
+                                          src={`${url}/products/${item.product.imageGallery[0]}`}
+                                        />
+                                      </Link>
+                                    </div>
+                                    <div className="shopping-cart-title">
+                                      <h4>
+                                        <Link to="#">{item.product.name}</Link>
+                                      </h4>
+                                      <h3>
+                                        <span>{item.quantity}× </span>
+                                        {item.product.prices.discounted
+                                          ? item.product.prices.discounted
+                                          : item.product.prices.calculatedPrice}
+                                      </h3>
+                                    </div>
+                                    <div className="shopping-cart-delete">
+                                      <Link
+                                        onClick={() => {
+                                          handleRemoveItemFromCart(
+                                            item.product._id
+                                          );
+                                        }}
+                                      >
+                                        <i className="fi-rs-cross-small bi bi-x" />
+                                      </Link>
+                                    </div>
+                                  </li>
+                                ))
+                              : null}
+                          </ul>
+                          <div className="shopping-cart-footer">
+                            {/* <div className="shopping-cart-total">
+                              <h4 className="d-flex justify-content-between">
+                                <span>Total</span> <span>{totalPrice}</span>
                               </h4>
-                              <h3>
-                                <span>1 × </span>₹800.00
-                              </h3>
-                            </div>
-                            <div className="shopping-cart-delete">
-                              <Link to="#">
-                                <i className="fi-rs-cross-small bi bi-x" />
+                            </div> */}
+                            <div className="shopping-cart-button">
+                              <Link to={`/cart/${CustomerInfo._id}`}>
+                                View cart
+                              </Link>
+                              <Link to={`/checkout/${CustomerInfo._id}`}>
+                                Checkout
                               </Link>
                             </div>
-                          </li>
-                          <li>
-                            <div className="shopping-cart-img">
-                              <Link to="#">
-                                <img alt="cart" src={smallsangar} />
-                              </Link>
-                            </div>
-                            <div className="shopping-cart-title">
-                              <h4>
-                                <Link to="#">God Har</Link>
-                              </h4>
-                              <h3>
-                                <span>1 × </span>₹3500.00
-                              </h3>
-                            </div>
-                            <div className="shopping-cart-delete">
-                              <Link to="#">
-                                <i className="fi-rs-cross-small bi bi-x" />
-                              </Link>
-                            </div>
-                          </li>
-                        </ul>
-                        <div className="shopping-cart-footer">
-                          <div className="shopping-cart-total">
-                            <h4 className="d-flex justify-content-between">
-                              <span>Total</span> <span>₹383.00</span>
-                            </h4>
-                          </div>
-                          <div className="shopping-cart-button">
-                            <Link to="/cart">View cart</Link>
-                            <Link to="/checkout">Checkout</Link>
                           </div>
                         </div>
-                      </div>
         </div>
       )}
     </>

@@ -15,83 +15,8 @@ export const SidebarData = [
     path: '/about-us',
     icon: <IoIcons.IoMdHelpCircle />
   },
-  {
-    title: 'Shringar',
-    path: '/',
-    icon: <AiIcons.AiFillHome />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
+ 
 
-    subNav: [
-      {
-        title: 'Shri Mastak',
-        path: '/',
-        icon: <IoIcons.IoIosPaper />
-      },
-      {
-        title: 'Shri Karna',
-        path: '/',
-        icon: <IoIcons.IoIosPaper />
-      }
-    ]
-  },
-  {
-    title: 'Categories',
-    path: '/',
-    icon: <IoIcons.IoIosPaper />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-
-    subNav: [
-      {
-        title: 'Mukhravind',
-        path: '/',
-        icon: <IoIcons.IoIosPaper />,
-        cName: 'sub-nav',
-
-       
-      },
-      {
-        title: 'Shri Mastak',
-        path: '/',
-        icon: <IoIcons.IoIosPaper />,
-        cName: 'sub-nav'
-      },
-      {
-        title: 'Shri Karna',
-        path: '/',
-        icon: <IoIcons.IoIosPaper />
-      }
-    ]
-  },
-
-  
-  {
-    title: 'Vastra',
-    path: '/',
-    icon: <FaIcons.FaEnvelopeOpenText />,
-
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-
-    subNav: [
-      {
-        title: 'Cotton',
-        path: '/',
-        icon: <IoIcons.IoIosPaper />
-      },
-      {
-        title: 'Satin',
-        path: '/',
-        icon: <IoIcons.IoIosPaper />
-      },
-      {
-        title: 'Zari',
-        path: '/',
-        icon: <IoIcons.IoIosPaper />
-      }
-    ]
-  },
   {
     title: 'Blog',
     path: '/blog',
@@ -105,6 +30,11 @@ export const SidebarData = [
   {
     title: 'Contact',
     path: '/contact-us',
+    icon: <IoIcons.IoMdHelpCircle />
+  },
+  {
+    title: 'Shop',
+    path: '/shop',
     icon: <IoIcons.IoMdHelpCircle />
   },
   {

@@ -339,13 +339,13 @@ body {
   font-size: 20px !important;
 }
 .product-cart-wrap .product-content-wrap .product-price span{
-  font-size: 20px !important;
+  font-size: 12px !important;
 }
 .product-cart-wrap .product-content-wrap .product-price span.old-price {
-  font-size: 15px !important;
+  font-size: 10px !important;
 }
 .product-cart-wrap .product-card-bottom .add-cart .add{
-  font-size: 20px !important;
+  font-size: 12px !important;
 }
 .product-cart-wrap .product-content-wrap .product-category a{
   font-size: 16px !important;
@@ -753,6 +753,9 @@ h4 {
 
 
 @media screen and  (min-width: 380px) and (max-width: 391px){
+  .product-cart-wrap .product-content-wrap .product-price span.old-price {
+    font-size: 15px !important;
+}
   .nav-cart{
     margin-left: 70px !important;
   }
@@ -760,8 +763,11 @@ h4 {
     margin-left: 69px !important;
   }
   .popular-card {
-    width: 361px !important;
+    width: 360px !important;
     margin-left: 0px !important;
+}
+.filter-card{
+  width: 99% !important;
 }
 .shringar-card {
   width: 361px !important;
@@ -774,13 +780,22 @@ h4 {
   padding: 10px 10px 10px 10px !important;
 }
 .product-cart-wrap .product-content-wrap .product-price span {
-  font-size: 25px !important;
+  font-size: 20px !important;
+}
+#f-c-p{
+  font-size: 12px !important;
 }
 .offer-2 {
   width: 67%;
 }
 .shop-now-hover-2{
   margin-left: -80px ;
+}
+#shop-cart{
+  font-size: 10px !important;
+}
+#f-c-o-p{
+  font-size: 10px !important;
 }
 .popular-next-arrow button{
   left: -63px !important;
@@ -793,7 +808,7 @@ h4 {
 
 }
 .product-cart-wrap .product-card-bottom .add-cart .add{
-  font-size: 12px !important;
+  font-size: 20px !important;
 }
 .cart-buttons .shopping-coupon-code button{
   display: flex;
