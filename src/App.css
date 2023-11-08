@@ -42,6 +42,7 @@ body {
 }
 .col-sm-6{
   width: 20% !important;
+  padding: 0;
 }
 .popular-card{
   width: 95% !important;

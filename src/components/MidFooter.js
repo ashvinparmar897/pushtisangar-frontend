@@ -16,6 +16,10 @@ const MidFooter = () => {
   const [CategoryData, setCategoryData] = useState([]);
   const authToken = localStorage.getItem("authToken");
   const [CustomerInfo, setCustomerInfo] = useState({});
+  const openGoogleMaps = () => {
+    window.open("https://www.google.com/maps/search/?api=1&query=Vadodara,Gujarat");
+  };
+  
 
 
   const Getcategories = async () => {
@@ -66,7 +70,7 @@ const handleSignout = async () => {
                   </Link>
                 </div>
                 <ul className="contact-infor list-unstyled text-start">
-                  <li>
+                  <li onClick={openGoogleMaps}>
                     <MdLocationPin className="react-icon "/>
                     <strong className=""> Address : </strong>{" "}
                     <span style={{fontWeight:'600',fontSize:'14px'}}>
