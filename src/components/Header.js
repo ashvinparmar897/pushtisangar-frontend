@@ -106,19 +106,19 @@ const Header = () => {
 
   const handleRemoveItemFromCart = async (productId) => {
     try {
-      const customerId = CustomerInfo._id; // Replace with the actual customer ID
+      const customerId = CustomerInfo._id; 
       const res = await removeItemFromCart(customerId, productId);
-
+      // console.log(productId)
       if (res.success) {
-        // Cart updated successfully
+       
         console.log("Cart updated successfully");
-        // navigate(`/cart/${customerId}`);
+      
       } else {
-        // Handle the error
+       
         console.error(res.msg);
       }
     } catch (error) {
-      // Handle unexpected errors
+     
       console.error("Unexpected error:", error);
     }
   };

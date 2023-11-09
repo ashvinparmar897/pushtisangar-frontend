@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+// import { getLoggedinCustomerCart } from './Header';
 
 import "./SeasonalProducts.css";
 import "./TopProducts.css";
@@ -12,13 +13,21 @@ import Swal from 'sweetalert2';
 
 const NewArrival = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
+
   // const [showPopup, setShowPopup] = useState(false);
-  const { getProducts, getCategories , getLoggedInCustomer , addToCart } = useContext(SignContext);
+  const { getProducts, getCategories , getLoggedInCustomer , addToCart  } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
   const authToken = localStorage.getItem("authToken");
 
+  // const getLoggedinCustomerCart = async (CustomerId) => {
+  //   const res = await GetLoggedInCartItems(CustomerId);
+  //   // console.log("get cart", res);
+  //   if (res.success) {
+  //     setCartData(res.cartItems);
+  //   }
+  // };
 
 
   const Getproduct = async () => {
@@ -126,6 +135,7 @@ const NewArrival = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+         
         } else {
           // Handle the error
           console.error(res.msg);
@@ -150,6 +160,7 @@ const NewArrival = () => {
   useEffect(() => {
     Getproduct();
     GetLoggedInCustomer(authToken);
+    // getLoggedinCustomerCart(CustomerInfo._id);
   }, [authToken]);
 
   

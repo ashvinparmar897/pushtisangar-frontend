@@ -20,10 +20,10 @@ import { SignState } from "../contextAPI/State/SignState";
 const Home = () => {
   return (
     <div>
-      <Header />
+      <Header  />
 
       <MobileSidebar />
-      <HomeSlider />
+      <HomeSlider  />
       {/* <FeatureCategory/> */}
       <Category />
       <OfferPart />

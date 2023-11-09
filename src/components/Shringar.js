@@ -82,19 +82,38 @@ const Shringar = () => {
     </div>
   );
 
-  const numProducts = ProductData.length;
-  const productsToShow = numProducts >= 4 ? 4 : 3;
+  
 
-  // Slider Configuration
+  
   var settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: productsToShow,
-    slidesToScroll: productsToShow,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    // other settings...
+    slidesToShow: 4, // Show 4 slides on larger screens
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1025,
+        settings: {
+          slidesToShow: 3, // Show 3 slides on medium-sized screens
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2, // Show 2 slides on small screens
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1, // Show 1 slide on extra small screens
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
+  
 
   const handleCartClick = async (id) => {
     try {
@@ -164,7 +183,7 @@ const Shringar = () => {
             </div>
           </div>
 
-          <div className="col-lg-9 col-md-12 mb-4">
+          <div className="col-lg-9 col-md-8 col-sm-6 mb-4">
             <Slider {...settings}>
               {products.slice(0, 4).map((product) => (
                 <div key={product.id}>
@@ -183,7 +202,7 @@ const Shringar = () => {
                             tabIndex={0}
                           >
                             <img
-                              className="default-img"
+                              className="default-img img-fluid"
                               src={`${url}/products/${product.imageGallery[0]}`}
                               alt=""
                               onError={(e) => {

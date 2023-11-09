@@ -10,6 +10,8 @@ import "./Wishlist.css";
 import { Link, useParams } from "react-router-dom";
 import SignContext from "../../contextAPI/Context/SignContext";
 import MidFooter from "../../components/MidFooter";
+import Swal from 'sweetalert2';
+
 
 const Wishlist = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
@@ -41,6 +43,7 @@ const Wishlist = () => {
         quantity: 1,
       };
       const res = await addToCart(customerId, cartInfo);
+      console.log(res)
 
       if (res.success) {
         // Cart updated successfully
@@ -62,16 +65,18 @@ const Wishlist = () => {
       const res = await removeItemFromWishlist(customerId, productId);
 
       if (res.success) {
-        // Cart updated successfully
-        console.log("Wishlist updated successfully");
+        Swal.fire({
+          icon: 'success',
+          title: 'Successfully Removed',
+          showConfirmButton: false,
+          timer: 1500,
+        });
         getLoggedinWishlist(id);
-        // navigate(`/cart/${customerId}`);
       } else {
-        // Handle the error
+      
         console.error(res.msg);
       }
     } catch (error) {
-      // Handle unexpected errors
       console.error("Unexpected error:", error);
     }
   };
