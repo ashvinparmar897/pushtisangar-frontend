@@ -106,19 +106,15 @@ const Header = () => {
 
   const handleRemoveItemFromCart = async (productId) => {
     try {
-      const customerId = CustomerInfo._id; 
+      const customerId = CustomerInfo._id;
       const res = await removeItemFromCart(customerId, productId);
       // console.log(productId)
       if (res.success) {
-       
         console.log("Cart updated successfully");
-      
       } else {
-       
         console.error(res.msg);
       }
     } catch (error) {
-     
       console.error("Unexpected error:", error);
     }
   };
@@ -230,7 +226,9 @@ const Header = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
-    phone: Yup.string().required("Mobile Number is required").matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
+    phone: Yup.string()
+      .required("Mobile Number is required")
+      .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
   });
 
   const handleLogin = async (Values) => {
@@ -963,12 +961,18 @@ const Header = () => {
                               </h4>
                             </div> */}
                             <div className="shopping-cart-button">
-                              <Link to={`/cart/${CustomerInfo._id}`}>
-                                View cart
-                              </Link>
-                              <Link to={`/checkout/${CustomerInfo._id}`}>
-                                Checkout
-                              </Link>
+                              {CartData.length > 0 ? (
+                                <>
+                                  <Link to={`/cart/${CustomerInfo._id}`}>
+                                    View cart
+                                  </Link>
+                                  <Link to={`/checkout/${CustomerInfo._id}`}>
+                                    Checkout
+                                  </Link>
+                                </>
+                              ) : (
+                                <h4 className="text-center text-danger">Your cart is empty</h4>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -1087,8 +1091,6 @@ const Header = () => {
                     <li>
                       <Link to="/about-us">About</Link>
                     </li>
-
-                    
 
                     <li>
                       <Link className="" to="/blogcategories">

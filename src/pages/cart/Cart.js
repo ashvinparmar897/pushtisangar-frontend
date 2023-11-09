@@ -82,10 +82,11 @@ const Cart = () => {
   }, [CartData]);
 
   const handleQuantityChange = (productId, newQuantity) => {
+    const updatedQuantity = Math.max(newQuantity, 0);
     const updatedCart = CartData
       ? CartData.map((item) =>
           item.product._id === productId
-            ? { ...item, quantity: newQuantity }
+            ? { ...item, quantity: updatedQuantity }
             : item
         )
       : null;

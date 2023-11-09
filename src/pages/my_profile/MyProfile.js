@@ -34,10 +34,7 @@ const MyProfile = () => {
       console.log(updateResult);
       if (updateResult.success) {
         // Update the state with the new username
-        setCustomerInfo((prevInfo) => ({
-          ...prevInfo,
-          username: values.username,
-        }));
+        setCustomerInfo(updateResult.customer);
       } else {
         // Handle the case where the update fails
         console.error(updateResult.msg);
@@ -144,7 +141,7 @@ const MyProfile = () => {
                         validationSchema={usernameValidationSchema}
                         onSubmit={async (values, { resetForm }) => {
                           await handleUsernameSubmit(values);
-                          // resetForm();
+                          resetForm();
                           // togglemodal();
                         }}
                       >

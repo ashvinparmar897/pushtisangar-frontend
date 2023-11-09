@@ -145,7 +145,7 @@ const HomeSlider = () => {
                             overflow: "hidden",
                           }}
                         /> */}
-                        <Link to="/" className="shop-now-hover btn btn">
+                        <Link to="/shop" className="shop-now-hover btn btn">
                           Shop Now <i className="fi-rs-arrow-small-right" />
                         </Link>
                       </div>

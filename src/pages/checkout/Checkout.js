@@ -3,7 +3,7 @@ import Select from "react-select";
 import "./Checkout.css";
 import Header from "../../components/Header";
 import MidFooter from "../../components/MidFooter";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import MobileSidebar from "../../components/MobileSidebar";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -57,6 +57,7 @@ const countryOptions = [{ value: "India", label: "India" }];
 
 const Checkout = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [selectedState, setSelectedState] = useState(null);
   const {
     getLoggedInCustomer,
@@ -214,15 +215,15 @@ const Checkout = () => {
       }, 0)
     : null;
 
-  const shpChrg = CartData
-    ? CartData.reduce((acc, item) => {
-        // Ensure that item.quantity and item.discountedPrice are valid numbers
-        let quantity = 0;
-        quantity = quantity + parseFloat(item.product.shippingCharge);
+  // const shpChrg = CartData
+  //   ? CartData.reduce((acc, item) => {
+  //       // Ensure that item.quantity and item.discountedPrice are valid numbers
+  //       let quantity = 0;
+  //       quantity = quantity + parseFloat(item.product.shippingCharge);
 
-        return quantity;
-      }, 0)
-    : null;
+  //       return quantity;
+  //     }, 0)
+  //   : null;
 
   const validationSchema = Yup.object().shape({
     // email: Yup.string()
@@ -328,6 +329,7 @@ const Checkout = () => {
                     
                     handleRemoveAll();
                     resetForm();
+                    navigate("/");
                   } else {
                     console.error("Error creating order:", response.msg);
                   }
@@ -692,7 +694,7 @@ const Checkout = () => {
                                         : 0) +
                                         (!isNaN(ShippingCharge)
                                           ? ShippingCharge
-                                          : 0)}
+                                          : 0)-75}
                                     </span>
                                   </td>
                                 </tr>
