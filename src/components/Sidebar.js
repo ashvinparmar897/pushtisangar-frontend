@@ -16,6 +16,7 @@ import {
 } from "react-icons/fa";
 import logo from "../images/logo1.png";
 import SignContext from "../contextAPI/Context/SignContext";
+import axios from "axios";
 
 const Nav = styled.div`
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.09);
@@ -126,11 +127,39 @@ const Sidebar = () => {
     useContext(SignContext);
 
   const authToken = localStorage.getItem("authToken");
-
+  const [tag, setTag] = useState("");
+  const [products, setProducts] = useState([]);
   const [sidebar, setSidebar] = useState(false);
   const [cartCount, setCartCount] = useState(CartData ? CartData.length : null);
   const [showCartTooltip, setShowCartTooltip] = useState(false);
   const [CustomerInfo, setCustomerInfo] = useState({});
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleTagsSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${url}/product/getproductbytags?tag=${tag}`
+      );
+      const { success, products } = response.data;
+      console.log(response.data);
+      if (success) {
+        setProducts(products);
+      } else {
+        setProducts([]);
+      }
+      setShowDropdown(success && products.length > 0);
+    } catch (error) {
+      console.error(error);
+      setProducts([]);
+      setShowDropdown(false);
+    }
+  };
+
+  const handleSignout = async () => {
+    localStorage.removeItem("authToken");
+    console.log("authToken Removed");
+  };
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
@@ -222,32 +251,63 @@ const Sidebar = () => {
               />
             </NavIcon>
             <hr />
+              <form onSubmit={handleTagsSearch}>
             <SearchBar className="search-main-div">
               <SearchInput
                 type="text"
-                placeholder="Search"
+                placeholder="Search..."
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
                 className="search-input"
               />
-              <SearchIcon />
+
+              <button type="submit">
+                Search
+                </button>
+              
+              {showDropdown && (
+                  <ul className="search-list">
+                    {products ? (
+                      products.map((product) => (
+                        <Link
+                          to={`/product-details/${product._id}`}
+                          key={product._id}
+                        >
+                          <li>{product.name}</li>
+                        </Link>
+                      ))
+                    ) : (
+                      <></>
+                    )}
+                  </ul>
+                )}
             </SearchBar>
+            </form>
 
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />;
             })}
             <div>
-              <div class="mobile-header-info-wrap">
-                <div class="single-mobile-header-info">
-                  <Link to="/login">
-                    <i class="fi-rs-user bi bi-person"></i>Log In / Sign Up{" "}
-                  </Link>
+              {authToken ? (
+                <Link className="" onClick={handleSignout}>
+                  <i class="fi-rs-user bi bi-person"></i>
+                  <strong>Logout </strong>
+                </Link>
+              ) : (
+                <div class="mobile-header-info-wrap">
+                  <div class="single-mobile-header-info">
+                    <Link to="/login">
+                      <i class="fi-rs-user bi bi-person"></i>Log In / Sign Up{" "}
+                    </Link>
+                  </div>
+                  <div class="single-mobile-header-info">
+                    <Link to="#">
+                      <i class="fi-rs-headphones bi bi-headphones"></i>(+91)
+                      9234596789{" "}
+                    </Link>
+                  </div>
                 </div>
-                <div class="single-mobile-header-info">
-                  <Link to="#">
-                    <i class="fi-rs-headphones bi bi-headphones"></i>(+91)
-                    9234596789{" "}
-                  </Link>
-                </div>
-              </div>
+              )}
             </div>
             <div className="social-icon ">
               <h6 className="mb-15">Follow Us </h6>
@@ -316,60 +376,54 @@ const Sidebar = () => {
         <div className="cart-tooltip">
           {/* Add your cart tooltip content here */}
           <div className="cart-dropdown-wrap cart-dropdown-hm2">
-                          <ul>
-                            {CartData
-                              ? CartData.map((item) => (
-                                  <li>
-                                    <div className="shopping-cart-img">
-                                      <Link to="#">
-                                        <img
-                                          alt="cart"
-                                          src={`${url}/products/${item.product.imageGallery[0]}`}
-                                        />
-                                      </Link>
-                                    </div>
-                                    <div className="shopping-cart-title">
-                                      <h4>
-                                        <Link to="#">{item.product.name}</Link>
-                                      </h4>
-                                      <h3>
-                                        <span>{item.quantity}× </span>
-                                        {item.product.prices.discounted
-                                          ? item.product.prices.discounted
-                                          : item.product.prices.calculatedPrice}
-                                      </h3>
-                                    </div>
-                                    <div className="shopping-cart-delete">
-                                      <Link
-                                        onClick={() => {
-                                          handleRemoveItemFromCart(
-                                            item.product._id
-                                          );
-                                        }}
-                                      >
-                                        <i className="fi-rs-cross-small bi bi-x" />
-                                      </Link>
-                                    </div>
-                                  </li>
-                                ))
-                              : null}
-                          </ul>
-                          <div className="shopping-cart-footer">
-                            {/* <div className="shopping-cart-total">
+            <ul>
+              {CartData
+                ? CartData.map((item) => (
+                    <li>
+                      <div className="shopping-cart-img">
+                        <Link to="#">
+                          <img
+                            alt="cart"
+                            src={`${url}/products/${item.product.imageGallery[0]}`}
+                          />
+                        </Link>
+                      </div>
+                      <div className="shopping-cart-title">
+                        <h4>
+                          <Link to="#">{item.product.name}</Link>
+                        </h4>
+                        <h3>
+                          <span>{item.quantity}× </span>
+                          {item.product.prices.discounted
+                            ? item.product.prices.discounted
+                            : item.product.prices.calculatedPrice}
+                        </h3>
+                      </div>
+                      <div className="shopping-cart-delete">
+                        <Link
+                          onClick={() => {
+                            handleRemoveItemFromCart(item.product._id);
+                          }}
+                        >
+                          <i className="fi-rs-cross-small bi bi-x" />
+                        </Link>
+                      </div>
+                    </li>
+                  ))
+                : null}
+            </ul>
+            <div className="shopping-cart-footer">
+              {/* <div className="shopping-cart-total">
                               <h4 className="d-flex justify-content-between">
                                 <span>Total</span> <span>{totalPrice}</span>
                               </h4>
                             </div> */}
-                            <div className="shopping-cart-button">
-                              <Link to={`/cart/${CustomerInfo._id}`}>
-                                View cart
-                              </Link>
-                              <Link to={`/checkout/${CustomerInfo._id}`}>
-                                Checkout
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
+              <div className="shopping-cart-button">
+                <Link to={`/cart/${CustomerInfo._id}`}>View cart</Link>
+                <Link to={`/checkout/${CustomerInfo._id}`}>Checkout</Link>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>

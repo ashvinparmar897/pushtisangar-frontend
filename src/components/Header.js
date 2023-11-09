@@ -33,12 +33,8 @@ const Header = () => {
     removeItemFromCart,
     forgotCustomerPassword,
     getCategories,
-    // GetSpecificCustomer,
-    // UpdateCustomer,
-    // deleteCustomer,
   } = useContext(SignContext);
   const authToken = localStorage.getItem("authToken");
-  // console.log(authToken);
   const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [CategoryData, setCategoryData] = useState([]);
@@ -1077,10 +1073,6 @@ const Header = () => {
                         </div>
                       )}
                     </div>
-                    {/* <div className="more_categories" onClick={toggleVisibility}>
-                      <span></span>{" "}
-                      <span className="heading-sm-1">{buttonText}</span>
-                    </div> */}
                   </div>
                 )}
               </div>
