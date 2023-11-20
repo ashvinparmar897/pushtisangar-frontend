@@ -19,7 +19,7 @@ export const SidebarData = [
 
   {
     title: 'Blog',
-    path: '/blog',
+    path: '/blogcategories',
     icon: <FaIcons.FaCartPlus />
   },
   {
