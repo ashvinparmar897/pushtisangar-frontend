@@ -1107,7 +1107,7 @@ const ProductDetails = () => {
           {CategorybyProductsData
             ? CategorybyProductsData.slice(0, 5).map((product) => (
                 <div
-                  className=" col-lg-3 col-md-4 col-sm-6 mb-4"
+                  className=" col-lg-3 col-md-4 col-sm-6 mb-4 responsive-div"
                   key={product.id}
                 >
                   <div className="product-cart-wrap popular-card" tabIndex={0}>

@@ -540,3 +540,11 @@ p {
   background-color: #dfaaaa;
   color: #333;
 }
+
+@media (max-width: 767.98px) {
+  .responsive-div {
+    padding: 40px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+}
