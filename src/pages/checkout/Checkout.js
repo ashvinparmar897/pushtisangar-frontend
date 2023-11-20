@@ -8,8 +8,7 @@ import MobileSidebar from "../../components/MobileSidebar";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import SignContext from "../../contextAPI/Context/SignContext";
-import Swal from 'sweetalert2';
-
+import Swal from "sweetalert2";
 
 const allStates = [
   "Andhra Pradesh",
@@ -99,8 +98,8 @@ const Checkout = () => {
 
   const showEmptyCartMessage = () => {
     Swal.fire({
-      icon: 'warning',
-      title: 'Your Cart is Empty',
+      icon: "warning",
+      title: "Your Cart is Empty",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -153,6 +152,10 @@ const Checkout = () => {
       }
     }
   };
+
+  function formatNumberWithCommas(number) {
+    return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
   const handleRemoveAll = async () => {
     const res = await RemoveAllItemsFromCart(id);
@@ -297,19 +300,21 @@ const Checkout = () => {
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }) => {
               try {
-                if (CartData?.length > 0) { 
+                if (CartData?.length > 0) {
                   const response = await CreateOrder({
                     customer: CustomerInfo._id,
                     FirstName: values.firstName,
                     LastName: values.lastName,
-                    products: CartData?CartData.map((item) => ({
-                      product: item.product._id,
-                      quantity: item.quantity,
-                    })):null,
+                    products: CartData
+                      ? CartData.map((item) => ({
+                          product: item.product._id,
+                          quantity: item.quantity,
+                        }))
+                      : null,
                     totalAmount: discountedTotal
                       ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
                       : (tPwithGST + (ShippingCharge || 0)).toFixed(2),
-            
+
                     country: values.selectedCountry.value,
                     state: values.selectedState.value,
                     city: values.city,
@@ -321,12 +326,13 @@ const Checkout = () => {
                   if (response.success) {
                     console.log("Order", response);
                     Swal.fire({
-                      icon: 'success',
-                      title: 'Order placed successfully! Invoice will send to you later',
+                      icon: "success",
+                      title:
+                        "Order placed successfully! Invoice will send to you later",
                       showConfirmButton: false,
                       timer: 3000,
                     });
-                    
+
                     handleRemoveAll();
                     resetForm();
                     navigate("/");
@@ -335,8 +341,8 @@ const Checkout = () => {
                   }
                 } else {
                   Swal.fire({
-                    icon: 'warning',
-                    title: 'Your Cart is Empty',
+                    icon: "warning",
+                    title: "Your Cart is Empty",
                     showConfirmButton: false,
                     timer: 1500,
                   });
@@ -345,7 +351,6 @@ const Checkout = () => {
                 console.error("Error creating order:", error);
               }
             }}
-            
           >
             {({
               values,
@@ -654,12 +659,12 @@ const Checkout = () => {
                                 <span className="subtotal-amount">
                                   ₹{" "}
                                   {tPwithGST
-                                    ? (
+                                    ? formatNumberWithCommas(
                                         tPwithGST + (ShippingCharge || 0)
-                                      ).toFixed(2)
-                                    : (
+                                      )
+                                    : formatNumberWithCommas(
                                         totalAmount + (ShippingCharge || 0)
-                                      ).toFixed(2)}
+                                      )}
                                 </span>
                               </td>
                             </tr>
@@ -689,12 +694,15 @@ const Checkout = () => {
                                   <td className="product-subtotal">
                                     <span className="subtotal-amount">
                                       ₹{" "}
-                                      {(!isNaN(discountedTotal)
-                                        ? discountedTotal
-                                        : 0) +
-                                        (!isNaN(ShippingCharge)
-                                          ? ShippingCharge
-                                          : 0)-75}
+                                      {formatNumberWithCommas(
+                                        (!isNaN(discountedTotal)
+                                          ? discountedTotal
+                                          : 0) +
+                                          (!isNaN(ShippingCharge)
+                                            ? ShippingCharge
+                                            : 0) -
+                                          75
+                                      )}
                                     </span>
                                   </td>
                                 </tr>
@@ -718,26 +726,28 @@ const Checkout = () => {
                             </label>
                           </p>
                         </div>
-                        {CartData?CartData.length > 0 ? (
-                          <button
-                            to="#"
-                            type="submit"
-                            className="default-btn order-btn"
-                          >
-                            Place Order
-                            <span />
-                          </button>
-                        ) : (
-                          <button
-                            to="#"
-                            type="submit"
-                            className="default-btn order-btn"
-                            onClick={showEmptyCartMessage}
-                          >
-                            Place Order
-                            <span />
-                          </button>
-                        ):null}
+                        {CartData ? (
+                          CartData.length > 0 ? (
+                            <button
+                              to="#"
+                              type="submit"
+                              className="default-btn order-btn"
+                            >
+                              Place Order
+                              <span />
+                            </button>
+                          ) : (
+                            <button
+                              to="#"
+                              type="submit"
+                              className="default-btn order-btn"
+                              onClick={showEmptyCartMessage}
+                            >
+                              Place Order
+                              <span />
+                            </button>
+                          )
+                        ) : null}
                       </div>
                     </div>
                   </div>
