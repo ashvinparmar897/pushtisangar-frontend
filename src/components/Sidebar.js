@@ -228,7 +228,7 @@ const Sidebar = () => {
             onMouseEnter={toggleCartTooltip}
             onMouseLeave={toggleCartTooltip}
           >
-            <FaIcons.FaShoppingCart color="#5a5757" />
+            <FaIcons.FaShoppingCart color="#5a5757" style={{marginRight : '10px' , fontSize :"30px"}} />
             {cartCount > 0 && <CartCount>{cartCount}</CartCount>}
           </CartButton>
         </Nav>
