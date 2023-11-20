@@ -35,7 +35,7 @@ const ContactUs = () => {
   const schema = Yup.object().shape({
     email: Yup.string()
       .required("Email is a required field")
-      .email("Invalid email format"),
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
     phone: Yup.string()
       .required("Phone number  is a required field").matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
     name: Yup.string().required("Please enter your name !!!"),
