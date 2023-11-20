@@ -419,8 +419,18 @@ const Sidebar = () => {
                               </h4>
                             </div> */}
               <div className="shopping-cart-button">
-                <Link to={`/cart/${CustomerInfo._id}`}>View cart</Link>
-                <Link to={`/checkout/${CustomerInfo._id}`}>Checkout</Link>
+              {CartData.length > 0 ? (
+                                <>
+                                  <Link to={`/cart/${CustomerInfo._id}`}>
+                                    View cart
+                                  </Link>
+                                  <Link to={`/checkout/${CustomerInfo._id}`}>
+                                    Checkout
+                                  </Link>
+                                </>
+                              ) : (
+                                <h4 className="text-center text-danger">Your cart is empty</h4>
+                              )}
               </div>
             </div>
           </div>
