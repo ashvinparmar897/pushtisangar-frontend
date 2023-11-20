@@ -482,7 +482,7 @@ const Shop = () => {
               </div>
             )}
           </div>
-          --
+         
         </div>
         {/* Product List */}
         {/* <div className="row">
