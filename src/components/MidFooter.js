@@ -58,7 +58,7 @@ const handleSignout = async () => {
 
 
   return (
-    <div >
+    <div>
       <section className="section-padding footer-mid bg-dark " >
         <div className="container pt-15 pb-20">
           <div className="row">
@@ -100,6 +100,7 @@ const handleSignout = async () => {
                 </ul>
               </div>
             </div>
+              
             <div className="footer-link-widget col">
               <h4 className="widget-title footer-title text-start">Company</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
