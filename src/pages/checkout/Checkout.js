@@ -9,6 +9,8 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import SignContext from "../../contextAPI/Context/SignContext";
 import Swal from "sweetalert2";
+import axios from "axios";
+
 
 const allStates = [
   "Andhra Pradesh",
@@ -57,6 +59,7 @@ const countryOptions = [{ value: "India", label: "India" }];
 const Checkout = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const url = `${process.env.REACT_APP_BASE_URL}`;
   const [selectedState, setSelectedState] = useState(null);
   const {
     getLoggedInCustomer,
@@ -218,15 +221,34 @@ const Checkout = () => {
       }, 0)
     : null;
 
-  // const shpChrg = CartData
-  //   ? CartData.reduce((acc, item) => {
-  //       // Ensure that item.quantity and item.discountedPrice are valid numbers
-  //       let quantity = 0;
-  //       quantity = quantity + parseFloat(item.product.shippingCharge);
+    const data ={
+      name: 'Shalin',
+      amount: discountedTotal
+      ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
+      : (tPwithGST + (ShippingCharge || 0)).toFixed(2),
+      number: '7498608775',
+      MUID: "MUID" + Date.now(),
+      transactionId: 'T' + Date.now(),
+  }
 
-  //       return quantity;
-  //     }, 0)
-  //   : null;
+  const handlePayment = async () => {
+    try {
+      const response = await axios.post(`${url}/api/payment`, { ...data });
+      console.log(response.data);
+      const newTab = window.open(response.data.url, '_blank');
+        if (newTab) {
+            // If the new tab was successfully opened, you can focus on it
+            newTab.focus();
+        } else {
+            // If the new tab was blocked by a popup blocker, you might want to inform the user
+            console.error("Popup blocked. Please enable popups to view the payment page.");
+        }
+    } catch (error) {
+  
+      console.error(error);
+    }
+  };
+  
 
   const validationSchema = Yup.object().shape({
     // email: Yup.string()
@@ -255,7 +277,7 @@ const Checkout = () => {
     Getcoupons();
   }, [CustomerInfo._id]);
 
-  console.log(typeof tPwithGST);
+  // console.log(typeof tPwithGST);
 
   return (
     <div>
@@ -713,6 +735,7 @@ const Checkout = () => {
                       </div>
                       <div className="payment-box">
                         <div className="payment-method">
+                          
                           <p>
                             <input
                               type="radio"
@@ -725,13 +748,28 @@ const Checkout = () => {
                               Cash on Delivery
                             </label>
                           </p>
+                          
+                        </div>
+                        
+                        OR
+                        <div className="payment-method">
+                        <button
+                              onClick={handlePayment}
+                              type="submit"
+                              className="default-btn order-btn"
+                            >
+                              Pay {discountedTotal
+                      ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
+                      : (tPwithGST + (ShippingCharge || 0)).toFixed(2)}
+                              <span />
+                            </button>
                         </div>
                         {CartData ? (
                           CartData.length > 0 ? (
                             <button
                               to="#"
                               type="submit"
-                              className="default-btn order-btn"
+                              className="default-btn order-btn text-center"
                             >
                               Place Order
                               <span />
@@ -740,7 +778,7 @@ const Checkout = () => {
                             <button
                               to="#"
                               type="submit"
-                              className="default-btn order-btn"
+                              className="default-btn order-btn text-center"
                               onClick={showEmptyCartMessage}
                             >
                               Place Order
@@ -755,6 +793,7 @@ const Checkout = () => {
               </form>
             )}
           </Formik>
+         
         </div>
       </section>
       <MidFooter />
