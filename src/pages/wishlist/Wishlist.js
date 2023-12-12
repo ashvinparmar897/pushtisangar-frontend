@@ -16,16 +16,19 @@ import Swal from 'sweetalert2';
 const Wishlist = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const { id } = useParams();
-  const { GetLoggedInWishlistItems, addToCart, removeItemFromWishlist } =
+  const { GetLoggedInWishlistItems, addToCart, removeItemFromWishlist , getLoggedInCustomer } =
     useContext(SignContext);
 
   const [WishlistData, setWishlistData] = useState([]);
+  const [CustomerInfo, setCustomerInfo] = useState({});
+  const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
     console.log("customerId:", id);
     getLoggedinWishlist(id);
+    GetLoggedInCustomer(authToken);
     console.log("inside useeffect");
-  }, [id]);
+  }, [id , authToken]);
 
   const getLoggedinWishlist = async (CustomerId) => {
     const res = await GetLoggedInWishlistItems(CustomerId);
@@ -35,23 +38,46 @@ const Wishlist = () => {
     }
   };
 
-  const handleCartClick = async (ProductId) => {
-    try {
-      const customerId = id; // Replace with the actual customer ID
-      const cartInfo = {
-        ProductId: ProductId,
-        quantity: 1,
-      };
-      const res = await addToCart(customerId, cartInfo);
-      console.log(res)
+  const GetLoggedInCustomer = async (token) => {
+    const res = await getLoggedInCustomer(token);
+    if (res.success) {
+      setCustomerInfo(res.customer);
+    } else {
+      console.log(res.msg);
+    }
+  };
 
-      if (res.success) {
-        // Cart updated successfully
-        console.log("Cart updated successfully");
-        // navigate(`/cart/${customerId}`);
+  const handleCartClick = async (id) => {
+    try {
+      if (authToken) { // Check if the user is authenticated
+        const customerId = CustomerInfo._id; // Replace with the actual customer ID
+        const cartInfo = {
+          productId: id,
+          quantity: 1,
+        };
+        const res = await addToCart(customerId, cartInfo);
+  
+        if (res.success) {
+          // Cart updated successfully
+          console.log("Cart updated successfully");
+          Swal.fire({
+            icon: 'success',
+            title: 'Item Added to Cart',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+         
+        } else {
+          // Handle the error
+          console.error(res.msg);
+        }
       } else {
-        // Handle the error
-        console.error(res.msg);
+        Swal.fire({
+          icon: 'warning', 
+          title: 'Please Login First',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       // Handle unexpected errors
@@ -167,9 +193,7 @@ const Wishlist = () => {
         <td className="text-right" data-title="Cart">
           <button
             className="btn btn-sm"
-            onClick={() => {
-              handleCartClick(item.product._id);
-            }}
+            onClick={()=>{handleCartClick(item.product._id)}}
           >
             Add to cart
           </button>

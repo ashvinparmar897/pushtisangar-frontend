@@ -211,12 +211,12 @@ const Header = () => {
 
   // Validation schemas
   const loginSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string().matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format").required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
 
   const forgotPasswordSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string().matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format").required("Email is required"),
   });
 
   const signupSchema = Yup.object().shape({
@@ -228,7 +228,7 @@ const Header = () => {
       .required("Confirm Password is required"),
     phone: Yup.string()
       .required("Mobile Number is required")
-      .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
+      .matches(/^\d{10}$/, "Phone number must be 10 digits"),
   });
 
   const handleLogin = async (Values) => {
@@ -1084,7 +1084,7 @@ const Header = () => {
                 <nav>
                   <ul>
                     <li>
-                      <Link className="" to="/">
+                      <Link className="" to="/home">
                         Home{" "}
                       </Link>
                     </li>

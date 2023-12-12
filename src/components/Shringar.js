@@ -61,23 +61,23 @@ const Shringar = () => {
   //  Next/Previous Button Configuration
   const NextArrow = ({ onClick }) => (
     <div
-      className="custom-arrow next-arrow position-absolute top-0 end-0"
+      className="custom-arrow position-absolute top-0 end-0 popular-next-arrow"
       onClick={onClick}
     >
       <button>
         {" "}
-        <i class="bi bi-arrow-right"></i>
+        <i className="bi bi-arrow-right"></i>
       </button>
     </div>
   );
 
   const PrevArrow = ({ onClick }) => (
     <div
-      className="custom-arrow prev-arrow position-absolute top-0 end-0 "
+      className="custom-arrow  position-absolute top-0 left-0 popular-prev-arrow  "
       onClick={onClick}
     >
       <button>
-        <i class="bi bi-arrow-left"></i>
+        <i className="bi bi-arrow-left "></i>
       </button>
     </div>
   );

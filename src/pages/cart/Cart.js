@@ -131,7 +131,9 @@ const Cart = () => {
         // const gst = parseFloat(item.tax);
 
         const discountedPrice = parseFloat(
-          item.product.prices.discounted ? item.product.prices.discounted : item.product.prices.calculatedPrice
+          item.product.prices.discounted
+            ? item.product.prices.discounted
+            : item.product.prices.calculatedPrice
         );
 
         if (isNaN(quantity) || isNaN(discountedPrice)) {
@@ -148,7 +150,9 @@ const Cart = () => {
         const gst = parseFloat(item.tax);
 
         const discountedPrice = parseFloat(
-          item.product.prices.discounted ? item.product.prices.discounted : item.product.prices.calculatedPrice
+          item.product.prices.discounted
+            ? item.product.prices.discounted
+            : item.product.prices.calculatedPrice
         );
         const totalPriceWithGST =
           quantity * discountedPrice + (quantity * discountedPrice * gst) / 100;
@@ -220,7 +224,8 @@ const Cart = () => {
 
                             <td className="product-price text-center">
                               <span className="unit-amount">
-                                ₹{item.product.prices &&
+                                ₹
+                                {item.product.prices &&
                                   (item.product.prices.discounted
                                     ? item.product.prices.discounted
                                     : item.product.prices.calculatedPrice)}
@@ -292,7 +297,6 @@ const Cart = () => {
                     </Link>
                   </div>
                   <div className="col-lg-5 col-sm-5 col-md-5 text-right">
-               
                     <Link
                       onClick={handleUpdateSubmit}
                       className="default-btn update-cart-btn"
@@ -340,10 +344,12 @@ const Cart = () => {
                     Coupon code can also be applied at checkout before payment.
                   </small>
                 </div> */}
-                <Link to={`/checkout/${id}`} className="default-btn">
-                  Proceed to Checkout
-                  <span />
-                </Link>
+               
+                  <Link to={`/checkout/${id}`} className="default-btn">
+                    Proceed to Checkout
+                    <span />
+                  </Link>
+                
               </div>
             </div>
           </div>

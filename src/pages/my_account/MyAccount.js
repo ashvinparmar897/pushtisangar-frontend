@@ -21,6 +21,12 @@ const MyAccount = () => {
     }
   };
 
+  const handleSignout = async () => {
+    localStorage.removeItem("authToken");
+    console.log("authToken Removed");
+    
+  };
+
   useEffect(() => {
     GetLoggedInCustomer(authToken);
   }, []);
@@ -66,7 +72,7 @@ const MyAccount = () => {
                       <Link to="/ticket-support">Support Ticket</Link>
                     </li> */}
                     <li>
-                      <Link to="/">Logout</Link>
+                      <Link onClick={handleSignout} to="/home">Logout</Link>
                     </li>
                   </ul>
                 </section>

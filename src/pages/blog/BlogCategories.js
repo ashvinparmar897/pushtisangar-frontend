@@ -22,7 +22,7 @@ const Blog = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   const currentRecords = CategoryData.slice(indexOfFirstRecord, indexOfLastRecord);
 
-  const totalPages = Math.ceil(CategoryData.length / recordsPerPage);
+  const totalPages = Math.ceil(CategoryData.length / recordsPerPage) || 1;
 
 
   const [blogPosts,setBlogPosts] = useState([]);
@@ -115,13 +115,19 @@ const Blog = () => {
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-start">
                                     <li class="page-item">
-                                        <Link className="page-link" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}><i className="fi-rs-arrow-small-left bi bi-arrow-left"></i></Link>
+                                        <Link className="page-link" onClick={() => setCurrentPage(currentPage > 1 ? currentPage - 1 : 1)} disabled={currentPage === 1}><i className="fi-rs-arrow-small-left bi bi-arrow-left"></i></Link>
                                     </li>
                                     <span> <li className="page-item"><Link className="page-link">{currentPage}</Link></li></span>
                                     
 
                                     <li class="page-item">
-                                        <Link class="page-link" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}><i class="fi-rs-arrow-small-right bi bi-arrow-right"></i></Link>
+                                        <Link class="page-link" onClick={() => {
+                        const nextPage = currentPage + 1;
+                        const hasRecordsOnNextPage = nextPage <= totalPages;
+                        if (hasRecordsOnNextPage) {
+                            setCurrentPage(nextPage);
+                        }
+                    }}disabled={currentPage === totalPages}><i class="fi-rs-arrow-small-right bi bi-arrow-right"></i></Link>
                                     </li>
                                 </ul>
                             </nav>

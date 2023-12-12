@@ -247,7 +247,7 @@ const ProductList = () => {
   };
 
   const handleShowMore = () => {
-    setProductsToShow(ProductData.length);
+    setProductsToShow(ProductData?ProductData.length:null);
   };
 
   const handleCartClick = async (id) => {
@@ -597,11 +597,11 @@ const ProductList = () => {
             : null}
         </div>
         <div>
-        {productsToShow < ProductData.length && (
+        {productsToShow < ProductData?ProductData.length && (
             <div className="btn" onClick={handleShowMore}>
               Show More
             </div>
-          )}
+          ):null}
         </div>
       </div>
       <Subscribe />
