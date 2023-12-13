@@ -75,7 +75,7 @@ const Category = ({ background }) => {
               <span className="fw-bold">
                 <Link to={`/product-list/${id}`}>{name}</Link>
               </span>
-              <div className="mt-1"> {itemCount} Items</div>
+              {/* <div className="mt-1"> {itemCount} Items</div> */}
             </p>
           </div>
         </div>
@@ -134,7 +134,7 @@ const Category = ({ background }) => {
               key={index}
               name={category.name}
               image={category.image}
-              itemCount={category.noOfProducts}
+              // itemCount={category.noOfProducts}
               id={category._id}
               // onClick={()=>{category._id}}
               // color={category.color}
