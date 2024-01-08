@@ -17,9 +17,24 @@ const MidFooter = () => {
   const authToken = localStorage.getItem("authToken");
   const [CustomerInfo, setCustomerInfo] = useState({});
   const openGoogleMaps = () => {
-    window.open("https://www.google.com/maps/search/?api=1&query=Vadodara,Gujarat");
+    window.open("https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.326428163956!2d73.17078387533668!3d22.30349117968429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc8aee6cfffff%3A0xc5da2624cf914dc5!2sPushtishangar!5e0!3m2!1sen!2sin!4v1704121065327!5m2!1sen!2si");
+  };
+  const email = 'pushtishangarsales@gmail.com';
+
+  const handleEmailClick = () => {
+    window.location.href = `mailto:${email}`;
+  };
+  const openInstagram = () => {
+    window.open("https://www.instagram.com/pushtishangar/?igsh=MXNwZjFvMXkwNDA0dg%3D%3D");
+  };
+  const openPintrest = () => {
+    window.open("https://www.pinterest.com/pushtishangar/?invite_code=79dd065f0f1144c284a9e615b38a7eef&sender=1101552527515708041");
+  };
+  const openYoutube = () => {
+    window.open("https://www.youtube.com/@pushtishangarofficial");
   };
   
+
 
 
   const Getcategories = async () => {
@@ -70,31 +85,31 @@ const handleSignout = async () => {
                   </Link>
                 </div>
                 <ul className="contact-infor list-unstyled text-start">
-                  <li onClick={openGoogleMaps}>
+                  <li onClick={openGoogleMaps} style={{cursor:"pointer"}}>
                     <MdLocationPin className="react-icon "/>
                     <strong className=""> Address : </strong>{" "}
                     <span style={{fontWeight:'600',fontSize:'14px'}}>
-                      Vadodara,Gujarat
+103, VrajMadhurya Flats, Laxmi Colony 20, Behind Govardhannathji Haveli, Productivity road, Vadodara, Gujarat.390007
                     </span>
                   </li>
                   <li>
                    <MdCall className="react-icon" />
                     <strong className=""> Call Us :</strong>
-                    <span style={{fontWeight:'600',fontSize:'14px'}}> (+91) - 540-025-124553</span>
+                    <span style={{fontWeight:'600',fontSize:'14px'}}> (+91) 8980963151</span>
                   </li>
-                  <li>
+                  <li onClick={handleEmailClick} style={{cursor:"pointer"}}>
                     <MdEmail className="react-icon"/>
                     <strong className=""> Email :</strong>
-                    <span style={{fontWeight:'600' ,fontSize:'14px'}}> pushtishangar@gmail.com</span>
+                    <span style={{fontWeight:'600' ,fontSize:'14px'}}>pushtishangarsales@gmail.com</span>
                   </li>
                   <li className="text-start d-flex jusify-content-start">
                   <div className="mobile-social-icon ">
         <h6 className="fs-5 text-white">Follow Us</h6>
-        <Link to="#" className="text-dark"><FaFacebook/></Link>
-        <Link to="#" className="text-dark"><FaTwitter/></Link>
-        <Link to="#" className="text-dark"><FaInstagram/></Link>
-        <Link to="#" className="text-dark"><FaPinterest/></Link>
-        <Link to="#" className="text-dark"><FaYoutube/></Link>
+        {/* <Link to="#" className="text-dark"><FaFacebook/></Link> */}
+        {/* <Link to="#" className="text-dark"><FaTwitter/></Link> */}
+        <Link onClick={openInstagram} className="text-dark"><FaInstagram/></Link>
+        <Link onClick={openPintrest} className="text-dark"><FaPinterest/></Link>
+        <Link onClick={openYoutube} className="text-dark"><FaYoutube/></Link>
       </div>
                   </li>
                 </ul>
@@ -113,14 +128,11 @@ const handleSignout = async () => {
                 <li>
                   <Link to="/privacy">Privacy Policy</Link>
                 </li>
+              
+               
+                
                 <li>
-                  <Link to="/return-policy">Return Policy</Link>
-                </li>
-                <li>
-                  <Link to="/terms-condition">Terms &amp; Conditions</Link>
-                </li>
-                <li>
-                  <Link to="/faq">FAQ's</Link>
+                  <Link to="/shipping-policy">Shipping Policy</Link>
                 </li>
               </ul>
             </div>
@@ -141,14 +153,18 @@ const handleSignout = async () => {
             <div className="footer-link-widget costomer-block col">
               <h4 className="widget-title footer-title text-start">Customer Service</h4>
               <ul className="footer-list mb-sm-5 mb-md-0 text-start">
-                <li>
-                  <Link to="#">Site Map</Link>
-                </li>
+               
                 <li>
                   <Link to="/contact-us">Contact Us</Link>
                 </li>
                 <li>
-                  <Link to="#">Payments</Link>
+                  <Link to="/faq">FAQ's</Link>
+                </li>
+                <li>
+                  <Link to="/return-policy">Return Policy</Link>
+                </li>
+                <li>
+                  <Link to="/terms-condition">Terms &amp; Conditions</Link>
                 </li>
               </ul>
             </div>

@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import "./ResetPassword.css"; // Import your external CSS file
 import SignContext from "../contextAPI/Context/SignContext";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from 'sweetalert2';
+
 
 const ForgetPassword = () => {
   const {resetToken} = useParams();
@@ -28,11 +30,22 @@ const ForgetPassword = () => {
               // Check the response and handle it accordingly
               if (response.success) {
                 // Password reset was successful
-                alert("Password reset successful!");
+                // alert("Password reset successful!");
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Password Reset Succesfully Please Login',
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
                 navigate("/");
               } else {
-                // Password reset failed
-                alert("Password reset failed. Error: " + response.msg);
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Password reset failed. Error: " + response.msg',
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                // alert("Password reset failed. Error: " + response.msg);
               }
             } catch (error) {
               // Handle any other errors here

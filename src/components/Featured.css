@@ -6,6 +6,7 @@
     background: #F4F6FA;
     padding: 15px 5px;
     border-radius: 10px;
+    place-content: center;
 }
 .banner-left-icon .banner-icon {
     max-width: 50px;

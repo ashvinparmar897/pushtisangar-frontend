@@ -215,7 +215,13 @@ const Shop = () => {
 
     if (value === "newIn") {
       sortedData.sort((a, b) => {
-        return a.isProductNew === b.isProductNew ? 0 : a.isProductNew ? -1 : 1;
+        if (a.isProductNew && !b.isProductNew) {
+          return -1; // A comes before B if A is new and B is not
+        } else if (!a.isProductNew && b.isProductNew) {
+          return 1; // B comes before A if B is new and A is not
+        } else {
+          return 0; // Preserve the original order if both are new or both are not new
+        }
       });
     } else if (value === "priceLowestFirst") {
       sortedData.sort((a, b) => {
@@ -525,6 +531,7 @@ const Shop = () => {
                   value={selectedSortBy}
                   onChange={(e) => handleSortByChange(e.target.value)}
                 >
+                  <option value="">select</option>
                   <option value="newIn">New In</option>
                   <option value="priceLowestFirst">Price(lowest first)</option>
                   <option value="priceHighestFirst">

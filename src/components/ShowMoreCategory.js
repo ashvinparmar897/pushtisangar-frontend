@@ -10,7 +10,7 @@ const ShowMoreCategory = ({ onClick }) => {
           <p className="card-text mt-2 d-block">
             <span className="fw-bold d-flex flex-column align-items-center" onClick={onClick}>
                <span className="show-more-category-icon" > <AiOutlineAppstore/></span>
-             <span className="text-center "> View All Categories</span>
+             <span className="text-center "> View All</span>
             </span>
           </p>
         </div>

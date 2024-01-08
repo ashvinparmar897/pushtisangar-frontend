@@ -78,8 +78,10 @@ const Checkout = () => {
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [discountedTotal, setDiscountedTotal] = useState(0);
+  const [Name, setName] = useState("");
+  const [Phone, setPhone] = useState("");
 
-  const ShippingCharge = 150;
+  const ShippingCharge = 0;
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
@@ -171,7 +173,7 @@ const Checkout = () => {
   function calculateDiscountedTotal(total, coupon) {
     if (coupon && coupon.type === "%") {
       const discountAmount = (total * coupon.discount) / 100;
-      return total - discountAmount;
+      return total - discountAmount-75;
     } else if (coupon && coupon.discount !== null) {
       return total - coupon.discount;
     } else {
@@ -222,32 +224,57 @@ const Checkout = () => {
     : null;
 
     const data ={
-      name: 'Shalin',
+      name: Name,
       amount: discountedTotal
       ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
       : (tPwithGST + (ShippingCharge || 0)).toFixed(2),
-      number: '7498608775',
+      number: Phone,
       MUID: "MUID" + Date.now(),
       transactionId: 'T' + Date.now(),
   }
+
+  console.log(Name)
+  console.log(Phone)
 
   const handlePayment = async () => {
     try {
       const response = await axios.post(`${url}/api/payment`, { ...data });
       console.log(response.data);
-      const newTab = window.open(response.data.url, '_blank');
-        if (newTab) {
-            // If the new tab was successfully opened, you can focus on it
-            newTab.focus();
-        } else {
-            // If the new tab was blocked by a popup blocker, you might want to inform the user
-            console.error("Popup blocked. Please enable popups to view the payment page.");
-        }
-    } catch (error) {
   
+      const newTab = window.open(response.data.url, '_blank');
+  
+      if (newTab) {
+        
+        newTab.focus();
+  
+        
+        const intervalId = setInterval(async () => {
+          try {
+            const checkStatusResponse = await axios.get(`${url}/api/status/${response.data.merchantId}/${response.data.merchantTransactionId}`);
+            console.log(checkStatusResponse.data);
+  
+            if (checkStatusResponse.data.success) {
+              // Payment successful
+              clearInterval(intervalId); 
+              navigate("/");
+              
+            } else {
+              // Payment still pending or failed
+              // You can handle this accordingly, or just continue checking
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }, 5000); // Check status every 5 seconds (adjust as needed)
+      } else {
+        // If the new tab was blocked by a popup blocker, you might want to inform the user
+        console.error("Popup blocked. Please enable popups to view the payment page.");
+      }
+    } catch (error) {
       console.error(error);
     }
   };
+  
   
 
   const validationSchema = Yup.object().shape({
@@ -344,7 +371,11 @@ const Checkout = () => {
                     shippingAddress: values.address,
                     couponCode: selectedCoupon ? selectedCoupon._id : null,
                     // paymentMethod: "Net Banking", // You might want to get this from the form
+                    
                   });
+                  
+                setName(values.firstName);
+                setPhone(values.phone);
                   if (response.success) {
                     console.log("Order", response);
                     Swal.fire({
@@ -360,6 +391,13 @@ const Checkout = () => {
                     navigate("/");
                   } else {
                     console.error("Error creating order:", response.msg);
+                    Swal.fire({
+                      icon: "warning",
+                      title:
+                        "Product is Out of Stock",
+                      showConfirmButton: false,
+                      timer: 3000,
+                    });
                   }
                 } else {
                   Swal.fire({
@@ -613,7 +651,7 @@ const Checkout = () => {
                                         <div className="row coupn_det">
                                           <div className="col-lg-6">
                                             <p>
-                                              Name:{" "}
+                                              Code:{" "}
                                               {selectedCoupon
                                                 ? selectedCoupon.name
                                                 : null}
@@ -722,8 +760,8 @@ const Checkout = () => {
                                           : 0) +
                                           (!isNaN(ShippingCharge)
                                             ? ShippingCharge
-                                            : 0) -
-                                          75
+                                            : 0)
+                                          
                                       )}
                                     </span>
                                   </td>

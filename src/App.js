@@ -35,14 +35,15 @@ import ReturnPolicy from "./pages/ReturnPolicy/ReturnPolicy";
 import Faq from "./pages/FAQ's/Faq.jsx";
 import BlogCategories from "./pages/blog/BlogCategories.js";
 import Undermaintainance from "./pages/Undermaintenance/Undermaintainance.js";
+import ShippingPolicy from "./pages/ShippingPolicy/ShippingPolicy.js";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={< Undermaintainance/>} />
-          <Route path="/home" element={<Home />} />
+          {/* <Route path="/" element={< Undermaintainance/>} /> */}
+          <Route path="/" element={<Home />} />
           <Route path="/product-list/:id" element={<ProductList />} />
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/cart/:id" element={<Cart />} />
@@ -73,6 +74,7 @@ function App() {
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
           <Route path="/faq" element={<Faq />} />
         </Routes>
       </BrowserRouter>

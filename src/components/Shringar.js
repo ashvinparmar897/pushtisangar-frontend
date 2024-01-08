@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./SeasonalProducts.css";
 import Slider from "react-slick";
-import S1 from "../images/s1.jpg";
+import S1 from "../images/ShringarCover.jpg";
 import S2 from "../images/s2.jpg";
 import S3 from "../images/s3.jpg";
 import S4 from "../images/s4.jpg";
-import "./Shringar.css";
+// import "./Shringar.css";
 import { Link } from "react-router-dom";
 import SignContext from "../contextAPI/Context/SignContext";
 import Swal from 'sweetalert2';
@@ -24,6 +24,7 @@ const Shringar = () => {
   const [ProductData, setProductData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
+  const [categoryImage, setCategoryImage] = useState(""); 
   const authToken = localStorage.getItem("authToken");
 
   const Getproduct = async (id) => {
@@ -36,17 +37,24 @@ const Shringar = () => {
       const mapping = {};
       categoryRes.forEach((category) => {
         mapping[category._id] = category.name;
+
+        if (category._id === id) {
+          
+          setCategoryImage(category.image); 
+        }
       });
       // console.log(mapping);
       setCategoryNameMapping(mapping);
     }
-
+    
     // const transformedData = res.products.map((product, index) => ({
     //   ...product,
     //   id: index + 1,
     // }));
     setProductData(res.products);
   };
+
+ 
 
   const GetLoggedInCustomer = async (token) => {
     const res = await getLoggedInCustomer(token);
@@ -95,25 +103,18 @@ const Shringar = () => {
     prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 1024,
+        breakpoint: 1025,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
         },
       },
       {
@@ -126,6 +127,10 @@ const Shringar = () => {
     ],
   };
   
+  const shringarStyle = {
+    filter: "brightness(85%)",
+    transform: "scale(1,1)",
+  };
 
   const handleCartClick = async (id) => {
     try {
@@ -183,9 +188,12 @@ const Shringar = () => {
           </div>
         </div>
 
+        
+
         <div className="row ">
-          <div class="col-lg-3 d-none d-lg-flex mb-4">
-            <div class="banner-img style-2 shringar">
+          <div class="col-lg-3 d-none d-lg-flex mb-4" style={{marginTop : "30px"}}>
+            <div class="banner-img style-2 shringar" style={shringarStyle}>
+              <img style={{borderRadius : "10px"}} src={`${url}/cagtegory/${categoryImage}`} alt="" />
               <div class="banner-text d-none">
                 <h2 class="mb-100">Bring Top Vastra into Your Home</h2>
                 <Link to="#" class="btn btn-xs">
@@ -197,7 +205,7 @@ const Shringar = () => {
 
           <div className="col-lg-9 col-md-12 mb-4">
             <Slider {...settings}>
-              {products.slice(0, 4).map((product) => (
+              {products?products.map((product) => (
                 <div key={product.id}>
                   <Link to={`/product-details/${product._id}`}>
                     <div
@@ -270,7 +278,7 @@ const Shringar = () => {
                     </div>
                   </Link>
                 </div>
-              ))}
+              )):null}
             </Slider>
           </div>
         </div>

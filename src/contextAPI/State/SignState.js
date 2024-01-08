@@ -648,6 +648,19 @@ export const SignState = (props) => {
     }
   };
 
+  // Get subCategory & subSubCategory by CategoryId
+  const GetsubandsubSubcategory = async (id) => {
+    try {
+      const response = await axios.post(
+        `${url}/category/getsubcategories/${id}`,
+        {}
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
   return (
     <SignContext.Provider
       value={{
@@ -700,6 +713,7 @@ export const SignState = (props) => {
         GetMidBannerthree,
         AddSubscribe,
         AddContact,
+        GetsubandsubSubcategory,
       }}
     >
       {props.children}

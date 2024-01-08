@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Category from "./Category";
 import FeatureCategory from "./FeatureCategory";
 import Featured from "./Featured";
@@ -16,8 +16,11 @@ import TopProducts from "./TopProducts";
 import Vastra from "./Vastra";
 import Deals_Of_the_day from "./Deals_Of_the_day";
 import { SignState } from "../contextAPI/State/SignState";
+import Sugandhi from "./Sugandhi";
 
 const Home = () => {
+  
+  
   return (
     <div>
       <Header  />
@@ -28,10 +31,12 @@ const Home = () => {
       <Category />
       <OfferPart />
       <NewArrival />
-      <Deals_Of_the_day />
+      <Shringar />
+
       {/* <SeasonalProducts/> */}
       <Vastra />
-      <Shringar />
+      <Sugandhi />    
+      {/* sugandhi category */}
       <TopProducts />
       <Subscribe />
       <Featured />

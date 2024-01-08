@@ -24,9 +24,8 @@
     border-radius: 10px;
     padding: 20px 0px 18px 0px;
     margin-bottom: 45px;
-    min-height: 180px ;
     align-items: center;
-    min-height: 210px;
+    min-height: 193px;
 
 }
 .card img:hover {
@@ -95,7 +94,6 @@
     border-color: #dfaaaa;
 }
 .card-body {
-    padding: 0rem 1rem;
     font-family: "Quicksand", sans-serif;
     font-size: 16px;
     height: 75px;

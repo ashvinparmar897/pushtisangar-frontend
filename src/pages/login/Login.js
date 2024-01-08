@@ -175,8 +175,8 @@ const Login = () => {
                           </div>
                           <div className="col-md-12 col-lg-4 flex-col img-part">
                             <div className="login-white-container">
-                              <h1>Hello, friend!</h1>
-                              <p>Enjoy your personal details and start your journey with us.</p>
+                              <h1>Hello !</h1>
+                              <p>Unlock a personalized shopping experience by joining us now.</p>
                               <div className="register">
                                 <Link className="createlinking register_button" to="/signup" id>
                                   Sign Up

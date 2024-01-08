@@ -308,6 +308,7 @@ const Cart = () => {
                 </div>
               </div>
             </div>
+            {CartData && CartData.length > 0 && (
             <div className="col-md-12 col-lg-4">
               <div className="cart-totals ">
                 <h3>Summary</h3>
@@ -352,6 +353,7 @@ const Cart = () => {
                 
               </div>
             </div>
+            )}
           </div>
         </div>
       </section>

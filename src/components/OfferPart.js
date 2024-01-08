@@ -99,7 +99,7 @@ const OfferPart = () => {
             >
 
             </div>
-                  <Link to="/blog" className="shop-now-hover btn btn-xs mt-5">
+                  <Link to="/blogcategories" className="shop-now-hover btn btn-xs mt-5">
                     Read More <i className="fi-rs-arrow-small-right bi bi-arrow-right ms-2" />
                   </Link>
                 </div>

@@ -24,6 +24,7 @@ const options = [
 
 const Header = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
+  const [username, setUsername] = useState("");
   const [CartData, setCartData] = useState([]);
   const {
     createCustomer,
@@ -33,6 +34,7 @@ const Header = () => {
     removeItemFromCart,
     forgotCustomerPassword,
     getCategories,
+    GetsubandsubSubcategory
   } = useContext(SignContext);
   const authToken = localStorage.getItem("authToken");
   const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
@@ -50,17 +52,12 @@ const Header = () => {
   const [tag, setTag] = useState("");
   const [products, setProducts] = useState([]);
   const [Success, setSuccess] = useState("");
-  const [isVenderDropdownOpen, setVenderDropdownOpen] = useState(false);
-  const [isMegaMenuDropdownOpen, setMegaMenuDropdownOpen] = useState(false);
-  const [isPagesDropDownOpen, setPagesDropDownOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [buttonText, setButtonText] = useState("Show More...");
+  const [isMegaMenuDropdownOpen, setMegaMenuDropdownOpen] = useState(false);
 
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-    setButtonText(isVisible ? "Show More..." : "Show Less...");
-  };
+  
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
@@ -121,6 +118,8 @@ const Header = () => {
 
   const handleSignout = async () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("loggedIn");
     console.log("authToken Removed");
   };
 
@@ -156,36 +155,24 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
-  const closeDropdown = () => {
-    setIsOpen(false);
+  const handleCategoryHover = async (categoryId) => {
+    setCategoryDropdownOpen(true);
+    const data = await GetsubandsubSubcategory(categoryId);
+    console.log(data.categoriesWithSubCategoriesAndSubSubCategories);
+    setSelectedCategory(data.categoriesWithSubCategoriesAndSubSubCategories);
+    
   };
-
-  const handlePageHover = () => {
-    setPagesDropDownOpen(true);
-  };
-  const handlePageLeave = () => {
-    setPagesDropDownOpen(false);
+  const handleCategoryLeave = () => {
+    setCategoryDropdownOpen(false);
   };
 
   const handleMegaMenuHover = () => {
     setMegaMenuDropdownOpen(true);
+    setIsOpen(true);
   };
   const handleMegaMenuLeave = () => {
     setMegaMenuDropdownOpen(false);
-  };
-
-  const handleVenderHover = () => {
-    setVenderDropdownOpen(true);
-  };
-  const handleVenderLeave = () => {
-    setVenderDropdownOpen(false);
-  };
-
-  const handleCategoryHover = () => {
-    setCategoryDropdownOpen(true);
-  };
-  const handleCategoryLeave = () => {
-    setCategoryDropdownOpen(false);
+    
   };
 
   const handleCartHover = () => {
@@ -205,23 +192,27 @@ const Header = () => {
     setAccountDropdownOpen(false);
   };
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
+  
 
   // Validation schemas
   const loginSchema = Yup.object().shape({
-    email: Yup.string().matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format").required("Email is required"),
+    email: Yup.string()
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format")
+      .required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
 
   const forgotPasswordSchema = Yup.object().shape({
-    email: Yup.string().matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format").required("Email is required"),
+    email: Yup.string()
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format")
+      .required("Email is required"),
   });
 
   const signupSchema = Yup.object().shape({
     username: Yup.string().required("Name is required"),
-    email: Yup.string().matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format").required("Email is required"),
+    email: Yup.string()
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format")
+      .required("Email is required"),
     password: Yup.string().required("Password is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -237,6 +228,7 @@ const Header = () => {
     if (res.success) {
       window.localStorage.setItem("loggedIn", true);
       window.localStorage.setItem("authToken", res.token);
+      window.localStorage.setItem("username", res.customer.username);
       handleModalClose();
     } else {
       setErrorBanner(res.msg);
@@ -247,15 +239,25 @@ const Header = () => {
   };
 
   const handleForgotPasswordSubmit = async (Values) => {
-    const res = await forgotCustomerPassword(Values);
-    console.log(res);
-    if (res.success) {
-      setSuccess(res.msg);
-      setTimeout(() => {
-        setSuccess("");
-      }, 1000);
-    } else {
-      setError(res.msg);
+    try {
+      const res = await forgotCustomerPassword(Values);
+      console.log(res);
+
+      if (res.success) {
+        setSuccess(res.msg);
+        setTimeout(() => {
+          setSuccess("");
+        }, 1000);
+      } else {
+        setError(res.msg);
+        setTimeout(() => {
+          setError("");
+        }, 1000);
+      }
+    } catch (error) {
+      // Handle any unexpected errors here
+      console.error("An error occurred:", error);
+      setError("An unexpected error occurred.");
       setTimeout(() => {
         setError("");
       }, 1000);
@@ -296,7 +298,15 @@ const Header = () => {
     GetLoggedInCustomer(authToken);
     getLoggedinCustomerCart(CustomerInfo._id);
     Getcategories();
-  }, [CustomerInfo._id]);
+    const getStoredUsername = () => {
+      const storedUsername = window.localStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+    };
+    getStoredUsername();
+  }, [CustomerInfo._id , selectedCategory]);
+
 
   return (
     <header className="header-area header-style-1 header-height-2">
@@ -526,6 +536,11 @@ const Header = () => {
                         {Success}
                       </div>
                     )}
+                    {Error && (
+                      <div className="alert alert-danger" role="alert">
+                        {Error}
+                      </div>
+                    )}
                     {/* Modal body */}
                     <div className="modal-body">
                       <div className="forgot-password-part" style={{}}>
@@ -709,7 +724,7 @@ const Header = () => {
                                             type="text"
                                             name="username"
                                             className="form-control"
-                                            placeholder="First Name *"
+                                            placeholder="Full Name *"
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                             value={values.username}
@@ -917,42 +932,44 @@ const Header = () => {
                       {isCartDropdownOpen && (
                         <div className="cart-dropdown-wrap cart-dropdown-hm2">
                           <ul>
-                            {CartData
-                              ? CartData.map((item) => (
-                                  <li>
-                                    <div className="shopping-cart-img">
-                                      <Link to="#">
-                                        <img
-                                          alt="cart"
-                                          src={`${url}/products/${item.product.imageGallery[0]}`}
-                                        />
-                                      </Link>
-                                    </div>
-                                    <div className="shopping-cart-title">
-                                      <h4>
-                                        <Link to="#">{item.product.name}</Link>
-                                      </h4>
-                                      <h3>
-                                        <span>{item.quantity}× </span>
-                                        {item.product.prices.discounted
-                                          ? item.product.prices.discounted
-                                          : item.product.prices.calculatedPrice}
-                                      </h3>
-                                    </div>
-                                    <div className="shopping-cart-delete">
-                                      <Link
-                                        onClick={() => {
-                                          handleRemoveItemFromCart(
-                                            item.product._id
-                                          );
-                                        }}
-                                      >
-                                        <i className="fi-rs-cross-small bi bi-x" />
-                                      </Link>
-                                    </div>
-                                  </li>
-                                ))
-                              : null}
+                          {CartData
+  ? CartData.map((item) => (
+      <li key={item.product._id}>
+        {item.product && item.product.name && (
+          <>
+            <div className="shopping-cart-img">
+              <Link to="#">
+                <img
+                  alt="cart"
+                  src={`${url}/products/${item.product.imageGallery && item.product.imageGallery[0] ? item.product.imageGallery[0] : 'default-image.jpg'}`}
+                />
+              </Link>
+            </div>
+            <div className="shopping-cart-title">
+              <h4>
+                <Link to="#">{item.product.name}</Link>
+              </h4>
+              <h3>
+                <span>{item.quantity}× </span>
+                {item.product.prices.discounted
+                  ? item.product.prices.discounted
+                  : item.product.prices.calculatedPrice}
+              </h3>
+            </div>
+            <div className="shopping-cart-delete">
+              <Link
+                onClick={() => {
+                  handleRemoveItemFromCart(item.product._id);
+                }}
+              >
+                <i className="fi-rs-cross-small bi bi-x" />
+              </Link>
+            </div>
+          </>
+        )}
+      </li>
+    ))
+  : null}
                           </ul>
                           <div className="shopping-cart-footer">
                             {/* <div className="shopping-cart-total">
@@ -971,7 +988,9 @@ const Header = () => {
                                   </Link>
                                 </>
                               ) : (
-                                <h4 className="text-center text-danger">Your cart is empty</h4>
+                                <h4 className="text-center text-danger">
+                                  Your cart is empty
+                                </h4>
                               )}
                             </div>
                           </div>
@@ -1040,7 +1059,7 @@ const Header = () => {
               <div
                 className="main-categori-wrap d-none d-lg-block"
                 onMouseEnter={handleCategoryHover}
-                onMouseLeave={handleCategoryLeave}
+                // onMouseLeave={handleCategoryLeave}
               >
                 <Link
                   className="categories-button-active"
@@ -1054,37 +1073,48 @@ const Header = () => {
                   <i className="fi-rs-angle-down bi bi-chevron-down " />
                 </Link>
                 {isOpen && (
-                  <div className="categories-dropdown-wrap categories-dropdown-active-large font-heading">
+                  <div className="categories-dropdown-wrap categories-dropdown-active-large font-heading" onMouseEnter={ handleMegaMenuHover}
+                  onMouseLeave={ handleMegaMenuLeave}>
                     <div className="d-flex categori-dropdown-inner">
                       <ul>
                         {CategoryData.map((category, index) => (
-                          <li key={index}>
+                          <li key={index} onMouseEnter={() => handleCategoryHover(category._id)}>
                             <Link to={`/product-list/${category._id}`}>
                               {" "}
-                              <img src={logo} alt />
+                              <img src={`${url}/cagtegory/${category.image}`} alt="" />
                               {category.name}
                             </Link>
                           </li>
                         ))}
                       </ul>
-                      <ul className="end">{/* Add more categories here */}</ul>
                     </div>
-                    <div className="more_slide_open">
-                      {isVisible && (
-                        <div className="d-flex categori-dropdown-inner">
-                          <ul>{/* More categories */}</ul>
-                          <ul className="end">{/* More categories */}</ul>
-                        </div>
-                      )}
-                    </div>
+                    
                   </div>
+                  
                 )}
+                {isMegaMenuDropdownOpen && (
+  <div className="submenu d-flex ">
+    <div className="menu-title">{selectedCategory ? selectedCategory.subCategoryName : null}</div>
+    <ul>
+      {selectedCategory && selectedCategory.subSubCategories
+        ? selectedCategory.subSubCategories.map((subSubCategory) => (
+            <li key={subSubCategory.id}>
+              <Link to={`/product-list/${subSubCategory.id}`}>
+                {subSubCategory.name}
+              </Link>
+            </li>
+          ))
+        : null}
+    </ul>
+  </div>
+)}
               </div>
+              
               <div className="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                 <nav>
                   <ul>
                     <li>
-                      <Link className="" to="/home">
+                      <Link className="" to="/">
                         Home{" "}
                       </Link>
                     </li>
@@ -1112,11 +1142,7 @@ const Header = () => {
             </div>
             <div className="hotline d-none d-lg-flex">
               <div className="me-3 mt-1">
-                {authToken ? (
-                  <p>Welcome , {CustomerInfo.username}</p>
-                ) : (
-                  <p>Welcome</p>
-                )}
+                {authToken ? <p>Jay Shree Krishna , {username?username:null}</p> : <p>Jay Shree Krishna</p>}
               </div>
             </div>
             <div className="header-action-icon-2 d-block d-lg-none">

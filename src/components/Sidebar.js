@@ -208,6 +208,16 @@ const Sidebar = () => {
     setShowCartTooltip(!showCartTooltip);
   };
 
+  const openInstagram = () => {
+    window.open("https://www.instagram.com/pushtishangar/?igsh=MXNwZjFvMXkwNDA0dg%3D%3D");
+  };
+  const openPintrest = () => {
+    window.open("https://www.pinterest.com/pushtishangar/?invite_code=79dd065f0f1144c284a9e615b38a7eef&sender=1101552527515708041");
+  };
+  const openYoutube = () => {
+    window.open("https://www.youtube.com/@pushtishangarofficial");
+  };
+
   useEffect(() => {
     GetLoggedInCustomer(authToken);
     getLoggedinCustomerCart(CustomerInfo._id);
@@ -302,8 +312,7 @@ const Sidebar = () => {
                   </div>
                   <div class="single-mobile-header-info">
                     <Link to="#">
-                      <i class="fi-rs-headphones bi bi-headphones"></i>(+91)
-                      9234596789{" "}
+                      <i class="fi-rs-headphones bi bi-headphones"></i>(+91) 8980963151{" "}
                     </Link>
                   </div>
                 </div>
@@ -312,29 +321,7 @@ const Sidebar = () => {
             <div className="social-icon ">
               <h6 className="mb-15">Follow Us </h6>
               <div className="social-media-icon-group">
-                <Link to="#">
-                  <FaFacebook
-                    style={{
-                      fontSize: "18px",
-                      color: "#fff",
-                      background: "black",
-                      borderRadius: "30px",
-                      marginTop: "6px",
-                    }}
-                  />
-                </Link>
-                <Link to="#">
-                  <FaTwitter
-                    style={{
-                      fontSize: "18px",
-                      color: "#fff",
-                      background: "black",
-                      borderRadius: "30px",
-                      marginTop: "6px",
-                    }}
-                  />
-                </Link>
-                <Link to="#">
+                <Link onClick={openInstagram}>
                   <FaInstagram
                     style={{
                       fontSize: "18px",
@@ -345,7 +332,7 @@ const Sidebar = () => {
                     }}
                   />
                 </Link>
-                <Link to="#">
+                <Link onClick={openPintrest}>
                   <FaPinterest
                     style={{
                       fontSize: "18px",
@@ -356,7 +343,7 @@ const Sidebar = () => {
                     }}
                   />
                 </Link>
-                <Link to="#">
+                <Link onClick={openYoutube}>
                   <FaYoutube
                     style={{
                       fontSize: "18px",

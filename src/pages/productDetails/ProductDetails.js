@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import "./ProductDetails.css";
 import Header from "../../components/Header";
 import MidFooter from "../../components/MidFooter";
-
+import Swal from "sweetalert2";
+import { FaWhatsapp } from 'react-icons/fa';
 // import cover1 from "../../images/s1.jpg";
 // import cover2 from "../../images/s4.jpg";
 // import cover3 from "../../images/s3.jpg";
@@ -22,7 +23,6 @@ import S5 from "../../images/s5.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Preloader from "../../components/Loader";
 import MobileSidebar from "../../components/MobileSidebar";
-import Swal from 'sweetalert2';
 import SignContext from "../../contextAPI/Context/SignContext";
 
 const WishlistMessage = ({ onClose }) => (
@@ -126,8 +126,13 @@ const ProductDetails = () => {
         navigate(`/cart/${customerId}`);
         
       } else {
-        
         console.error(res.msg);
+        Swal.fire({
+          icon: "warning",
+          title: "Please Login First",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       // Handle unexpected errors
@@ -150,6 +155,12 @@ const ProductDetails = () => {
       } else {
         // Handle the error
         console.error(res.msg);
+        Swal.fire({
+          icon: "warning",
+          title: "Please Login First",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       // Handle unexpected errors
@@ -173,6 +184,22 @@ const ProductDetails = () => {
     } else {
       console.log(res.msg);
     }
+  };
+
+  const handleWhatsAppInquiry = () => {
+    // Assuming you have a WhatsApp business number
+    const businessNumber = '9824281021'; 
+    const productDetailsUrl = window.location.href;
+    const productName = ProductData.name;
+
+    // You can customize the inquiry message
+    const inquiryMessage = `Hi, I'm interested in the product "${productName}" (${productDetailsUrl}). Can you provide more information?`;
+
+    // Generate the WhatsApp link with the predefined message
+    const whatsappLink = `https://wa.me/${businessNumber}?text=${encodeURIComponent(inquiryMessage)}`;
+
+    // Open the WhatsApp link in a new window
+    window.open(whatsappLink, '_blank');
   };
 
   useEffect(() => {
@@ -203,62 +230,6 @@ const ProductDetails = () => {
       setSelectedColors([...selectedColors, color]);
     }
   };
-
-  // const products = [
-  //   {
-  //     id: 1,
-  //     imageUrl: S1,
-  //     hoverImageUrl:
-  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     category: "Shangar",
-  //     name: "God Shanagar By Pushtimarg ",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //     color: "#67bcee",
-  //   },
-  //   {
-  //     id: 1,
-  //     imageUrl: S2,
-  //     hoverImageUrl:
-  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     category: "Sughandhi",
-  //     name: "Sughandhi Attar Different fragrances",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //     color: "#3BB77Es",
-  //   },
-  //   {
-  //     id: 1,
-  //     imageUrl: S3,
-  //     hoverImageUrl:
-  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     category: "Shringar",
-  //     name: "Moti product with category of Shringar",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //     color: "#f74b81",
-  //   },
-  //   {
-  //     id: 1,
-  //     imageUrl: S4,
-  //     hoverImageUrl:
-  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     category: "Shringar",
-  //     name: "Popular Product on Shringar Products",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //   },
-  //   {
-  //     id: 1,
-  //     imageUrl: S5,
-  //     hoverImageUrl:
-  //       "https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/product-3-2.jpg",
-  //     category: "Vastra",
-  //     name: "Best Zari in Vastra Category",
-  //     price: 238.85,
-  //     oldPrice: 245.8,
-  //   },
-  // ];
 
   if (isLoading) {
     return <Preloader />; // Show the preloader while loading
@@ -307,25 +278,26 @@ const ProductDetails = () => {
                       />
                     </div>
                     <div className="wrapper_thumb p-2" id="wrapper-thumb">
-                      {ProductData.imageGallery?.map((image, index) => (
-                        <div
-                          key={index}
-                          className={`thumb p-2 ${
-                            selectedImage === image ? "active" : ""
-                          }`}
-                          onClick={() => handleThumbClick(image)}
-                        >
-                          <img
-                            src={`${url}/products/${image}`}
-                            alt={`Thumbnail ${index + 1}`}
-                            onError={(e) => {
-                              e.target.src =
-                                "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"; // Replace with the path to your alternate image
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </div>
+  {ProductData.imageGallery?.map((image, index) => (
+    <div
+      key={index}
+      className={`thumb p-2 ${selectedImage === image ? "active" : ""} ${
+        ProductData.imageGallery.length < 4 ? "single-column" : ""
+      }`}
+      onClick={() => handleThumbClick(image)}
+    >
+      <img
+        src={`${url}/products/${image}`}
+        alt={`Thumbnail ${index + 1}`}
+        onError={(e) => {
+          e.target.src =
+            "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
+        }}
+        style={{ width: '150.11px', height: '150.11px' }}
+      />
+    </div>
+  ))}
+</div>
                   </div>
 
                   {/* End Gallery */}
@@ -373,52 +345,9 @@ const ProductDetails = () => {
                         }}
                       />
                     </div>
-                    <div className="attr-detail attr-size mb-30 d-none">
-                      <strong className="mr-10 fs-5">Color: </strong>
-                      <ul className="list-filter size-filter font-small">
-                        <li>
-                          {" "}
-                          <input
-                            className="me-2"
-                            type="checkbox"
-                            style={{ minWidth: "20px" }}
-                          />{" "}
-                          <span className="me-2">Red</span>
-                        </li>
-                        <li className="active">
-                          <input
-                            className="me-2"
-                            type="checkbox"
-                            style={{ minWidth: "20px" }}
-                          />
-                          <span className="me-2">Green</span>
-                        </li>
-                        <li>
-                          <input
-                            className="me-2"
-                            type="checkbox"
-                            style={{ minWidth: "20px" }}
-                          />
-                          <span className="me-2">Grey</span>
-                        </li>
-                        <li>
-                          <input
-                            className="me-2"
-                            type="checkbox"
-                            style={{ minWidth: "20px" }}
-                          />
-                          <span className="me-2">Pink</span>
-                        </li>
-                        <li>
-                          <input
-                            className="me-2"
-                            type="checkbox"
-                            style={{ minWidth: "20px" }}
-                          />
-                          <span className="me-2">Black</span>
-                        </li>
-                      </ul>
-                    </div>
+
+                    
+                    
                     <div className="detail-extralink   ">
                       <div className="detail-qty border radius">
                         <Link
@@ -468,9 +397,12 @@ const ProductDetails = () => {
                           <WishlistMessage onClose={closeWishlistMessage} />
                         )}
                       </div>
+                      <button className="button button-whatsapp-share" onClick={handleWhatsAppInquiry} style={{ backgroundColor: '#25D366', color: '#FFFFFF', border: 'none' , height:"50px"}}>
+        <FaWhatsapp style={{fontSize:"25px"}} />
+      </button>
                     </div>
 
-                    {!ProductData.isVariant && (
+                   
   <div className="product-details-options">
     <div className="product-details-options-section">
       <h3>Available Colors:</h3>
@@ -510,7 +442,7 @@ const ProductDetails = () => {
       </div>
     </div>
   </div>
-)}
+
 
 
                     <div className="font-xs d-none">
@@ -586,7 +518,7 @@ const ProductDetails = () => {
                             __html: ProductData.description,
                           }}
                         />
-                        <p>
+                        {/* <p>
                           From the moment you slip into our clothing, you'll
                           notice the difference. The softness of the fabric, the
                           attention to detail in the stitching, and the
@@ -600,7 +532,7 @@ const ProductDetails = () => {
                           right. We take pride in delivering fashion that stands
                           the test of time, both in terms of durability and
                           style.
-                        </p>
+                        </p> */}
                         {/* <ul className="product-more-infor mt-30">
                     <li><span>Type Of Packing</span> Bottle</li>
                     <li><span>Color</span> Green, Pink, Powder Blue, Purple</li>
@@ -610,9 +542,9 @@ const ProductDetails = () => {
                   </ul> */}
                         <hr className="wp-block-separator is-style-dots" />
                         {/* <p>Laconic overheard dear woodchuck wow this outrageously taut beaver hey hello far meadowlark imitatively egregiously hugged that yikes minimally unanimous pouted flirtatiously as beaver beheld above forward energetic across this jeepers beneficently cockily less a the raucously that magic upheld far so the this where crud then below after jeez enchanting drunkenly more much wow callously irrespective limpet.</p> */}
-                        <h4 className="mt-30">Packaging &amp; Delivery</h4>
+                        {/* <h4 className="mt-30">Packaging &amp; Delivery</h4> */}
                         <hr className="wp-block-separator is-style-wide" />
-                        <p>
+                        {/* <p>
                           Discover a range that encompasses a spectrum of
                           choices, from casual wear that keeps you comfortable
                           during your everyday adventures to exquisite ensembles
@@ -627,7 +559,7 @@ const ProductDetails = () => {
                           and reaches new heights of elegance and grace. Explore
                           God Clothes today and elevate your style to a
                           celestial level.
-                        </p>
+                        </p> */}
                         {/* <p>Scallop or far crud plain remarkably far by thus far iguana lewd precociously and and less rattlesnake contrary caustic wow this near alas and next and pled the yikes articulate about as less cackled dalmatian in much less well jeering for the thanks blindly sentimental whimpered less across objectively fanciful grimaced wildly some wow and rose jeepers outgrew lugubrious luridly irrationally attractively dachshund.</p> */}
                       </div>
                     </div>

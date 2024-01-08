@@ -132,7 +132,7 @@ const ProductList = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
-  const [selectedSortBy, setSelectedSortBy] = useState("New In");
+  const [selectedSortBy, setSelectedSortBy] = useState("");
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState([]);
@@ -203,12 +203,6 @@ const ProductList = () => {
     changeQueryparams("material", selectedmaterial);
     setSelectedMaterial(selectedmaterial);
   };
-
-
-
-
- 
-
   const handleShopByChange = (shopItem) => {
     // Toggle the selected shop item
     if (selectedShopBy.includes(shopItem)) {
@@ -218,8 +212,6 @@ const ProductList = () => {
     }
   };
 
-  // Filter products based on selected filters (dummy data)
-
   const handleSortByChange = (value) => {
     setSelectedSortBy(value);
 
@@ -227,9 +219,7 @@ const ProductList = () => {
     const sortedData = [...ProductData];
 
     if (value === "newIn") {
-      sortedData.sort((a, b) => {
-        return a.isProductNew === b.isProductNew ? 0 : a.isProductNew ? -1 : 1;
-      });
+      sortedData.reverse();
     } else if (value === "priceLowestFirst") {
       sortedData.sort((a, b) => {
         const priceA = a.prices.discounted || a.prices.calculatedPrice;
@@ -242,6 +232,8 @@ const ProductList = () => {
         const priceB = b.prices.discounted || b.prices.calculatedPrice;
         return priceB - priceA;
       });
+    }else if (value === "") {
+      console.log("clicked")
     }
     setProductData(sortedData);
   };
@@ -471,22 +463,7 @@ const ProductList = () => {
             )}
           </div>
         </div>
-        {/* Product List */}
-        {/* <div className="row">
-          {filteredProducts.map((product, index) => (
-            <div key={index} className="col-lg-4">
-              <div className="product-card">
-                <h2>{product.name}</h2>
-                <p>Color: {product.color}</p>
-                <p>Price: {product.price}</p>
-                <p>Category: {product.category}</p>
-                <p>Shop by: {product.shopBy}</p>
-              </div>
-            </div>
-          ))}
-
-          
-        </div> */}
+        
         <div className="row">
           <div class="shop-product-fillter ">
             <div class="totall-product">
@@ -512,10 +489,12 @@ const ProductList = () => {
                   value={selectedSortBy}
                   onChange={(e) => handleSortByChange(e.target.value)}
                 >
+
+                  <option value="">Select</option>
                   <option value="newIn">New In</option>
-                  <option value="priceLowestFirst">Price(lowest first)</option>
+                  <option value="priceLowestFirst">Price (lowest)</option>
                   <option value="priceHighestFirst">
-                    Price(highest first)
+                    Price (highest)
                   </option>
                 </select>
               </div>
@@ -597,11 +576,11 @@ const ProductList = () => {
             : null}
         </div>
         <div>
-        {productsToShow < ProductData?ProductData.length && (
-            <div className="btn" onClick={handleShowMore}>
-              Show More
-            </div>
-          ):null}
+        {productsToShow < (ProductData?.length || 0) ? (
+  <div className="btn" onClick={handleShowMore}>
+    Show More
+  </div>
+) : null}
         </div>
       </div>
       <Subscribe />

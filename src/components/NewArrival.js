@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 
 
 
-const NewArrival = () => {
+const NewArrival = (props) => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
 
   // const [showPopup, setShowPopup] = useState(false);
@@ -75,11 +75,11 @@ const NewArrival = () => {
       </button>
     </div>
   );
-  var settings = {
+  const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 4, // Display all products in one row
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -87,30 +87,32 @@ const NewArrival = () => {
       {
         breakpoint: 1600,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: ProductData ? Math.min(ProductData.length, 4) : null,
           slidesToScroll: 1,
+          infinite: true,
+          dots: false,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: ProductData ? Math.min(ProductData.length, 3) : null,
+          slidesToScroll: 1,
+          initialSlide: 0,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToShow: ProductData ? Math.min(ProductData.length, 2) : null,
+          slidesToScroll: ProductData ? Math.min(ProductData.length, 2) : null,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: ProductData ? Math.min(ProductData.length, 1) : null,
+          slidesToScroll: ProductData ? Math.min(ProductData.length, 1) : null,
         },
       },
     ],
@@ -141,12 +143,13 @@ const NewArrival = () => {
           console.error(res.msg);
         }
       } else {
-        Swal.fire({
-          icon: 'warning', 
-          title: 'Please Login First',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        // Swal.fire({
+        //   icon: 'warning', 
+        //   title: 'Please Login First',
+        //   showConfirmButton: false,
+        //   timer: 1500,
+        // });
+        props.handleLoginClick();
       }
     } catch (error) {
       // Handle unexpected errors
@@ -182,7 +185,7 @@ const NewArrival = () => {
         <div className="row">
           
           <Slider {...settings}>
-          {ProductData.filter(product => product.isProductNew).slice(0, 10).map((product) => (
+          {ProductData?ProductData.filter(product => product.isProductNew).slice(0, 10).map((product) => (
               <div
                 className="col-xxl-2 col-lg-3 col-md-4 col-sm-6 mb-4 popular-card"
                 key={product.id}
@@ -233,7 +236,7 @@ const NewArrival = () => {
                   </div>
                 </Link>
               </div>
-            ))}
+            )):null}
           </Slider>
         </div>
       </div>

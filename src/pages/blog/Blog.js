@@ -25,7 +25,7 @@ const Blog = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   const currentRecords = BlogData?BlogData.slice(indexOfFirstRecord, indexOfLastRecord):null;
 
-  const totalPages = Math.ceil(BlogData?BlogData.length / recordsPerPage:null);
+  const totalPages = Math.ceil(BlogData?BlogData.length / recordsPerPage:null) || 1;
 
 
   const [blogPosts,setBlogPosts] = useState([]);
@@ -125,14 +125,20 @@ const Blog = () => {
                             <nav aria-label="Page navigation example">
                                 <ul className="pagination justify-content-start">
                                     <li className="page-item">
-                                        <Link className="page-link" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}><i className="fi-rs-arrow-small-left bi bi-arrow-left"></i></Link>
+                                        <Link className="page-link"onClick={() => setCurrentPage(currentPage > 1 ? currentPage - 1 : 1)} disabled={currentPage === 1}><i className="fi-rs-arrow-small-left bi bi-arrow-left"></i></Link>
                                     </li>
                                     <span> <li class="page-item"><Link className="page-link">{currentPage}</Link></li></span>
                                     {/* <li class="page-item">of</li>
                                     <span> <li class="page-item"><a class="page-link">{totalPages}</a></li></span> */}
 
                                     <li className="page-item">
-                                        <Link className="page-link" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}><i className="fi-rs-arrow-small-right bi bi-arrow-right"></i></Link>
+                                        <Link className="page-link" onClick={() => {
+                        const nextPage = currentPage + 1;
+                        const hasRecordsOnNextPage = nextPage <= totalPages;
+                        if (hasRecordsOnNextPage) {
+                            setCurrentPage(nextPage);
+                        }
+                    }} disabled={currentPage === totalPages}><i className="fi-rs-arrow-small-right bi bi-arrow-right"></i></Link>
                                     </li>
                                 </ul>
                             </nav>

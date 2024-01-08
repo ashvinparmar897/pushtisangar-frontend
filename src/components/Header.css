@@ -1255,3 +1255,32 @@ input:focus-visible {
 .card-text {
   text-align: center;
 }
+
+.right-positioned-mega-menu {
+  position: absolute;
+  top: 0;
+  left: 100%; /* Position the mega menu to the right of the main menu */
+  background-color: white; /* Set a background color */
+  border: 1px solid #ccc; /* Add a border for visibility */
+  padding: 10px; /* Add padding for content */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  z-index: 999; /* Ensure the mega menu appears above other elements */
+}
+
+/* Updated styles for making submenu items horizontal */
+.submenu ul {
+  display: flex; /* Set the display property to flex for horizontal layout */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.submenu li {
+  margin-right: 20px; /* Add margin between submenu items if needed */
+}
+
+/* Adjust width and other styles as needed for individual submenu items */
+.submenu li ul {
+  display: flex;
+  flex-direction: column; /* Set the submenu items to stack vertically */
+}

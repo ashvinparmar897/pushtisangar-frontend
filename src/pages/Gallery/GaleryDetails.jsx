@@ -101,7 +101,7 @@ const GalleryDetails = () => {
             <h2>Gallery Details</h2>
           </div>
           <div className="row clearfix">
-            {filterdPosts.map((item, index) => (
+            {filterdPosts.filter(item => item.active).map((item, index) => (
               <div
                 key={index}
                 className="col-lg-3 col-md-6 col-sm-12 team-block"

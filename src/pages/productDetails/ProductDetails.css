@@ -541,6 +541,11 @@ p {
   color: #333;
 }
 
+.single-column {
+  display: block;
+  margin: 0 auto;
+}
+
 @media (max-width: 767.98px) {
   .responsive-div {
     padding: 40px;

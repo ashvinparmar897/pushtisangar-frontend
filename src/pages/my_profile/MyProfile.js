@@ -12,25 +12,37 @@ const MyProfile = () => {
   const { getLoggedInCustomer, UpdateCustomer, changePassword } =
     useContext(SignContext);
   const authToken = localStorage.getItem("authToken");
-  const [CustomerInfo, setCustomerInfo] = useState({});
+  const [CustomerInfo, setCustomerInfo] = useState({ username: '' });
+  // const [UpdatedCustomerInfo, setUpdatedCustomerInfo] = useState({});
 
   const initialValues = {
     oldPassword: "",
     newPassword: "",
   };
 
-  const usernameValidationSchema = Yup.object().shape({
-    username: Yup.string().required("User Name is required"),
-  });
+  const handleChange = (e) => {
+    // Update the username in the state when the input changes
+    setCustomerInfo({ ...CustomerInfo, username: e.target.value });
+  };
 
   const passwordValidationSchema = Yup.object().shape({
     oldPassword: Yup.string().required("Old Password is required"),
     newPassword: Yup.string().required("New Password is required"),
   });
 
-  const handleUsernameSubmit = async (values) => {
+  const handleSignout = async () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("loggedIn");
+    console.log("authToken Removed");
+    
+  };
+
+  const handleUsernameSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
     try {
-      const updateResult = await UpdateCustomer(id, values);
+      const updateResult = await UpdateCustomer(id, CustomerInfo.username);
       console.log(updateResult);
       if (updateResult.success) {
         // Update the state with the new username
@@ -77,9 +89,13 @@ const MyProfile = () => {
     }
   };
 
+  
+
   useEffect(() => {
     GetLoggedInCustomer(authToken);
   }, [authToken]);
+
+  console.log(CustomerInfo)
 
   return (
     <div>
@@ -106,7 +122,7 @@ const MyProfile = () => {
                       <Link to="/my-account">My Account</Link>
                     </li>
                     <li>
-                      <Link to="/my-order">My Orders</Link>
+                      <Link to={`/my-order/${CustomerInfo._id}`}>My Orders</Link>
                     </li>
                     {/* <li>
                       <Link to="/my-address">My Addresses</Link>
@@ -121,7 +137,7 @@ const MyProfile = () => {
                       <Link to="/ticket-support">Support Ticket</Link>
                     </li> */}
                     <li>
-                      <Link to="/">Logout</Link>
+                      <Link onClick={handleSignout} to="/">Logout</Link>
                     </li>
                   </ul>
                 </section>
@@ -134,70 +150,32 @@ const MyProfile = () => {
                     <div className="col-md-6 col-lg-6">
                       <h5 className="text-start">Account Information</h5>
                       <hr />
-                      <Formik
-                        initialValues={{
-                          username: "",
-                        }}
-                        validationSchema={usernameValidationSchema}
-                        onSubmit={async (values, { resetForm }) => {
-                          await handleUsernameSubmit(values);
-                          resetForm();
-                          // togglemodal();
-                        }}
-                      >
-                        {({
-                          isSubmitting,
-                          handleChange,
-                          handleSubmit,
-                          errors,
-                          touched,
-                          values,
-                          handleBlur,
-                          setFieldValue,
-                        }) => (
-                          <Form onSubmit={handleSubmit}>
-                            <div className="billing-details">
-                              <div className="form-group">
-                                <label>
-                                  USER NAME
-                                  <span className="required">*</span>
-                                </label>
-                                <input
-                                  type="text"
-                                  name="username"
-                                  className="form-control"
-                                  value={values.username}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                />
-                                <p className="error text-danger">
-                                  {errors.username &&
-                                    touched.username &&
-                                    errors.username}
-                                </p>
-                              </div>
-                              {/* <div className="form-group">
-                                <label>
-                                  LAST NAME
-                                  <span className="required">*</span>
-                                </label>
-                                <Field type="text" name="lastName" className="form-control" />
-                                <ErrorMessage name="lastName" component="div" className="text-danger" />
-                              </div> */}
-                            </div>
-                            <div className="text-left">
-                              <button
-                                type="submit"
-                                className="default-btn"
-                                disabled={isSubmitting}
-                              >
-                                Update Now
-                                <span />
-                              </button>
-                            </div>
-                          </Form>
-                        )}
-                      </Formik>
+                      
+                        
+                          <form onSubmit={handleUsernameSubmit} >
+                          <div className="billing-details">
+        <div className="form-group">
+          <label>
+            USER NAME
+            <span className="required">*</span>
+          </label>
+          <input
+            type="text"
+            name="username"
+            className="form-control"
+            value={CustomerInfo.username}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="text-left">
+        <button type="submit" className="default-btn">
+          Update Now
+          <span />
+        </button>
+      </div>
+                          </form>
+                       
                     </div>
                     <div className="col-md-6 col-lg-6">
                       <h5 className="text-start">Change Password</h5>

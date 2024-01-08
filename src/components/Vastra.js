@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 
 const Vastra = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
-  const  id  = "65083839f32a06ef841fa5de";
+  const  id  = "650837faf32a06ef841fa5d8";
   // const navigate = useNavigate();
   const {
     GetProductsbyCategoryId,
@@ -22,6 +22,7 @@ const Vastra = () => {
   const [ProductData, setProductData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
+  const [categoryImage, setCategoryImage] = useState("");
   const authToken = localStorage.getItem("authToken");
 
   const Getproduct = async (id) => {
@@ -34,15 +35,16 @@ const Vastra = () => {
       const mapping = {};
       categoryRes.forEach((category) => {
         mapping[category._id] = category.name;
+        if (category._id === id) {
+          
+          setCategoryImage(category.image); 
+        }
       });
-      // console.log(mapping);
+      
       setCategoryNameMapping(mapping);
     }
 
-    // const transformedData = res.products.map((product, index) => ({
-    //   ...product,
-    //   id: index + 1,
-    // }));
+   
     setProductData(res.products);
   };
 
@@ -166,15 +168,16 @@ const Vastra = () => {
       <div className="container mb-4">
       <div className="row text-start">
           <div className="col">
-            <h1 className="fs-1 mt-4 mb-4">Vastra</h1>
+            <h1 className="fs-1 mt-4 mb-4">Silver Vessels</h1>
           </div>
           <div className="col text-end d-flex align-items-center justify-content-end">
             <Link to={`/product-list/${id}`} className="mb-2"><strong>view all</strong></Link>
           </div>
         </div>
         <div className="row ">
-          <div class="col-lg-3 d-none d-lg-flex mb-4">
+          <div class="col-lg-3 d-none d-lg-flex mb-4" style={{marginTop : "30px"}}>
             <div class="banner-img style-2 vastra">
+            <img style={{borderRadius : "10px"}} src={`${url}/cagtegory/${categoryImage}`} alt="" />
               <div class="banner-text d-none">
                 <h2 class="mb-100">Bring Top Vastra into Your Home</h2>
                 <Link to="#" class="btn btn-xs">
