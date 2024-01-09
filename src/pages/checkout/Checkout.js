@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import "./Checkout.css";
 import Header from "../../components/Header";
@@ -61,6 +61,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const [selectedState, setSelectedState] = useState(null);
+  const [loading2, setLoading2] = useState(false);
   const {
     getLoggedInCustomer,
     GetLoggedInCartItems,
@@ -223,58 +224,103 @@ const Checkout = () => {
       }, 0)
     : null;
 
-    const data ={
-      name: Name,
-      amount: discountedTotal
-      ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
-      : (tPwithGST + (ShippingCharge || 0)).toFixed(2),
-      number: Phone,
-      MUID: "MUID" + Date.now(),
-      transactionId: 'T' + Date.now(),
-  }
+  //   const data ={
+  //     name: Name,
+  //     amount: discountedTotal
+  //     ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
+  //     : (tPwithGST + (ShippingCharge || 0)).toFixed(2),
+  //     number: Phone,
+  //     MUID: "MUID" + Date.now(),
+  //     transactionId: 'T' + Date.now(),
+  // }
 
-  console.log(Name)
-  console.log(Phone)
+  
 
-  const handlePayment = async () => {
-    try {
-      const response = await axios.post(`${url}/api/payment`, { ...data });
-      console.log(response.data);
+//   const handlePayment = async () => {
+//     setLoading2(true);
+
+//     try {
+//         const response = await axios.post(`${url}/api/payment`, { ...data });
+//         console.log(response);
+
+//         const newTab = window.open(response.data.url, '_blank');
+
+//         if (newTab) {
+//             newTab.focus();
+//         } else {
+//             console.error("Popup blocked. Please enable popups to view the payment page.");
+//         }
+//     } catch (error) {
+//         console.error(error);
+//     } finally {
+//         setTimeout(() => {
+//             setLoading2(false);
+//         }, 1500);
+//     }
+// };
+
   
-      const newTab = window.open(response.data.url, '_blank');
-  
-      if (newTab) {
-        
-        newTab.focus();
-  
-        
-        const intervalId = setInterval(async () => {
-          try {
-            const checkStatusResponse = await axios.get(`${url}/api/status/${response.data.merchantId}/${response.data.merchantTransactionId}`);
-            console.log(checkStatusResponse.data);
-  
-            if (checkStatusResponse.data.success) {
-              // Payment successful
-              clearInterval(intervalId); 
-              navigate("/");
-              
-            } else {
-              // Payment still pending or failed
-              // You can handle this accordingly, or just continue checking
-            }
-          } catch (error) {
-            console.error(error);
+//   const handlePayment = async (e)=>{
+//     e.preventDefault();
+//     setLoading2(true);
+//     await axios.post(`${url}/api/payment`, {...data}).then(res => {  
+//     setTimeout(() => {
+//         setLoading2(false);
+//     }, 1500);
+//     })
+//     .catch(error => {
+//         setLoading2(false)
+//         console.error(error);
+//     });   
+// }
+
+const handlePayment = async (values) => {
+  setLoading2(true);
+
+  try {
+      // Validate UPI payment method
+      if (values.paymentMethod === "UPI") {
+          // Check if necessary fields are filled
+          if (!values.firstName || !values.phone) {
+              // Handle validation error, show a message or prevent the payment
+              console.error("Please fill out the required fields for UPI payment.");
+              return;
           }
-        }, 5000); // Check status every 5 seconds (adjust as needed)
-      } else {
-        // If the new tab was blocked by a popup blocker, you might want to inform the user
-        console.error("Popup blocked. Please enable popups to view the payment page.");
       }
-    } catch (error) {
+
+      // Prepare data for API call
+      const data = {
+          name: Name,
+          amount: discountedTotal
+              ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
+              : (tPwithGST + (ShippingCharge || 0)).toFixed(2),
+          number: Phone,
+          MUID: "MUID" + Date.now(),
+          transactionId: 'T' + Date.now(),
+      };
+
+      // Make API call
+      const response = await axios.post(`${url}/api/payment`, { ...data });
+      console.log(response);
+
+      // Open a new tab with the payment URL
+      const newTab = window.open(response.data.url, '_blank');
+
+      if (newTab) {
+          newTab.focus();
+      } else {
+          console.error("Popup blocked. Please enable popups to view the payment page.");
+      }
+  } catch (error) {
       console.error(error);
-    }
-  };
-  
+  } finally {
+      // Set loading state to false after a delay
+      setTimeout(() => {
+          setLoading2(false);
+      }, 1500);
+  }
+};
+
   
 
   const validationSchema = Yup.object().shape({
@@ -345,6 +391,7 @@ const Checkout = () => {
               city: "",
               postcode: "",
               phone: "",
+              paymentMethod: "COD",
             }}
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }) => {
@@ -370,7 +417,8 @@ const Checkout = () => {
                     postCode: values.postcode,
                     shippingAddress: values.address,
                     couponCode: selectedCoupon ? selectedCoupon._id : null,
-                    // paymentMethod: "Net Banking", // You might want to get this from the form
+                    paymentMethod: values.paymentMethod,
+
                     
                   });
                   
@@ -419,8 +467,9 @@ const Checkout = () => {
               handleChange,
               handleBlur,
               handleSubmit,
-              setFieldValue, // Add setFieldValue
-              setFieldTouched, // Add setFieldTouched
+              setFieldValue, 
+              setFieldTouched, 
+              isSubmitting,
             }) => (
               <form onSubmit={handleSubmit}>
                 <div className="row">
@@ -772,59 +821,114 @@ const Checkout = () => {
                         </table>
                       </div>
                       <div className="payment-box">
-                        <div className="payment-method">
-                          
-                          <p>
-                            <input
-                              type="radio"
-                              id="cash-on-delivery"
-                              name="radio-group"
-                              className="me-2"
-                              checked
-                            />
-                            <label htmlFor="cash-on-delivery">
-                              Cash on Delivery
-                            </label>
-                          </p>
-                          
-                        </div>
-                        
-                        OR
-                        <div className="payment-method">
-                        <button
-                              onClick={handlePayment}
-                              type="submit"
-                              className="default-btn order-btn"
-                            >
-                              Pay {discountedTotal
-                      ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
-                      : (tPwithGST + (ShippingCharge || 0)).toFixed(2)}
-                              <span />
-                            </button>
-                        </div>
-                        {CartData ? (
-                          CartData.length > 0 ? (
-                            <button
-                              to="#"
-                              type="submit"
-                              className="default-btn order-btn text-center"
-                            >
-                              Place Order
-                              <span />
-                            </button>
-                          ) : (
-                            <button
-                              to="#"
-                              type="submit"
-                              className="default-btn order-btn text-center"
-                              onClick={showEmptyCartMessage}
-                            >
-                              Place Order
-                              <span />
-                            </button>
-                          )
-                        ) : null}
-                      </div>
+    <div className="payment-method">
+        <p>
+            <input
+                type="radio"
+                id="cash-on-delivery"
+                name="paymentMethod"
+                value="COD"
+                checked={values.paymentMethod === "COD"}
+                onChange={() => setFieldValue("paymentMethod", "COD")}
+                onBlur={() => setFieldTouched("paymentMethod", true)}
+                className="me-2"
+            />
+            <label htmlFor="cash-on-delivery">
+                Cash on Delivery
+            </label>
+        </p>
+        
+        <p>
+            <input
+                type="radio"
+                id="upi-payment"
+                name="paymentMethod"
+                value="UPI"
+                checked={values.paymentMethod === "UPI"}
+                onChange={() => setFieldValue("paymentMethod", "UPI")}
+                onBlur={() => setFieldTouched("paymentMethod", true)}
+                className="me-2"
+            />
+            <label htmlFor="upi-payment">
+                UPI Payment
+            </label>
+        </p>
+    </div>
+
+    {/* {!loading2 ? (
+        values.paymentMethod === "COD" ? (
+            <div className="payment-method">
+                <button
+                    onClick={handleSubmit}
+                    type="submit"
+                    className="default-btn order-btn"
+                >
+                    Place Order
+                    <span />
+                </button>
+            </div>
+        ) : values.paymentMethod === "UPI" ? (
+            <div className="payment-method">
+                <button
+                    onClick={handlePayment}
+                    type="submit"
+                    className="default-btn order-btn"
+                >
+                    Pay {discountedTotal
+                        ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
+                        : (tPwithGST + (ShippingCharge || 0)).toFixed(2)}
+                    <span />
+                </button>
+            </div>
+        ) : null
+    ) : (
+        <div className='col-12 center'>
+            <button className='w-100 text-center' type="submit">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden ">Wait...</span>
+                </div>
+            </button>
+        </div>
+    )} */}
+    {!loading2 ? (
+  values.paymentMethod === "COD" ? (
+    <div className="payment-method">
+      <button
+        type="submit"
+        className="default-btn order-btn"
+        disabled={isSubmitting}  // Disable the button during form submission
+      >
+        Place Order
+        <span />
+      </button>
+    </div>
+  ) : values.paymentMethod === "UPI" ? (
+    <div className="payment-method">
+      <button
+        type="button"  // Change to type="button" to prevent form submission
+        onClick={() => handlePayment(values)}
+        className="default-btn order-btn"
+        disabled={isSubmitting}  // Disable the button during form submission
+      >
+        Pay {discountedTotal
+          ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
+          : (tPwithGST + (ShippingCharge || 0)).toFixed(2)}
+        <span />
+      </button>
+    </div>
+  ) : null
+) : (
+  <div className='col-12 center'>
+    <button className='w-100 text-center' type="button" disabled>
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden">Wait...</span>
+      </div>
+    </button>
+  </div>
+)}
+
+</div>
+
                     </div>
                   </div>
                 </div>

@@ -45,6 +45,8 @@ const ProductDetails = () => {
     addToWishlist,
     GetProductsbyCategoryId,
     GetAllVarProducts,
+    OpenLoginModal,
+    setOpenLoginModal
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [OtherProductData, setOtherProductData] = useState([]);
@@ -127,12 +129,7 @@ const ProductDetails = () => {
         
       } else {
         console.error(res.msg);
-        Swal.fire({
-          icon: "warning",
-          title: "Please Login First",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setOpenLoginModal(true);
       }
     } catch (error) {
       // Handle unexpected errors

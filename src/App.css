@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+.mainDivWhatsapp {
+  position: absolute;
+  z-index: 9;
+}
+.whatsappDiv {
+  position: fixed;
+  z-index: 999999;
+
+  right: 27px;
+  bottom: 86px;
+}
+
 .preloader-container {
   position: fixed;
   top: 0;

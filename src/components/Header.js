@@ -34,7 +34,9 @@ const Header = () => {
     removeItemFromCart,
     forgotCustomerPassword,
     getCategories,
-    GetsubandsubSubcategory
+    GetsubandsubSubcategory,
+    OpenLoginModal,
+    setOpenLoginModal,
   } = useContext(SignContext);
   const authToken = localStorage.getItem("authToken");
   const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
@@ -58,7 +60,7 @@ const Header = () => {
   const [isMegaMenuDropdownOpen, setMegaMenuDropdownOpen] = useState(false);
 
   
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  // const [showLoginModal, setOpenLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
@@ -124,16 +126,16 @@ const Header = () => {
   };
 
   const handleModalClose = () => {
-    setShowLoginModal(false);
+    setOpenLoginModal(false);
   };
   const handleLoginClick = () => {
-    setShowLoginModal(true);
+    setOpenLoginModal(true);
     setShowSignupModal(false);
   };
 
   const handleSignupClick = () => {
     setShowSignupModal(true);
-    setShowLoginModal(false);
+    setOpenLoginModal(false);
     setShowForgotPasswordModal(false);
   };
 
@@ -143,7 +145,7 @@ const Header = () => {
 
   const handleForgotPasswordClick = () => {
     setShowForgotPasswordModal(true);
-    setShowLoginModal(false);
+    setOpenLoginModal(false);
     setShowSignupModal(false);
   };
 
@@ -356,7 +358,7 @@ const Header = () => {
               </div>
             </div>
 
-            {showLoginModal && (
+            {OpenLoginModal && (
               <div
                 className="modal fade show modal-backdrop-opacity"
                 id="LoginRegister"
@@ -892,10 +894,16 @@ const Header = () => {
                     placeholder="Search for items..."
                   />
                   <button className="btn" ty>
-                    Search...{" "}
+                  {tag ? (
+    <Link to={`/bytags/${tag}`}>
+      Search...
+    </Link>
+  ) : (
+    <span>Search...</span>
+  )}
                   </button>
                 </form>
-                {showDropdown && (
+                {/* {showDropdown && (
                   <ul className="search-list">
                     {products ? (
                       products.map((product) => (
@@ -910,7 +918,7 @@ const Header = () => {
                       <></>
                     )}
                   </ul>
-                )}
+                )} */}
               </div>
               {authToken ? (
                 <div className="header-action-right">

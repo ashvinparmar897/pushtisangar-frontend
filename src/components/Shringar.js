@@ -20,6 +20,8 @@ const Shringar = () => {
     getCategories,
     getLoggedInCustomer,
     addToCart,
+    OpenLoginModal,
+    setOpenLoginModal
   } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
@@ -156,12 +158,7 @@ const Shringar = () => {
           console.error(res.msg);
         }
       } else {
-        Swal.fire({
-          icon: 'warning', 
-          title: 'Please Login First',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setOpenLoginModal(true);
       }
     } catch (error) {
   

@@ -15,7 +15,8 @@ const NewArrival = (props) => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
 
   // const [showPopup, setShowPopup] = useState(false);
-  const { getProducts, getCategories , getLoggedInCustomer , addToCart  } = useContext(SignContext);
+  const { getProducts, getCategories , getLoggedInCustomer , addToCart,OpenLoginModal,
+    setOpenLoginModal  } = useContext(SignContext);
   const [ProductData, setProductData] = useState([]);
   const [categoryNameMapping, setCategoryNameMapping] = useState({});
   const [CustomerInfo, setCustomerInfo] = useState({});
@@ -143,12 +144,7 @@ const NewArrival = (props) => {
           console.error(res.msg);
         }
       } else {
-        // Swal.fire({
-        //   icon: 'warning', 
-        //   title: 'Please Login First',
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
+        setOpenLoginModal(true);
         props.handleLoginClick();
       }
     } catch (error) {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import SignContext from "../Context/SignContext";
-import React from "react";
+import React, { useState } from "react";
 
 export const SignState = (props) => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
@@ -8,6 +8,9 @@ export const SignState = (props) => {
   // const url = `http://localhost:5000`;
 
   // create customer
+const [OpenLoginModal, setOpenLoginModal] = useState(false);
+
+
   const createCustomer = async (customerInfo) => {
     try {
       const response = await axios.post(
@@ -714,6 +717,8 @@ export const SignState = (props) => {
         AddSubscribe,
         AddContact,
         GetsubandsubSubcategory,
+        OpenLoginModal,
+        setOpenLoginModal
       }}
     >
       {props.children}

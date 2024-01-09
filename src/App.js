@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 import "./responsive.css";
 import Home from "./components/Home";
@@ -36,6 +36,11 @@ import Faq from "./pages/FAQ's/Faq.jsx";
 import BlogCategories from "./pages/blog/BlogCategories.js";
 import Undermaintainance from "./pages/Undermaintenance/Undermaintainance.js";
 import ShippingPolicy from "./pages/ShippingPolicy/ShippingPolicy.js";
+import icon from "./images/WhatsApp_icon.png.png";
+import Success from "./components/Success.js";
+import Failure from "./components/Failure.js";
+import ByTags from "./pages/ByTags/ByTags.js";
+
 
 function App() {
   return (
@@ -45,9 +50,13 @@ function App() {
           {/* <Route path="/" element={< Undermaintainance/>} /> */}
           <Route path="/" element={<Home />} />
           <Route path="/product-list/:id" element={<ProductList />} />
+          <Route path="/bytags/:tags" element={<ByTags />} />
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/cart/:id" element={<Cart />} />
           <Route path="/checkout/:id" element={<Checkout />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/failure" element={<Failure />} />
+
           <Route path="/order-statement" element={<OrderStatement />} />
           <Route path="/print-statement" element={<PrintStatement />} />
           <Route path="/my-order/:id" element={<MyOrder />} />
@@ -77,6 +86,16 @@ function App() {
           <Route path="/shipping-policy" element={<ShippingPolicy />} />
           <Route path="/faq" element={<Faq />} />
         </Routes>
+        <div className="mainDivWhatsapp">
+          <div className="whatsappDiv">
+            <Link
+              to="https://api.whatsapp.com/send?phone=919824281021&"
+              target="_blanck"
+            >
+              <img src={icon} alt="" style={{ width: "60px" }} />
+            </Link>
+          </div>
+        </div>
       </BrowserRouter>
     </div>
   );

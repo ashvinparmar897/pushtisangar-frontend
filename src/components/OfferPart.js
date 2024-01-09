@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import offer1 from "../images/small-image-1.jpg"
-import offer2 from "../images/small-image-2.jpg"
-import offer3 from "../images/small-image-3.jpg"
+import offer1 from "../images/p-1.png"
+import offer2 from "../images/p-2.png"
+import offer3 from "../images/p-3.png"
 import SignContext from "../contextAPI/Context/SignContext";
 
 const OfferPart = () => {
