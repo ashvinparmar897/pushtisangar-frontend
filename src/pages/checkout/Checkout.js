@@ -217,7 +217,7 @@ const Checkout = () => {
         // console.log(`Item: ${item.product.name}, Quantity: ${quantity}, Discounted Price: ${discountedPrice}, GST: ${gst}%, Total Price with GST: ${totalPriceWithGST}`);
         // Check for NaN or invalid values
         if (isNaN(quantity) || isNaN(discountedPrice)) {
-          return acc; // Skip this item if it has invalid data
+          return acc; 
         }
 
         return acc + totalPriceWithGST;
@@ -278,17 +278,17 @@ const handlePayment = async (values) => {
   setLoading2(true);
 
   try {
-      // Validate UPI payment method
+   
       if (values.paymentMethod === "UPI") {
-          // Check if necessary fields are filled
+      
           if (!values.firstName || !values.phone) {
-              // Handle validation error, show a message or prevent the payment
+             
               console.error("Please fill out the required fields for UPI payment.");
               return;
           }
       }
 
-      // Prepare data for API call
+      
       const data = {
           name: CustomerInfo?CustomerInfo.name:null,
           amount: discountedTotal
@@ -303,7 +303,7 @@ const handlePayment = async (values) => {
       const response = await axios.post(`${url}/api/payment`, { ...data });
       console.log(response);
 
-      // Open a new tab with the payment URL
+     
       const newTab = window.open(response.data.url, '_blank');
 
       if (newTab) {
