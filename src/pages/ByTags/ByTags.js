@@ -31,8 +31,6 @@ const ByTags = () => {
     const { tags } = useParams();
     const navigate = useNavigate();
     const {
-      GetProductsbyCategoryId,
-      getCategories,
       getLoggedInCustomer,
       getColors,
       getMaterials,

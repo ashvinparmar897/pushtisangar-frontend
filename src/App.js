@@ -89,7 +89,7 @@ function App() {
         <div className="mainDivWhatsapp">
           <div className="whatsappDiv">
             <Link
-              to="https://api.whatsapp.com/send?phone=919824281021&"
+              to="https://api.whatsapp.com/send?phone=918980963151&"
               target="_blanck"
             >
               <img src={icon} alt="" style={{ width: "60px" }} />

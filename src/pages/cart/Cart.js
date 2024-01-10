@@ -22,6 +22,7 @@ const Cart = () => {
 
   const [CartData, setCartData] = useState([]);
   const [productTax, setproductTax] = useState(0);
+  
 
   useEffect(() => {
     console.log("customerId:", id);
@@ -37,6 +38,7 @@ const Cart = () => {
     }
   };
 
+
   const handleRemoveAll = async () => {
     const res = await RemoveAllItemsFromCart(id);
     console.log("get cart", res);
@@ -51,15 +53,15 @@ const Cart = () => {
       const res = await UpdateCartItem(customerId, { cartItems: CartData });
       console.log(res);
       if (res.success) {
-        // Cart updated successfully
+        
         console.log("Cart updated successfully");
-        // navigate(`/cart/${customerId}`);
+        
       } else {
-        // Handle the error
+      
         console.error(res.msg);
       }
     } catch (error) {
-      // Handle unexpected errors
+      
       console.error("Unexpected error:", error);
     }
   };
@@ -88,6 +90,7 @@ const Cart = () => {
           item.product._id === productId
             ? { ...item, quantity: updatedQuantity }
             : item
+            
         )
       : null;
     setCartData(updatedCart);
@@ -119,11 +122,7 @@ const Cart = () => {
     }));
   };
 
-  // const calculateTotal = () => {
-  //   CartData.reduce((cv, item) => {
-  //     return cv + item.quantity * item.product.prices.discounted;
-  //   }, 0);
-  // };
+  
 
   const totalPrice = CartData
     ? CartData.reduce((acc, item) => {
@@ -257,18 +256,26 @@ const Cart = () => {
                                 />
                                 <span
                                   className="plus-btn"
-                                  onClick={
-                                    () =>
-                                      handleQuantityChange(
-                                        item.product._id,
-                                        item.quantity + 1
-                                      ) // Increase quantity by 1
-                                  }
+                                  onClick={() => {
+                                    const newQuantity = item.quantity + 1;
+                                
+                                    // Check if increasing quantity exceeds available stock
+                                    if (item.stock && item.stock.quantity !== null && newQuantity <= item.stock.quantity) {
+                                      handleQuantityChange(item.product._id, newQuantity);
+                                    }
+                                  }}
                                 >
                                   <i className="bx bx-plus bi bi-plus" />
                                 </span>
+                                
                               </div>
+                              <div className="mt-2 ms-2  text-danger">
+                                {item.stock && item.stock.quantity !== null && item.stock.quantity < 6 ? (
+ `Hurry up, only ${item.stock.quantity} left!`
+) : null}
+                                </div>
                             </td>
+                              
 
                             <td>
                               ₹

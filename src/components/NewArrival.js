@@ -181,7 +181,7 @@ const NewArrival = (props) => {
         <div className="row">
           
           <Slider {...settings}>
-          {ProductData?ProductData.filter(product => product.isProductNew).slice(0, 10).map((product) => (
+          {ProductData?ProductData.filter(product => product.isProductNew).slice(-10).map((product) => (
               <div
                 className="col-xxl-2 col-lg-3 col-md-4 col-sm-6 mb-4 popular-card"
                 key={product.id}

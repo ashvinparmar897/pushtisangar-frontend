@@ -290,11 +290,11 @@ const handlePayment = async (values) => {
 
       // Prepare data for API call
       const data = {
-          name: Name,
+          name: CustomerInfo?CustomerInfo.name:null,
           amount: discountedTotal
               ? (discountedTotal + (ShippingCharge || 0)).toFixed(2)
               : (tPwithGST + (ShippingCharge || 0)).toFixed(2),
-          number: Phone,
+          number: CustomerInfo.phone,
           MUID: "MUID" + Date.now(),
           transactionId: 'T' + Date.now(),
       };

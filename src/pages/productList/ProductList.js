@@ -1,5 +1,5 @@
 // ProductList.js
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import MidFooter from "../../components/MidFooter";
 import "./ProductList.css";
@@ -29,6 +29,7 @@ import axios from "axios";
 
 
 const ProductList = () => {
+  const originalData = useRef(null);
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const { id } = useParams();
   const navigate = useNavigate();
@@ -212,12 +213,44 @@ const ProductList = () => {
     }
   };
 
+  // const handleSortByChange = (value) => {
+  //   setSelectedSortBy(value);
+
+    
+  //   const sortedData = [...ProductData];
+
+  //   if (value === "newIn") {
+  //     sortedData.reverse();
+  //   } else if (value === "priceLowestFirst") {
+  //     sortedData.sort((a, b) => {
+  //       const priceA = a.prices.discounted || a.prices.calculatedPrice;
+  //       const priceB = b.prices.discounted || b.prices.calculatedPrice;
+  //       return priceA - priceB;
+  //     });
+  //   } else if (value === "priceHighestFirst") {
+  //     sortedData.sort((a, b) => {
+  //       const priceA = a.prices.discounted || a.prices.calculatedPrice;
+  //       const priceB = b.prices.discounted || b.prices.calculatedPrice;
+  //       return priceB - priceA;
+  //     });
+  //   }else if (value === "") {
+  //     console.log("clicked")
+  //   }
+  //   setProductData(sortedData);
+  // };
+
+
   const handleSortByChange = (value) => {
+    // If original data is not set, store the current order as the original order
+    if (!originalData.current) {
+      originalData.current = [...ProductData];
+    }
+  
     setSelectedSortBy(value);
-
+  
     // Sort the product data based on the selected option
-    const sortedData = [...ProductData];
-
+    const sortedData = [...originalData.current];
+  
     if (value === "newIn") {
       sortedData.reverse();
     } else if (value === "priceLowestFirst") {
@@ -232,11 +265,13 @@ const ProductList = () => {
         const priceB = b.prices.discounted || b.prices.calculatedPrice;
         return priceB - priceA;
       });
-    }else if (value === "") {
-      console.log("clicked")
+    } else if (value === "") {
+      console.log("clicked");
     }
+  
     setProductData(sortedData);
   };
+  
 
   const handleShowMore = () => {
     setProductsToShow(ProductData?ProductData.length:null);

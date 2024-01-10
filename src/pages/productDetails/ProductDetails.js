@@ -185,7 +185,7 @@ const ProductDetails = () => {
 
   const handleWhatsAppInquiry = () => {
     // Assuming you have a WhatsApp business number
-    const businessNumber = '9824281021'; 
+    const businessNumber = '918980963151'; 
     const productDetailsUrl = window.location.href;
     const productName = ProductData.name;
 
